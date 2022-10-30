@@ -1,9 +1,9 @@
 # Computer Graphics 203.3710
 ## Students Team data
 
-Name: 
+Name: Rashil Mbariky
 
-Student Number: 
+Student Number: 209148154
 
 
 Name: 
