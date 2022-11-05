@@ -6,9 +6,9 @@ Name: Rashil Mbariky
 Student Number: 209148154
 
 
-Name: 
+Name: Kareen Ghattas
 
-Student Number: 
+Student Number: 207478728
 
 ### Lecturer
 *Roi Poranne*
