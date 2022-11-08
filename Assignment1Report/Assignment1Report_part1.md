@@ -1,8 +1,8 @@
 # Assignment 1 Report : Part 1 
 
 ## Bresenham Algorithm 
-**_We used Bresenham Algorithm to drow a line, we checked when we had to do switch and when to do a reflect, 
-and wrote the algorithm to put pixels in the right place_** 
+**_We used Bresenham Algorithm to draw a line, we checked when we had to do switch and when to do a reflect, 
+and write the algorithm to put pixels in the right place_** 
 
 	void Renderer::DrawLine(const glm::ivec2& p1, const glm::ivec2& p2, const glm::vec3& color)
 	{
@@ -70,7 +70,7 @@ and wrote the algorithm to put pixels in the right place_**
 
 
 ## Draw Circle Algorithm
-**_We used the circule cordenats to draw a circule using Bresenham Algorithm to drow a line from the center of our page_** 
+**_We used the circle coordinates to draw a circle using Bresenham Algorithm to draw a line from the center of the page_** 
 
 	void Renderer::Render(const Scene& scene)
 	{
