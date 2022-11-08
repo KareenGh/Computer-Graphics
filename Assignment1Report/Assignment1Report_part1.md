@@ -115,4 +115,4 @@ and write the algorithm to put pixels in the right place_**
 ![Circle](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/SanityCheck.jpeg)
 
 ## Our drawing
-![Our drawing](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/OurDrowing.jpeg)
+![Our drawing](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/OurDrawing.jpeg)
