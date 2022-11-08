@@ -72,6 +72,8 @@ and write the algorithm to put pixels in the right place_**
 ## Draw Circle Algorithm
 **_We used the circle coordinates to draw a circle using Bresenham Algorithm to draw a line from the center of the page_** 
 
+**_(X0 + r * sin((2*i*pi)/a) , y0 + r * cos((2*i*pi)/a))_**
+
 	void Renderer::Render(const Scene& scene)
 	{
 		int half_width = viewport_width / 2;
