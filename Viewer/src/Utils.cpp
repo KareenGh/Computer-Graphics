@@ -5,6 +5,9 @@
 #include <sstream>
 
 #include "Utils.h"
+#include <iostream>
+
+using namespace std;
 
 glm::vec3 Utils::Vec3fFromStream(std::istream& issLine)
 {
@@ -44,6 +47,7 @@ std::shared_ptr<MeshModel> Utils::LoadMeshModel(const std::string& filePath)
 		if (lineType == "v")
 		{
 			vertices.push_back(Utils::Vec3fFromStream(issLine));
+			cout << issLine.str() << endl;
 		}
 		else if (lineType == "vn")
 		{
@@ -56,6 +60,7 @@ std::shared_ptr<MeshModel> Utils::LoadMeshModel(const std::string& filePath)
 		else if (lineType == "f")
 		{
 			faces.push_back(Face(issLine));
+			cout << issLine.str() << endl;
 		}
 		else if (lineType == "#" || lineType == "")
 		{
