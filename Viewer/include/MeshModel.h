@@ -11,7 +11,9 @@ public:
 	const Face& GetFace(int index) const;
 	int GetFacesCount() const;
 	const std::string& GetModelName() const;
-
+	glm::vec3 MeshModel::GetVertix(int i, int j);
+	void PrintFaces() const;
+	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
 private:
 	std::vector<Face> faces;
 	std::vector<glm::vec3> vertices;

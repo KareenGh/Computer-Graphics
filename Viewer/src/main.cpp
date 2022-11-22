@@ -19,7 +19,7 @@
 bool show_demo_window = false;
 bool show_another_window = false;
 //glm::vec4 clear_color = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
-glm::vec4 clear_color = glm::vec4(0.0f, 0.0f, 0.0f, 0.00f); ///
+glm::vec4 clear_color = glm::vec4(0.3f, 0.3f, 0.3f, 0.00f); ///
 
 
 /**
@@ -44,7 +44,7 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 
 int main(int argc, char **argv)
 {
-	int windowWidth = 12000, windowHeight = 5000; // 1280 , 720
+	int windowWidth = 1920, windowHeight = 1080; // 1280 , 720
 	GLFWwindow* window = SetupGlfwWindow(windowWidth, windowHeight, "Mesh Viewer");
 	if (!window)
 		return 1;
@@ -229,6 +229,12 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
 		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+		//
+		if(scene.GetModelCount())
+		ImGui::ColorEdit3("Object color", (float*)&scene.GetActiveModel().ObjectColor); // Edit 3 floats representing a color
+		//
+
 
 		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
 			counter++;

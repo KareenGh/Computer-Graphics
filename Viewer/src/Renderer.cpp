@@ -8,6 +8,9 @@
 #define INDEX(width,x,y,c) ((x)+(y)*(width))*3+(c)
 #define Z_INDEX(width,x,y) ((x)+(y)*(width))
 
+#define Scale = 200;
+#define Translate = 200;
+
 Renderer::Renderer(int viewport_width, int viewport_height) :
 	viewport_width(viewport_width),
 	viewport_height(viewport_height)
@@ -234,363 +237,10 @@ void Renderer::Render(const Scene& scene)
 	int half_width = viewport_width / 2;
 	int half_height = viewport_height / 2;
 	// draw circle
-	glm::ivec2 p1;
-	glm::ivec2 p2;
-	glm::vec3 color(1, 0.57, 1.31);
-	p1.x = half_width;
-	p1.y = half_height + 500;
-	p2.x = half_width + 700;
-	p2.y = half_height + 500;
-	DrawLine(p1, p2, color);
-	p2.x = half_width + 250;
-	p2.y = half_height + 250;
-	DrawLine(p1, p2, color);
-	p2.x = half_width - 250;
-	p2.y = half_height + 250;
-	DrawLine(p1, p2, color);
-	p1.x = half_width + 950;
-	p1.y = half_height + 250;
-	p2.x = half_width + 700;
-	p2.y = half_height + 500;
-	DrawLine(p1, p2, color);
-	p1.x = half_width + 950;
-	p1.y = half_height + 250;
-	p2.x = half_width - 250;
-	p2.y = half_height + 250;
-	DrawLine(p1, p2, color);
-	p1.x = half_width - 250;
-	p1.y = half_height + 250;
-	p2.x = half_width - 250;
-	p2.y = half_height - 250;
-	DrawLine(p1, p2, color);
-	p1.x = half_width + 250;
-	p1.y = half_height + 250;
-	p2.x = half_width + 250;
-	p2.y = half_height - 250;
-	DrawLine(p1, p2, color);
-	p1.x = half_width - 250;
-	p1.y = half_height - 250;
-	p2.x = half_width + 250;
-	p2.y = half_height - 250;
-	DrawLine(p1, p2, color);
-	p1.x = half_width + 950;
-	p1.y = half_height + 250;
-	p2.x = half_width + 950;
-	p2.y = half_height - 250;
-	DrawLine(p1, p2, color);
-	p1.x = half_width + 950;
-	p1.y = half_height - 250;
-	p2.x = half_width + 250;
-	p2.y = half_height - 250;
-	DrawLine(p1, p2, color);
-	p1.x = half_width - 100;
-	p1.y = half_height - 250;
-	p2.x = half_width - 100;
-	p2.y = half_height;
-	DrawLine(p1, p2, color);
-	p1.x = half_width + 50;
-	p1.y = half_height;
-	DrawLine(p1, p2, color);
-	p2.x = half_width + 50;
-	p2.y = half_height - 250;
-	DrawLine(p1, p2, color);
-
-	p1.x = 0;
-	p1.y = half_height - 250;
-	p2.x = half_width + 10000;
-	p2.y = p1.y;
-	DrawLine(p1, p2, color);
-
-	glm::vec3 color1(0, 1, 0);
-	p1.x = 250;
-	p1.y = half_height - 250;
-	p2.x = 250;
-	p2.y = half_height + 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 400;
-	p1.y = half_height - 250;
-	p2.x = 400;
-	p2.y = half_height + 150;
-	DrawLine(p1, p2, color1);
-
-	p1.x = 100;
-	p1.y = half_height + 150;
-	p2.x = 550;
-	p2.y = half_height + 150;
-	DrawLine(p1, p2, color1);
-	p2.x = 250;
-	p2.y = half_height + 250;
-	DrawLine(p1, p2, color1);
-	p1.x = 400;
-	p1.y = half_height + 250;
-	p2.x = 550;
-	p2.y = half_height + 150;
-	DrawLine(p1, p2, color1);
-	p2.x = 550;
-	p2.y = half_height + 250;
-	DrawLine(p1, p2, color1);
-	p1.x = 400;
-	p1.y = half_height + 350;
-	DrawLine(p1, p2, color1);
-	p1.x = 100;
-	p1.y = half_height + 250;
-	p2.x = 250;
-	p2.y = half_height + 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 250;
-	p2.y = half_height + 350;
-	DrawLine(p1, p2, color1);
-	p1.x = 100;
-	p1.y = half_height + 350;
-	DrawLine(p1, p2, color1);
-	p2.x = 325;
-	p2.y = half_height + 575;
-	DrawLine(p1, p2, color1);
-	p1.x = 400;
-	p1.y = half_height + 350;
-	p2.x = 550;
-	p2.y = half_height + 350;
-	DrawLine(p1, p2, color1);
-	p1.x = 325;
-	p1.y = half_height + 575;
-	DrawLine(p1, p2, color1);
-
-	p1.x = 0;
-	p1.y = half_height - 250;
-	p2.x = 30;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 60;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 90;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 120;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 150;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 180;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 210;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 240;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 270;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 300;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 330;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 360;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 390;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 420;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 450;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 480;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 510;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 540;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 570;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 600;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 630;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 660;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 690;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 720;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 750;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 780;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 810;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 840;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 870;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 900;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 930;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 960;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 990;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 1020;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 1040;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 1080;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 1100;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = 1140;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = 1160;
-	p2.y = half_height - 150;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width - 250;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-
-	p1.x = half_width + 950;
-	p1.y = half_height - 250;
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1010;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1070;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1130;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1190;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1250;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1310;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1370;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1430;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1490;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1550;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-	p2.x = p1.x + 30;
-	p2.y = p1.y + 100;
-	DrawLine(p1, p2, color1);
-	p1.x = half_width + 1610;
-	p1.y = half_height - 250;
-	DrawLine(p1, p2, color1);
-
-	for (int i = 4; i < 250; i += 4)
+	if (scene.GetModelCount())
 	{
-		p1.x = half_width + 250 - i;
-		p1.y = half_height + 250 + i;
-		p2.x = half_width + 950 - i;
-		p2.y = half_height + 250 + i;
-		DrawLine(p1, p2, color);
-		p1.x = half_width - 250 + i;
-		p1.y = half_height + 250 + i;
-		p2.x = half_width + 250 - i;
-		p2.y = half_height + 250 + i;
-		DrawLine(p1, p2, color);
-
-		p1.x = half_width - 100;
-		p1.y = half_height - i;
-		p2.x = half_width + 50;
-		p2.y = half_height - i;
-		DrawLine(p1, p2, color);
-
+		DrawObject(scene.GetActiveModel());
 	}
-
-	for (int i = 0; i < 100; i++)
-	{
-		p1.x = 100 + i;
-		p1.y = half_height + 150 + i;
-		p2.x = 550 - i;
-		p2.y = half_height + 150 + i;
-		DrawLine(p1, p2, color1);
-		p1.x = 100 + i;
-		p1.y = half_height + 250 + i;
-		p2.x = 550 - i;
-		p2.y = half_height + 250 + i;
-		DrawLine(p1, p2, color1);
-
-	}
-	for (double i = 0; i < 225; i++)
-	{
-		p1.x = 100 + i;
-		p1.y = half_height + 350 + i;
-		p2.x = 550 - i;
-		p2.y = half_height + 350 + i;
-		DrawLine(p1, p2, color1);
-	}
-
 }
 
 int Renderer::GetViewportWidth() const
@@ -601,4 +251,38 @@ int Renderer::GetViewportWidth() const
 int Renderer::GetViewportHeight() const
 {
 	return viewport_height;
+}
+
+void Renderer::DrawObject(MeshModel& Model)
+{
+	glm::vec3 point1 = glm::vec3(0.0f);
+	glm::vec3 point2 = glm::vec3(0.0f);
+	glm::vec3 point3 = glm::vec3(0.0f);
+	for (int i = 0; i < Model.GetFacesCount(); i++)
+	{
+		point1 = Model.GetVertix(i, 0);
+		point2 = Model.GetVertix(i, 1);
+		point3 = Model.GetVertix(i, 2);
+
+		point1.x *= 200;
+		point1.y *= 200;
+		point2.x *= 200;
+		point2.y *= 200;
+		point3.x *= 200;
+		point3.y *= 200;
+
+
+		point1 += glm::vec3(960, 540, 0);
+		point2 += glm::vec3(960, 540, 0);
+		point3 += glm::vec3(960, 540, 0);
+
+		{
+			DrawLine(point1, point2, Model.ObjectColor);
+			DrawLine(point1, point3, Model.ObjectColor);
+			DrawLine(point2, point3, Model.ObjectColor);
+
+		}
+
+
+	}
 }
