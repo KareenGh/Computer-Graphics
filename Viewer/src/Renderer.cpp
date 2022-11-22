@@ -4,6 +4,9 @@
 
 #include "Renderer.h"
 #include "InitShader.h"
+#include <iostream>
+#include <glm/gtx/string_cast.hpp>
+
 
 #define INDEX(width,x,y,c) ((x)+(y)*(width))*3+(c)
 #define Z_INDEX(width,x,y) ((x)+(y)*(width))
@@ -255,26 +258,23 @@ int Renderer::GetViewportHeight() const
 
 void Renderer::DrawObject(MeshModel& Model)
 {
-	glm::vec3 point1 = glm::vec3(0.0f);
-	glm::vec3 point2 = glm::vec3(0.0f);
-	glm::vec3 point3 = glm::vec3(0.0f);
+	glm::vec4 point1 = glm::vec4(0.0f);
+	glm::vec4 point2 = glm::vec4(0.0f);
+	glm::vec4 point3 = glm::vec4(0.0f);
+
+	MeshModel MyModel = Model;
+	glm::mat4x4 Changer = MyModel.w_move * MyModel.w_scale * MyModel.xw_rotate * MyModel.yw_rotate * MyModel.zw_rotate * MyModel.Translation_mat * MyModel.x_rotate * MyModel.y_rotate * MyModel.z_rotate * MyModel.Scale_mat;
+	;
 	for (int i = 0; i < Model.GetFacesCount(); i++)
 	{
-		point1 = Model.GetVertix(i, 0);
-		point2 = Model.GetVertix(i, 1);
-		point3 = Model.GetVertix(i, 2);
+		point1 = glm::vec4(MyModel.GetVertix(i, 0),1);
+		point2 = glm::vec4(MyModel.GetVertix(i, 1),1);
+		point3 = glm::vec4(MyModel.GetVertix(i, 2),1);
 
-		point1.x *= 200;
-		point1.y *= 200;
-		point2.x *= 200;
-		point2.y *= 200;
-		point3.x *= 200;
-		point3.y *= 200;
+		point1 = Changer*point1;
+		point2 = Changer*point2;
+		point3 = Changer*point3;
 
-
-		point1 += glm::vec3(960, 540, 0);
-		point2 += glm::vec3(960, 540, 0);
-		point3 += glm::vec3(960, 540, 0);
 
 		{
 			DrawLine(point1, point2, Model.ObjectColor);

@@ -230,6 +230,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
 		ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
+		//ImGui::SliderInt("Scale", &scene.GetModel(0).Scale_ch, -1000, 1000);
 		//
 		if(scene.GetModelCount())
 		ImGui::ColorEdit3("Object color", (float*)&scene.GetActiveModel().ObjectColor); // Edit 3 floats representing a color
