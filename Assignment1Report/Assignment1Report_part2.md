@@ -6,7 +6,7 @@
 
 in order to do that we add two lines to the Utils file, if (lineType == "v") or if (lineType == "f") we add a cout line to print the vertices and faces. 
 ![Q1](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q1_code)
- in that way when we loaded a mesh, for example, a bunny mesh we got:
+ in that way when we loaded a mesh, for example, a camera mesh we got:
 ![Q1](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q1_V)
 ![Q1](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q1_F)
 
