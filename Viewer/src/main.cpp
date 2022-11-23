@@ -232,7 +232,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 		ImGui::SliderInt("Scale", &scene.GetModel(0).Scale_ch, -1000, 1000);
 		//
-		if(scene.GetModelCount())
+		//if(scene.GetModelCount())
 		ImGui::ColorEdit3("Object color", (float*)&scene.GetActiveModel().ObjectColor); // Edit 3 floats representing a color
 		//
 
