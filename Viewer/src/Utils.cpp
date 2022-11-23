@@ -47,7 +47,7 @@ std::shared_ptr<MeshModel> Utils::LoadMeshModel(const std::string& filePath)
 		if (lineType == "v")
 		{
 			vertices.push_back(Utils::Vec3fFromStream(issLine));
-			cout << issLine.str() << endl;
+			//cout << issLine.str() << endl;
 		}
 		else if (lineType == "vn")
 		{
@@ -60,7 +60,7 @@ std::shared_ptr<MeshModel> Utils::LoadMeshModel(const std::string& filePath)
 		else if (lineType == "f")
 		{
 			faces.push_back(Face(issLine));
-			cout << issLine.str() << endl;
+			//cout << issLine.str() << endl;
 		}
 		else if (lineType == "#" || lineType == "")
 		{
