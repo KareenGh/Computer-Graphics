@@ -15,7 +15,7 @@ public:
 	glm::vec3 MeshModel::GetVertix(int i, int j);
 	void PrintFaces() const;
 	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
-	glm::mat4x4 Scale_mat = glm::mat4x4(300, 0, 0, 0, 0, 300, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+	glm::mat4x4 Scale_mat = glm::mat4x4(70, 0, 0, 0, 0, 70, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	glm::mat4x4 Translation_mat = glm::mat4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 900,600, 10, 1);
 	glm::mat4x4 w_scale = glm::mat4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	glm::mat4x4 x_rotate = glm::mat4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
