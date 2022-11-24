@@ -234,15 +234,48 @@ void Renderer::ClearColorBuffer(const glm::vec3& color)
 	}
 }
 
-void Renderer::Render(const Scene& scene)
+//void Renderer::Render(const Scene& scene)
+//{
+//	// TODO: Replace this code with real scene rendering code
+//	int half_width = viewport_width / 2;
+//	int half_height = viewport_height / 2;
+//	// draw circle
+//	if (scene.GetModelCount())
+//	{
+//		DrawObject(scene.GetActiveModel());
+//	}
+//}
+
+
+void Renderer::Render(const Scene& scene) 
 {
-	// TODO: Replace this code with real scene rendering code
-	int half_width = viewport_width / 2;
-	int half_height = viewport_height / 2;
-	// draw circle
-	if (scene.GetModelCount())
-	{
-		DrawObject(scene.GetActiveModel());
+	glm::vec4 point1, point2, point3;
+	glm::mat4x4 ScaleTransMat;
+	glm::mat4x4 TransMat;
+	glm::ivec3 color(1 , 0.57 , 1.31);
+
+	if (scene.GetModelCount()) {
+		auto MyModel = scene.GetActiveModel();
+		ScaleTransMat = MyModel.GetSTMatrix();
+		TransMat = MyModel.GetTransformMat();
+		ScaleTransMat = TransMat * ScaleTransMat;
+
+		for (int i = 0; i < MyModel.GetFacesCount(); i++) 
+		{
+			// turn a vec3 to vec4, then mul to sacle and translation matrix
+			point1 = ScaleTransMat * glm::vec4(MyModel.GetVertix(i, 0), 1);
+			point2 = ScaleTransMat * glm::vec4(MyModel.GetVertix(i, 1), 1);
+			point3 = ScaleTransMat * glm::vec4(MyModel.GetVertix(i, 2), 1);
+
+			// turn back to vec3 
+			point1 /= point1.w;
+			point2 /= point2.w;
+			point3 /= point3.w;
+
+			DrawLine(point1, point2, color);	//MyModel.ObjectColor
+			DrawLine(point1, point3, color);
+			DrawLine(point2, point3, color);
+		}
 	}
 }
 
@@ -275,14 +308,10 @@ void Renderer::DrawObject(MeshModel& Model)
 		point2 = Changer*point2;
 		point3 = Changer*point3;
 
-
 		{
-			DrawLine(point1, point2, Model.ObjectColor);
-			DrawLine(point1, point3, Model.ObjectColor);
-			DrawLine(point2, point3, Model.ObjectColor);
-
+			DrawLine(point1, point2, MyModel.ObjectColor);
+			DrawLine(point1, point3, MyModel.ObjectColor);
+			DrawLine(point2, point3, MyModel.ObjectColor);
 		}
-
-
 	}
 }

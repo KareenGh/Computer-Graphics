@@ -3,6 +3,10 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 
 #include "Utils.h"
 #include <iostream>
@@ -30,6 +34,11 @@ std::shared_ptr<MeshModel> Utils::LoadMeshModel(const std::string& filePath)
 	std::vector<glm::vec3> normals;
 	std::ifstream ifile(filePath.c_str());
 
+	glm::vec3 Vertix; // curr vertix 
+	std::vector<glm::vec2> TextureCoordinates;
+
+	float xMax = 0, yMax = 0, zMax = 0, xMin = 0, yMin = 0, zMin = 0, Max = 0, Min = 0;
+
 	// while not end of file
 	while (!ifile.eof())
 	{
@@ -46,8 +55,19 @@ std::shared_ptr<MeshModel> Utils::LoadMeshModel(const std::string& filePath)
 		// based on the type parse data
 		if (lineType == "v")
 		{
-			vertices.push_back(Utils::Vec3fFromStream(issLine));
+			//vertices.push_back(Utils::Vec3fFromStream(issLine));
 			//cout << issLine.str() << endl;
+
+			Vertix = Utils::Vec3fFromStream(issLine);
+			xMax = max(xMax, Vertix.x);
+			yMax = max(yMax, Vertix.y);
+			zMax = max(zMax, Vertix.z);
+
+			xMin = min(xMin, Vertix.x);
+			yMin = min(yMin, Vertix.y);
+			zMin = min(zMin, Vertix.z);
+
+			vertices.push_back(Vertix);
 		}
 		else if (lineType == "vn")
 		{
@@ -56,6 +76,7 @@ std::shared_ptr<MeshModel> Utils::LoadMeshModel(const std::string& filePath)
 		else if (lineType == "vt")
 		{
 			// TODO: Handle texture coordinates
+			TextureCoordinates.push_back(Utils::Vec2fFromStream(issLine));
 		}
 		else if (lineType == "f")
 		{
@@ -71,8 +92,16 @@ std::shared_ptr<MeshModel> Utils::LoadMeshModel(const std::string& filePath)
 			std::cout << "Found unknown line Type \"" << lineType << "\"";
 		}
 	}
+	Max = max(zMax, max(xMax, yMax));
+	//Min = min(zMin, min(xMin, yMin));
 
-	return std::make_shared<MeshModel>(faces, vertices, normals, Utils::GetFileName(filePath));
+	glm::mat4x4 scaleMat = glm::scale(glm::vec3(500 / Max, 500 / Max, 500 / Max));
+	glm::mat4x4 translationMat = glm::translate(glm::vec3(abs(xMin), abs(yMin), abs(zMin)));
+
+	//return std::make_shared<MeshModel>(faces, vertices, normals, Utils::GetFileName(filePath), scaleMat * translationMat, xMax, yMax, zMax, xMin, yMin, zMin, TextureCoordinates);
+	return std::make_shared<MeshModel>(faces, vertices, normals, Utils::GetFileName(filePath), scaleMat * translationMat);
+
+	// return std::make_shared<MeshModel>(faces, vertices, normals, Utils::GetFileName(filePath));
 }
 
 std::string Utils::GetFileName(const std::string& filePath)
