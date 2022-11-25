@@ -44,7 +44,7 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 
 int main(int argc, char **argv)
 {
-	int windowWidth = 1920, windowHeight = 1080; // 1280 , 720
+	int windowWidth = 1920, windowHeight = 1080; // 1280 , 720      1920 , 1080
 	GLFWwindow* window = SetupGlfwWindow(windowWidth, windowHeight, "Mesh Viewer");
 	if (!window)
 		return 1;

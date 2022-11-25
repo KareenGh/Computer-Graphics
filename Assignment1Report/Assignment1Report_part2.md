@@ -1240,3 +1240,20 @@ f 413//102 412//102 284//102
 f 253//102 414//102 276//102
 f 391//102 408//102 424//102
 f 250//102 422//102 283//102
+
+## 2. Scale and translate the vertices such that they will fit inside your window. The coordinates of the vertices should be around 0-1000. explain how you performed this transformation in the report.
+
+in order to do scaling and translation, we added parameters in the LoadMeshModel so we can caluclate minimum and maximum values of x,y,z in the mesh vertices, we foun the maximum of all of them and in order to make a scaling matrix we created a scale matrix that git a vec3 
+glm::mat4x4 scaleMat = glm::scale(glm::vec3(500 / Max, 500 / Max, 500 / Max));
+and in order to make a translate we created a matrix that git the abs of every minimum in that way we get that all the points will be over 0.
+glm::mat4x4 translationMat = glm::translate(glm::vec3(abs(xMin), abs(yMin), abs(zMin)));
+
+now we have a scale and translate matrix we return the multivision of both of them to the MeshModel class.
+
+## 3.From the Scene object, transfer the mesh triangles to the Renderer object, iterate over all of the triangles and draw all the lines using the DrawLine function, by ignoring one of the coordinates. You should be able to clearly display the object on the screen now.Place a screenshot in the report.
+
+in the MeshModel class we added the scaleTranslate Matrix and a transformation matrix (מטריצת יחידה) 
+we added a GetVertix function so we can get the vertix of spicefic i in a specific face j 
+and in the Render function we used this matrix and iterate over all of the triangles and get thier vertices we multivision wit the matrix and then returned it a vec3, in the end we draw a line between every two vertices in each triangle.
+
+![Q3](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q3)

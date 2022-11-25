@@ -93,7 +93,6 @@ std::shared_ptr<MeshModel> Utils::LoadMeshModel(const std::string& filePath)
 		}
 	}
 	Max = max(zMax, max(xMax, yMax));
-	//Min = min(zMin, min(xMin, yMin));
 
 	glm::mat4x4 scaleMat = glm::scale(glm::vec3(500 / Max, 500 / Max, 500 / Max));
 	glm::mat4x4 translationMat = glm::translate(glm::vec3(abs(xMin), abs(yMin), abs(zMin)));

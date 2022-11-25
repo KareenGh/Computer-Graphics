@@ -267,7 +267,7 @@ void Renderer::Render(const Scene& scene)
 			point2 = ScaleTransMat * glm::vec4(MyModel.GetVertix(i, 1), 1);
 			point3 = ScaleTransMat * glm::vec4(MyModel.GetVertix(i, 2), 1);
 
-			// turn back to vec3 
+			// turn back to vec3	
 			point1 /= point1.w;
 			point2 /= point2.w;
 			point3 /= point3.w;
