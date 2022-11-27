@@ -315,3 +315,8 @@ void Renderer::DrawObject(MeshModel& Model)
 		}
 	}
 }
+
+void Renderer::DrawTriangle(const glm::ivec2& p1, const glm::ivec2& p2, const glm::ivec2& p3, const glm::vec3& color)
+{
+	return;
+}

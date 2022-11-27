@@ -5,7 +5,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <nfd.h>
-
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 
@@ -16,6 +15,7 @@
 /**
  * Fields
  */
+static bool inWorld = false;
 bool show_demo_window = false;
 bool show_another_window = false;
 //glm::vec4 clear_color = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
@@ -42,7 +42,7 @@ void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
 	// TODO: Handle mouse scroll here
 }
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	int windowWidth = 1920, windowHeight = 1080; // 1280 , 720      1920 , 1080
 	GLFWwindow* window = SetupGlfwWindow(windowWidth, windowHeight, "Mesh Viewer");
@@ -55,19 +55,19 @@ int main(int argc, char **argv)
 
 	Renderer renderer = Renderer(frameBufferWidth, frameBufferHeight);
 	Scene scene = Scene();
-	
+
 	ImGuiIO& io = SetupDearImgui(window);
 	glfwSetScrollCallback(window, ScrollCallback);
-    while (!glfwWindowShouldClose(window))
-    {
-        glfwPollEvents();
+	while (!glfwWindowShouldClose(window))
+	{
+		glfwPollEvents();
 		StartFrame();
 		DrawImguiMenus(io, scene);
 		RenderFrame(window, scene, renderer, io);
-    }
+	}
 
 	Cleanup(window);
-    return 0;
+	return 0;
 }
 
 static void GlfwErrorCallback(int error, const char* description)
@@ -83,16 +83,16 @@ GLFWwindow* SetupGlfwWindow(int w, int h, const char* window_name)
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	
-	#if __APPLE__
-		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	#endif
-	
+
+#if __APPLE__
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+
 	GLFWwindow* window = glfwCreateWindow(w, h, window_name, NULL, NULL);
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1); // Enable vsync
-						 // very importent!! initialization of glad
-						 // https://stackoverflow.com/questions/48582444/imgui-with-the-glad-opengl-loader-throws-segmentation-fault-core-dumped
+	// very importent!! initialization of glad
+	// https://stackoverflow.com/questions/48582444/imgui-with-the-glad-opengl-loader-throws-segmentation-fault-core-dumped
 
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	return window;
@@ -122,12 +122,13 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 	int frameBufferWidth, frameBufferHeight;
 	glfwMakeContextCurrent(window);
 	glfwGetFramebufferSize(window, &frameBufferWidth, &frameBufferHeight);
-	
+
 	if (frameBufferWidth != renderer.GetViewportWidth() || frameBufferHeight != renderer.GetViewportHeight())
 	{
 		// TODO: Set new aspect ratio
+		Renderer view_volume = Renderer(frameBufferWidth, frameBufferHeight);
 	}
-
+	
 	if (!io.WantCaptureKeyboard)
 	{
 		// TODO: Handle keyboard events here
@@ -151,6 +152,8 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 	renderer.Render(scene);
 	renderer.SwapBuffers();
 
+	if (scene.GetModelCount())
+		scene.GetActiveModel().SetTransform();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwMakeContextCurrent(window);
 	glfwSwapBuffers(window);
@@ -172,7 +175,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	 * MeshViewer menu
 	 */
 	ImGui::Begin("MeshViewer Menu");
-	
+
 	// Menu Bar
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -205,14 +208,14 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 	// Controls
 	ImGui::ColorEdit3("Clear Color", (float*)&clear_color);
 	// TODO: Add more controls as needed
-	
+
 	ImGui::End();
 
 	/**
 	 * Imgui demo - you can remove it once you are familiar with imgui
 	 */
-	
-	// 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
+
+	 // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
 	if (show_demo_window)
 		ImGui::ShowDemoWindow(&show_demo_window);
 
@@ -232,10 +235,9 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 		//ImGui::SliderInt("Scale", &scene.GetModel(0).Scale_ch, -1000, 1000);
 		//
-		if(scene.GetModelCount())
-		ImGui::ColorEdit3("Object color", (float*)&scene.GetActiveModel().ObjectColor); // Edit 3 floats representing a color
+		if (scene.GetModelCount())
+			ImGui::ColorEdit3("Object color", (float*)&scene.GetActiveModel().ObjectColor); // Edit 3 floats representing a color
 		//
-
 
 		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
 			counter++;
@@ -253,6 +255,40 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Text("Hello from another window!");
 		if (ImGui::Button("Close Me"))
 			show_another_window = false;
+		ImGui::End();
+	}
+
+	if (scene.GetModelCount())
+	{
+		ImGui::Begin("Translate,Rotate,Scale");
+		if (ImGui::Button("Next_model"))
+			scene.SetActiveModelIndex((scene.GetActiveModelIndex() + 1) % scene.GetModelCount());
+
+		ImGui::Checkbox("tranformate_world", &inWorld);
+		if (!inWorld)
+		{
+			ImGui::SliderFloat("xTranslate", &scene.GetActiveModel().Translation_mat[3][0], -1, 1);
+			ImGui::SliderFloat("yTranslate", &scene.GetActiveModel().Translation_mat[3][1], -1, 1);
+			ImGui::SliderFloat("zTranslate", &scene.GetActiveModel().Translation_mat[3][2], -1, 1);
+			ImGui::SliderFloat("xRotate", &scene.GetActiveModel().x, -180, 180);
+			ImGui::SliderFloat("yRotate", &scene.GetActiveModel().y, -180, 180);
+			ImGui::SliderFloat("zRotate", &scene.GetActiveModel().z, -180, 180);
+			ImGui::SliderFloat("xScale", &scene.GetActiveModel().Scale_mat[0][0], 0, 3);
+			ImGui::SliderFloat("yScale", &scene.GetActiveModel().Scale_mat[1][1], 0, 3);
+			ImGui::SliderFloat("zScale", &scene.GetActiveModel().Scale_mat[2][2], 0, 3);
+		}
+		else
+		{
+			ImGui::SliderFloat("xWorld_Translate", &scene.GetActiveModel().w_translate[3][0], -1, 1);
+			ImGui::SliderFloat("yWorld_Translate", &scene.GetActiveModel().w_translate[3][1], -1, 1);
+			ImGui::SliderFloat("zWorld_Translate", &scene.GetActiveModel().w_translate[3][2], -1, 1);
+			ImGui::SliderFloat("xWorld_Rotate", &scene.GetActiveModel().xw, -180, 180);
+			ImGui::SliderFloat("yWorld_Rotate", &scene.GetActiveModel().yw, -180, 180);
+			ImGui::SliderFloat("zWorld_Rotate", &scene.GetActiveModel().zw, -180, 180);
+			ImGui::SliderFloat("xWorld_Scale", &scene.GetActiveModel().w_scale[0][0], 0, 3);
+			ImGui::SliderFloat("yWorld_Scale", &scene.GetActiveModel().w_scale[1][1], 0, 3);
+			ImGui::SliderFloat("zWorld_Scale", &scene.GetActiveModel().w_scale[2][2], 0, 3);
+		}
 		ImGui::End();
 	}
 }
