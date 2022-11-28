@@ -138,13 +138,29 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 			// Use the ASCII table for more key codes (https://www.asciitable.com/)
 		}
 	}
-
+	
 	if (!io.WantCaptureMouse)
 	{
 		// TODO: Handle mouse events here
 		if (io.MouseDown[0])
 		{
-			// Left mouse button is down
+			if (scene.GetModelCount())
+				// Left mouse button is down
+			{
+				scene.GetActiveModel().Scale_mat[0][0] += 5;
+				scene.GetActiveModel().Scale_mat[1][1] += 5;
+			}
+
+		}
+		if (io.MouseDown[1])
+		{
+			if (scene.GetModelCount())
+				// Left mouse button is down
+			{
+				scene.GetActiveModel().Scale_mat[0][0] -= 5;
+				scene.GetActiveModel().Scale_mat[1][1] -= 5;
+			}
+
 		}
 	}
 
