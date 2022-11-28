@@ -11,6 +11,7 @@
 #include "Renderer.h"
 #include "Scene.h"
 #include "Utils.h"
+#include <iostream>
 
 /**
  * Fields
@@ -126,7 +127,6 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 	if (frameBufferWidth != renderer.GetViewportWidth() || frameBufferHeight != renderer.GetViewportHeight())
 	{
 		// TODO: Set new aspect ratio
-		Renderer view_volume = Renderer(frameBufferWidth, frameBufferHeight);
 	}
 	
 	if (!io.WantCaptureKeyboard)
@@ -153,7 +153,7 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 	renderer.SwapBuffers();
 
 	if (scene.GetModelCount())
-		scene.GetActiveModel().SetTransform();
+		scene.GetActiveModel().SetTransformate();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwMakeContextCurrent(window);
 	glfwSwapBuffers(window);
@@ -267,15 +267,15 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::Checkbox("tranformate_world", &inWorld);
 		if (!inWorld)
 		{
-			ImGui::SliderFloat("xTranslate", &scene.GetActiveModel().Translation_mat[3][0], -1, 1);
-			ImGui::SliderFloat("yTranslate", &scene.GetActiveModel().Translation_mat[3][1], -1, 1);
-			ImGui::SliderFloat("zTranslate", &scene.GetActiveModel().Translation_mat[3][2], -1, 1);
+			ImGui::SliderFloat("xTranslate", &scene.GetActiveModel().Translation_mat[3][0], -1000, 1000);
+			ImGui::SliderFloat("yTranslate", &scene.GetActiveModel().Translation_mat[3][1], -1000, 1000);
+			ImGui::SliderFloat("zTranslate", &scene.GetActiveModel().Translation_mat[3][2], -1000, 1000);
 			ImGui::SliderFloat("xRotate", &scene.GetActiveModel().x, -180, 180);
 			ImGui::SliderFloat("yRotate", &scene.GetActiveModel().y, -180, 180);
 			ImGui::SliderFloat("zRotate", &scene.GetActiveModel().z, -180, 180);
-			ImGui::SliderFloat("xScale", &scene.GetActiveModel().Scale_mat[0][0], 0, 3);
-			ImGui::SliderFloat("yScale", &scene.GetActiveModel().Scale_mat[1][1], 0, 3);
-			ImGui::SliderFloat("zScale", &scene.GetActiveModel().Scale_mat[2][2], 0, 3);
+			ImGui::SliderFloat("xScale", &scene.GetActiveModel().Scale_mat[0][0], 0, 1000);
+			ImGui::SliderFloat("yScale", &scene.GetActiveModel().Scale_mat[1][1], 0, 1000);
+			ImGui::SliderFloat("zScale", &scene.GetActiveModel().Scale_mat[2][2], 0, 1000);
 		}
 		else
 		{
@@ -285,9 +285,9 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::SliderFloat("xWorld_Rotate", &scene.GetActiveModel().xw, -180, 180);
 			ImGui::SliderFloat("yWorld_Rotate", &scene.GetActiveModel().yw, -180, 180);
 			ImGui::SliderFloat("zWorld_Rotate", &scene.GetActiveModel().zw, -180, 180);
-			ImGui::SliderFloat("xWorld_Scale", &scene.GetActiveModel().w_scale[0][0], 0, 3);
-			ImGui::SliderFloat("yWorld_Scale", &scene.GetActiveModel().w_scale[1][1], 0, 3);
-			ImGui::SliderFloat("zWorld_Scale", &scene.GetActiveModel().w_scale[2][2], 0, 3);
+			ImGui::SliderFloat("xWorld_Scale", &scene.GetActiveModel().w_scale[0][0], 0, 4);
+			ImGui::SliderFloat("yWorld_Scale", &scene.GetActiveModel().w_scale[1][1], 0, 4);
+			ImGui::SliderFloat("zWorld_Scale", &scene.GetActiveModel().w_scale[2][2], 0, 4);
 		}
 		ImGui::End();
 	}

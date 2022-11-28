@@ -36,7 +36,7 @@ public:
 	glm::mat4x4 Transformate = glm::mat4x4(1);
 	glm::mat4x4 Transform_world = glm::mat4x4(1);
 	glm::mat4x4 Transform_model = glm::mat4x4(1);
-	void SetTransform();
+	void SetTransformate();
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
 private:

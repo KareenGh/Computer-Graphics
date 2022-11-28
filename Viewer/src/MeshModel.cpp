@@ -82,7 +82,7 @@ const glm::mat4x4 MeshModel::GetTransformMat() const {
 //
 //}
 
-void MeshModel::SetTransform()
+void MeshModel::SetTransformate()
 {
 	double alfa = glm::radians(x);
 	x_rotate[1][1] = cos(alfa);
@@ -116,6 +116,4 @@ void MeshModel::SetTransform()
 	zw_rotate[1][0] = -sin(alfa);
 
 	Transformate = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;
-	Transform_model = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat *x_rotate*y_rotate*z_rotate* Scale_mat;
-	Transform_world= w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat  * Scale_mat;
 }
