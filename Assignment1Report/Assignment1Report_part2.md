@@ -1282,6 +1282,7 @@ We also implement some letter clicks using keyboard
 
 We will share some screenshots using our implements                                            
 -First Pressing Mouse left side to make our model bigger then pressing mouse right to turn it to smaller:
+
 https://user-images.githubusercontent.com/116673155/204604742-034e83d6-9fd4-4dda-9e33-c61094b94154.mp4
 
 
