@@ -1267,3 +1267,6 @@ rotation at every one of three axis in accordance.
 and at the end multiply by Scale_mat that scale the object locally.
 (Transformate = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;)
 
+![TranslateScaleRotate_Gui](https://user-images.githubusercontent.com/116673155/204549692-ec494089-1bae-4064-9202-d2cb9909bb4e.png)
+
+
