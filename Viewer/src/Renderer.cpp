@@ -258,27 +258,30 @@ void Renderer::Render(const Scene& scene)
 
 
 	if (scene.GetModelCount()) {
-		auto MyModel = scene.GetActiveModel();
-		ScaleTransMat = MyModel.GetSTMatrix();
-		TransMat = MyModel.GetTransformMat();
-		ScaleTransMat = TransMat * ScaleTransMat;
-		Changer = MyModel.Transformate;
-
-		for (int i = 0; i < MyModel.GetFacesCount(); i++) 
+		for (int j = 0; j < scene.GetModelCount(); j++)
 		{
-			// turn a vec3 to vec4, then mul to sacle and translation matrix
-			point1 = Changer * glm::vec4(MyModel.GetVertix(i, 0), 1);
-			point2 = Changer * glm::vec4(MyModel.GetVertix(i, 1), 1);
-			point3 = Changer * glm::vec4(MyModel.GetVertix(i, 2), 1);
+			auto MyModel = scene.GetModel(j);
+			ScaleTransMat = MyModel.GetSTMatrix();
+			TransMat = MyModel.GetTransformMat();
+			ScaleTransMat = TransMat * ScaleTransMat;
+			Changer = MyModel.Transformate;
 
-			// turn back to vec3	
-			point1 /= point1.w;
-			point2 /= point2.w;
-			point3 /= point3.w;
+			for (int i = 0; i < MyModel.GetFacesCount(); i++)
+			{
+				// turn a vec3 to vec4, then mul to sacle and translation matrix
+				point1 = Changer * glm::vec4(MyModel.GetVertix(i, 0), 1);
+				point2 = Changer * glm::vec4(MyModel.GetVertix(i, 1), 1);
+				point3 = Changer * glm::vec4(MyModel.GetVertix(i, 2), 1);
 
-			DrawLine(point1, point2, color);	//MyModel.ObjectColor
-			DrawLine(point1, point3, color);
-			DrawLine(point2, point3, color);
+				// turn back to vec3	
+				point1 /= point1.w;
+				point2 /= point2.w;
+				point3 /= point3.w;
+
+				DrawLine(point1, point2, color);	//MyModel.ObjectColor
+				DrawLine(point1, point3, color);
+				DrawLine(point2, point3, color);
+			}
 		}
 	}
 }
@@ -318,9 +321,4 @@ void Renderer::DrawObject(MeshModel& Model)
 			DrawLine(point2, point3, MyModel.ObjectColor);
 		}
 	}
-}
-
-void Renderer::DrawTriangle(const glm::ivec2& p1, const glm::ivec2& p2, const glm::ivec2& p3, const glm::vec3& color)
-{
-	return;
 }

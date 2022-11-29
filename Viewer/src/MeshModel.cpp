@@ -82,6 +82,7 @@ const glm::mat4x4 MeshModel::GetTransformMat() const {
 //
 //}
 
+//Responsible about rotation calculating
 void MeshModel::SetTransformate()
 {
 	double alfa = glm::radians(x);

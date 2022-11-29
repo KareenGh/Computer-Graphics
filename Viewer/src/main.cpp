@@ -16,6 +16,7 @@
 /**
  * Fields
  */
+int models_number = 0;
 static bool inWorld = false;
 bool show_demo_window = false;
 bool show_another_window = false;
@@ -274,6 +275,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::End();
 	}
 
+	//Create GUI items to specify the local and world transformations
 	if (scene.GetModelCount())
 	{
 		ImGui::Begin("Translate,Rotate,Scale");

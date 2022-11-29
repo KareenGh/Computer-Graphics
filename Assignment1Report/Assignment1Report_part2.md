@@ -1257,3 +1257,13 @@ we added a GetVertix function so we can get the vertix of spicefic i in a specif
 and in the Render function we used this matrix and iterate over all of the triangles and get thier vertices we multivision wit the matrix and then returned it a vec3, in the end we draw a line between every two vertices in each triangle.
 
 ![Q3](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q3)
+
+## 4.This is a screenshoot of a Translate,Rotate,Scale window.U can see that we made for each one of them a slider that let user to change value of translate,scale,rotate and when pressing at transformate_world checkbox u can also control the world the same way.
+Calculating:
+First we define a new matrix that will be a multipication of those matrices: w_translate that responsible to do the world translate ,multiplied by w_scale that responsible to do the world scale then it will multipied by xw_rotate * yw_rotate * zw_rotate that every one of those three matrices responsible about locally
+rotation at every one of three axis in accordance in world.
+then we multiply the result by Translation_mat that translate the object then we will multiply by the result until now x_rotate * y_rotate * z_rotate that every one of those three matrices responsible about
+rotation at every one of three axis in accordance. 
+and at the end multiply by Scale_mat that scale the object locally.
+(Transformate = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;)
+
