@@ -1269,4 +1269,7 @@ and at the end multiply by Scale_mat that scale the object locally.
 
 ![TranslateScaleRotate_Gui](https://user-images.githubusercontent.com/116673155/204549692-ec494089-1bae-4064-9202-d2cb9909bb4e.png)
 
+## 6.That is a video of loading several models, switching between the active models and transforming each independently:
+![Enable_Loading_Several_Models](https://user-images.githubusercontent.com/116673155/204576910-387bbd0d-b17a-4fbe-a2ba-8a32e3a6db03.gif)
+
 
