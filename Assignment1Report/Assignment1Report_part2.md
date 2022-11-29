@@ -1272,7 +1272,16 @@ and at the end multiply by Scale_mat that scale the object locally.
 ## 5.This is screenshots of:
 -translating teapot model in the model then rotating in the world frame
 
+![teapot-modelTranslate-then-worlRotation1](https://user-images.githubusercontent.com/116673155/204620094-5dd26886-1cbb-4c89-add4-84b32beb3395.png)
+
+![teapot-modelTranslate-then-worlRotation2](https://user-images.githubusercontent.com/116673155/204620118-2a9521a6-562f-454c-b1fc-4c5f3c47d45e.png)
+
 -translating teapot model in the world then rotating in the model frame
+
+![teapot-worldTranslate-then-modelRotation1](https://user-images.githubusercontent.com/116673155/204620265-861f8122-99ca-4e46-b9ef-91a1cb23b34b.png)
+
+![teapot-WorldTranslate-then-modelRotation2](https://user-images.githubusercontent.com/116673155/204620286-ec7388f4-5e73-4e82-a157-ea79527567cc.png)
+
 ## 6.That is a video of loading several models, switching between the active models and transforming each independently:
 https://user-images.githubusercontent.com/116673155/204577350-57ec0318-676c-4984-96aa-fce1b19986bd.mp4
 
