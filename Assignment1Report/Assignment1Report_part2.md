@@ -1272,3 +1272,14 @@ and at the end multiply by Scale_mat that scale the object locally.
 ## 6.That is a video of loading several models, switching between the active models and transforming each independently:
 https://user-images.githubusercontent.com/116673155/204577350-57ec0318-676c-4984-96aa-fce1b19986bd.mp4
 
+## 7.Here we implement two approaches using the mouse to scale the model,if we press mouse lift side the model will be bigger,and if we press mouse right side the model will be smaller.
+We also implement some letter clicks using keyboard 
+-if we want to move it right and Up so we have to click "I" and "T" together so that mean increasing translation and if we want the opposite so we have to click "D" and "T"
+-"R" to move Right 
+-"L" to move Left
+-"U" to move Up
+-"D" to move Down
+
+We will share some screenshots using our implements
+-First Pressing Mouse left side to make our model bigger then pressing mouse right to turn it to smaller
+
