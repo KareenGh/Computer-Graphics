@@ -139,6 +139,39 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 			// Use the ASCII table for more key codes (https://www.asciitable.com/)
 
 		}
+		//Here we add an option to do Model Translation , if we want to move it right and Up so we have to click "I" and "T" together
+		//so that mean increasing translation and if we want the opposite so we have to click "D" and "T"
+		if (io.KeysDown[73] && io.KeysDown[84])
+		{
+			scene.GetActiveModel().Translation_mat[3][0] += 10;
+			scene.GetActiveModel().Translation_mat[3][1] += 10;
+		}
+		if (io.KeysDown[68] && io.KeysDown[84])
+		{
+			scene.GetActiveModel().Translation_mat[3][0] -= 10;
+			scene.GetActiveModel().Translation_mat[3][1] -= 10;
+		}
+		//Click "R" to move Right 
+		if (io.KeysDown[82])
+		{
+			scene.GetActiveModel().Translation_mat[3][0] += 15;
+		}
+		//Click "L" to move Left
+		if (io.KeysDown[76])
+		{
+			scene.GetActiveModel().Translation_mat[3][0] -= 15;
+		}
+		//Click "U" to move Up
+		if (io.KeysDown[85])
+		{
+			scene.GetActiveModel().Translation_mat[3][1] += 15;
+		}
+		//Click "D" to move Down
+		if (io.KeysDown[68])
+		{
+			scene.GetActiveModel().Translation_mat[3][1] -= 15;
+		}
+
 	}
 	
 	//Here we control model scale by using mouse ,make it bigger by clicking on the mouse left side and make it smaller by clicking on the mouse right side
