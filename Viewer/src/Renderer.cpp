@@ -258,6 +258,7 @@ void Renderer::Render(const Scene& scene)
 
 
 	if (scene.GetModelCount()) {
+		//we use for loop to enable more than one object to be active 
 		for (int j = 0; j < scene.GetModelCount(); j++)
 		{
 			auto MyModel = scene.GetModel(j);

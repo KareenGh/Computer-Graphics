@@ -297,15 +297,15 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		}
 		else
 		{
-			ImGui::SliderFloat("xWorld_Translate", &scene.GetActiveModel().w_translate[3][0], -1, 1);
-			ImGui::SliderFloat("yWorld_Translate", &scene.GetActiveModel().w_translate[3][1], -1, 1);
-			ImGui::SliderFloat("zWorld_Translate", &scene.GetActiveModel().w_translate[3][2], -1, 1);
+			ImGui::SliderFloat("xWorld_Translate", &scene.GetActiveModel().w_translate[3][0], -1000, 1000);
+			ImGui::SliderFloat("yWorld_Translate", &scene.GetActiveModel().w_translate[3][1], -1000, 1000);
+			ImGui::SliderFloat("zWorld_Translate", &scene.GetActiveModel().w_translate[3][2], -1000, 1000);
 			ImGui::SliderFloat("xWorld_Rotate", &scene.GetActiveModel().xw, -180, 180);
 			ImGui::SliderFloat("yWorld_Rotate", &scene.GetActiveModel().yw, -180, 180);
 			ImGui::SliderFloat("zWorld_Rotate", &scene.GetActiveModel().zw, -180, 180);
-			ImGui::SliderFloat("xWorld_Scale", &scene.GetActiveModel().w_scale[0][0], 0, 4);
-			ImGui::SliderFloat("yWorld_Scale", &scene.GetActiveModel().w_scale[1][1], 0, 4);
-			ImGui::SliderFloat("zWorld_Scale", &scene.GetActiveModel().w_scale[2][2], 0, 4);
+			ImGui::SliderFloat("xWorld_Scale", &scene.GetActiveModel().w_scale[0][0], 0, 1000);
+			ImGui::SliderFloat("yWorld_Scale", &scene.GetActiveModel().w_scale[1][1], 0, 1000);
+			ImGui::SliderFloat("zWorld_Scale", &scene.GetActiveModel().w_scale[2][2], 0, 1000);
 		}
 		ImGui::End();
 	}
