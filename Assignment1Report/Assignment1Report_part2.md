@@ -1267,4 +1267,8 @@ rotation at every one of three axis in accordance.
 and at the end multiply by Scale_mat that scale the object locally.
 (Transformate = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;)
 
+![TranslateScaleRotate_Gui](https://user-images.githubusercontent.com/116673155/204549692-ec494089-1bae-4064-9202-d2cb9909bb4e.png)
+
+## 6.That is a video of loading several models, switching between the active models and transforming each independently:
+https://user-images.githubusercontent.com/116673155/204577350-57ec0318-676c-4984-96aa-fce1b19986bd.mp4
 
