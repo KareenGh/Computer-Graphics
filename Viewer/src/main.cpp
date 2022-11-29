@@ -137,9 +137,11 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 		{
 			// A key is down
 			// Use the ASCII table for more key codes (https://www.asciitable.com/)
+
 		}
 	}
 	
+	//Here we control model scale by using mouse ,make it bigger by clicking on the mouse left side and make it smaller by clicking on the mouse right side
 	if (!io.WantCaptureMouse)
 	{
 		// TODO: Handle mouse events here
@@ -156,7 +158,7 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 		if (io.MouseDown[1])
 		{
 			if (scene.GetModelCount())
-				// Left mouse button is down
+				// Right mouse button is down
 			{
 				scene.GetActiveModel().Scale_mat[0][0] -= 5;
 				scene.GetActiveModel().Scale_mat[1][1] -= 5;
