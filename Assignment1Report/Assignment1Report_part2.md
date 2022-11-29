@@ -1285,4 +1285,5 @@ We will share some screenshots using our implements
 
 https://user-images.githubusercontent.com/116673155/204604742-034e83d6-9fd4-4dda-9e33-c61094b94154.mp4
 
+-Using "U" to move the model UP ,"D" to move the model DOWN,"L" to move the model LIFT,"R" to the model RIGHT
 
