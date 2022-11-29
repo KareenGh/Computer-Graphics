@@ -1269,6 +1269,10 @@ and at the end multiply by Scale_mat that scale the object locally.
 
 ![TranslateScaleRotate_Gui](https://user-images.githubusercontent.com/116673155/204549692-ec494089-1bae-4064-9202-d2cb9909bb4e.png)
 
+## 5.This is screenshots of:
+-translating teapot model in the model then rotating in the world frame
+
+-translating teapot model in the world then rotating in the model frame
 ## 6.That is a video of loading several models, switching between the active models and transforming each independently:
 https://user-images.githubusercontent.com/116673155/204577350-57ec0318-676c-4984-96aa-fce1b19986bd.mp4
 
