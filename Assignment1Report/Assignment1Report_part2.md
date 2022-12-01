@@ -1258,7 +1258,11 @@ and in the Render function we used this matrix and iterate over all of the trian
 
 ![Q3](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q3)
 
-## 4.This is a screenshoot of a Translate,Rotate,Scale window.U can see that we made for each one of them a slider that let user to change value of translate,scale,rotate and when pressing at transformate_world checkbox u can also control the world the same way.
+## 4.Create GUI items to specify the local and world transformations that should be applied to the model. Note that the user should be able to control the translation, rotation and
+scale in each frame independently. Put a screenshot of the GUI you designed, and explain how the transformations are computed using the basic transformations. That is, explain
+in what order the matrices are multiplied.
+
+This is a screenshoot of a Translate,Rotate,Scale window.U can see that we made for each one of them a slider that let user to change value of translate,scale,rotate and when pressing at transformate_world checkbox u can also control the world the same way.
 Calculating:
 First we define a new matrix that will be a multipication of those matrices: w_translate that responsible to do the world translate ,multiplied by w_scale that responsible to do the world scale then it will multipied by xw_rotate * yw_rotate * zw_rotate that every one of those three matrices responsible about locally
 rotation at every one of three axis in accordance in world.
@@ -1269,7 +1273,11 @@ and at the end multiply by Scale_mat that scale the object locally.
 
 ![TranslateScaleRotate_Gui](https://user-images.githubusercontent.com/116673155/204549692-ec494089-1bae-4064-9202-d2cb9909bb4e.png)
 
-## 5.This is screenshots of:
+## 5.Compute the transformations, and in the renderer, apply them to the vertices (by multi-plying) before drawing the lines. You should be able to see the model being transformed
+as you change the parameters of the transformation. Show two screenshots comparing the difference between translating in the model frame and then rotating in the world frame,
+vs. translating in the world frame and then rotating in the local frame.
+
+This is screenshots of:
 -translating teapot model in the model then rotating in the world frame
 
 ![teapot-modelTranslate-then-worlRotation1](https://user-images.githubusercontent.com/116673155/204620094-5dd26886-1cbb-4c89-add4-84b32beb3395.png)
@@ -1282,10 +1290,14 @@ and at the end multiply by Scale_mat that scale the object locally.
 
 ![teapot-WorldTranslate-then-modelRotation2](https://user-images.githubusercontent.com/116673155/204620286-ec7388f4-5e73-4e82-a157-ea79527567cc.png)
 
-## 6.That is a video of loading several models, switching between the active models and transforming each independently:
+## 6.For pairs only: Enable loading several models, switching between the active models and transforming each independently. Demonstrate the result in a screenshots.
+
+That is a video of loading several models, switching between the active models and transforming each independently:
 https://user-images.githubusercontent.com/116673155/204577350-57ec0318-676c-4984-96aa-fce1b19986bd.mp4
 
-## 7.Here we implement two approaches using the mouse to scale the model,if we press mouse lift side the model will be bigger,and if we press mouse right side the model will be smaller.
+## 7.implement one (for pairs, two) or more approaches for modifying the basic transformations using the keyboard or mouse. Describe them in the report.
+
+Here we implement two approaches using the mouse to scale the model,if we press mouse lift side the model will be bigger,and if we press mouse right side the model will be smaller.
 We also implement some letter clicks using keyboard 
 -if we want to move it right and Up so we have to click "I" and "T" together so that mean increasing translation and if we want the opposite so we have to click "D" and "T"
 -"R" to move Right 
