@@ -1258,9 +1258,7 @@ and in the Render function we used this matrix and iterate over all of the trian
 
 ![Q3](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q3)
 
-## 4.Create GUI items to specify the local and world transformations that should be applied to the model. Note that the user should be able to control the translation, rotation and
-scale in each frame independently. Put a screenshot of the GUI you designed, and explain how the transformations are computed using the basic transformations. That is, explain
-in what order the matrices are multiplied.
+## 4.Create GUI items to specify the local and world transformations that should be applied to the model. Note that the user should be able to control the translation, rotation and scale in each frame independently. Put a screenshot of the GUI you designed, and explain how the transformations are computed using the basic transformations. That is, explain in what order the matrices are multiplied.
 
 This is a screenshoot of a Translate,Rotate,Scale window.U can see that we made for each one of them a slider that let user to change value of translate,scale,rotate and when pressing at transformate_world checkbox u can also control the world the same way.
 Calculating:
@@ -1273,9 +1271,7 @@ and at the end multiply by Scale_mat that scale the object locally.
 
 ![TranslateScaleRotate_Gui](https://user-images.githubusercontent.com/116673155/204549692-ec494089-1bae-4064-9202-d2cb9909bb4e.png)
 
-## 5.Compute the transformations, and in the renderer, apply them to the vertices (by multi-plying) before drawing the lines. You should be able to see the model being transformed
-as you change the parameters of the transformation. Show two screenshots comparing the difference between translating in the model frame and then rotating in the world frame,
-vs. translating in the world frame and then rotating in the local frame.
+## 5.Compute the transformations, and in the renderer, apply them to the vertices (by multi-plying) before drawing the lines. You should be able to see the model being transformed as you change the parameters of the transformation. Show two screenshots comparing the difference between translating in the model frame and then rotating in the world frame,vs. translating in the world frame and then rotating in the local frame.
 
 This is screenshots of:
 -translating teapot model in the model then rotating in the world frame
