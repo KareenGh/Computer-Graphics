@@ -1289,6 +1289,7 @@ This is screenshots of:
 ## 6.For pairs only: Enable loading several models, switching between the active models and transforming each independently. Demonstrate the result in a screenshots.
 
 That is a video of loading several models, switching between the active models and transforming each independently:
+
 https://user-images.githubusercontent.com/116673155/204577350-57ec0318-676c-4984-96aa-fce1b19986bd.mp4
 
 ## 7.implement one (for pairs, two) or more approaches for modifying the basic transformations using the keyboard or mouse. Describe them in the report.
