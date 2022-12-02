@@ -1269,6 +1269,8 @@ we added a GetVertix function so we can get the vertix of spicefic i in a specif
 and in the Render function we used this matrix and iterate over all of the triangles and get thier vertices we multivision with the matrix and then returned it a vec3, in the end we draw a line between every two vertices in each triangle.
 
 ![[Q3](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q3)](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Q3.png)
+![Q3.2](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Q3.2.png)
+![Q3.3](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Q3.3.png)
 
 ## 4.Create GUI items to specify the local and world transformations that should be applied to the model. Note that the user should be able to control the translation, rotation and scale in each frame independently. Put a screenshot of the GUI you designed, and explain how the transformations are computed using the basic transformations. That is, explain in what order the matrices are multiplied.
 
