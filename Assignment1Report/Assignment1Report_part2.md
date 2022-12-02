@@ -2,13 +2,19 @@
 # Wireframe Viewer
 # Simple Mesh Display
 
-## 1.Load a small mesh and output it’s vertices and faces to the console (using cout). Put the output in the report
+## 1.Load a small mesh and output it’s vertices and faces to the console.
 
-in order to do that we add two lines to the Utils file, if (lineType == "v") or if (lineType == "f") we add a cout line to print the vertices and faces. 
-![Q1](Assignment1Report/Q1_code.png)
- in that way when we loaded a mesh, for example, a camera mesh we got:
-![Q1](Assignment1Report/Q1_V.png)
-![Q1](Assignment1Report/Q1_F.png)
+**in order to do that we add two lines to the Utils file, if (lineType == "v") or if (lineType == "f") we add a cout line to print the vertices and faces.**
+
+![Q1_code](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Q1_code.png)
+
+**in that way when we loaded a mesh, for example, a _camera_ mesh we got:**
+ 
+![(Assignment1Report/Q1_V.png)](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Q1_V.png)
+![[Q1](Assignment1Report/Q1_F.png)](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Q1_F.png)
+
+### The full result:
+```
 
 v -0.238942 1.636398 -1.012672
 v -0.238942 1.516136 -0.903594
@@ -434,6 +440,8 @@ v 0.055252 -1.027578 0.861964
 v 0.864530 0.864530 0.861964
 v 0.438047 0.756638 0.861964
 v 0.109741 0.456523 0.861964
+```
+```
 f 9//1 23//1 75//1
 f 97//2 57//2 96//2
 f 99//3 55//3 98//3
@@ -1241,22 +1249,26 @@ f 253//102 414//102 276//102
 f 391//102 408//102 424//102
 f 250//102 422//102 283//102
 
-## 2. Scale and translate the vertices such that they will fit inside your window. The coordinates of the vertices should be around 0-1000. explain how you performed this transformation in the report.
+```
 
-in order to do scaling and translation, we added parameters in the LoadMeshModel so we can caluclate minimum and maximum values of x,y,z in the mesh vertices, we foun the maximum of all of them and in order to make a scaling matrix we created a scale matrix that git a vec3 
-glm::mat4x4 scaleMat = glm::scale(glm::vec3(500 / Max, 500 / Max, 500 / Max));
+## 2. Scale and translate the vertices such that they will fit inside your window. The coordinates of the vertices should be around 0-1000.
+
+in order to do scaling and translation, we added parameters in the LoadMeshModel so we can caluclate minimum and maximum values of x,y,z in the mesh vertices, we
+found the maximum of all of them and in order to make a scaling matrix we created a scale matrix that git a vec3 
+***glm::mat4x4 scaleMat = glm::scale(glm::vec3(500 / Max, 500 / Max, 500 / Max));***
+
 and in order to make a translate we created a matrix that git the abs of every minimum in that way we get that all the points will be over 0.
-glm::mat4x4 translationMat = glm::translate(glm::vec3(abs(xMin), abs(yMin), abs(zMin)));
+***glm::mat4x4 translationMat = glm::translate(glm::vec3(abs(xMin), abs(yMin), abs(zMin)));***
 
-now we have a scale and translate matrix we return the multivision of both of them to the MeshModel class.
+**now we have a scale and translate matrix we return the multivision of both of them to the MeshModel class.**
 
 ## 3.From the Scene object, transfer the mesh triangles to the Renderer object, iterate over all of the triangles and draw all the lines using the DrawLine function, by ignoring one of the coordinates. You should be able to clearly display the object on the screen now.Place a screenshot in the report.
 
-in the MeshModel class we added the scaleTranslate Matrix and a transformation matrix (מטריצת יחידה) 
+in the MeshModel class we added the scaleTranslate Matrix and a transformation matrix that is for now a unit matrix 
 we added a GetVertix function so we can get the vertix of spicefic i in a specific face j 
-and in the Render function we used this matrix and iterate over all of the triangles and get thier vertices we multivision wit the matrix and then returned it a vec3, in the end we draw a line between every two vertices in each triangle.
+and in the Render function we used this matrix and iterate over all of the triangles and get thier vertices we multivision with the matrix and then returned it a vec3, in the end we draw a line between every two vertices in each triangle.
 
-![Q3](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q3)
+![[Q3](C:\Users\Kareen\Documents\GitHub\computer-graphics-2023-rashilmbariky\Assignment1Report\Q3)](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Q3.png)
 
 ## 4.Create GUI items to specify the local and world transformations that should be applied to the model. Note that the user should be able to control the translation, rotation and scale in each frame independently. Put a screenshot of the GUI you designed, and explain how the transformations are computed using the basic transformations. That is, explain in what order the matrices are multiplied.
 
@@ -1267,20 +1279,20 @@ rotation at every one of three axis in accordance in world.
 then we multiply the result by Translation_mat that translate the object then we will multiply by the result until now x_rotate * y_rotate * z_rotate that every one of those three matrices responsible about
 rotation at every one of three axis in accordance. 
 and at the end multiply by Scale_mat that scale the object locally.
-(Transformate = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;)
+**(Transformate = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;)**
 
 ![TranslateScaleRotate_Gui](https://user-images.githubusercontent.com/116673155/204549692-ec494089-1bae-4064-9202-d2cb9909bb4e.png)
 
 ## 5.Compute the transformations, and in the renderer, apply them to the vertices (by multi-plying) before drawing the lines. You should be able to see the model being transformed as you change the parameters of the transformation. Show two screenshots comparing the difference between translating in the model frame and then rotating in the world frame,vs. translating in the world frame and then rotating in the local frame.
 
-This is screenshots of:
--translating teapot model in the model then rotating in the world frame
+#### This is screenshots of:
+#### -translating teapot model in the model then rotating in the world frame***
 
 ![teapot-modelTranslate-then-worlRotation1](https://user-images.githubusercontent.com/116673155/204620094-5dd26886-1cbb-4c89-add4-84b32beb3395.png)
 
 ![teapot-modelTranslate-then-worlRotation2](https://user-images.githubusercontent.com/116673155/204620118-2a9521a6-562f-454c-b1fc-4c5f3c47d45e.png)
 
--translating teapot model in the world then rotating in the model frame
+#### -translating teapot model in the world then rotating in the model frame
 
 ![teapot-worldTranslate-then-modelRotation1](https://user-images.githubusercontent.com/116673155/204620265-861f8122-99ca-4e46-b9ef-91a1cb23b34b.png)
 
@@ -1288,7 +1300,7 @@ This is screenshots of:
 
 ## 6.For pairs only: Enable loading several models, switching between the active models and transforming each independently. Demonstrate the result in a screenshots.
 
-That is a video of loading several models, switching between the active models and transforming each independently:
+#### That is a video of loading several models, switching between the active models and transforming each independently:
 
 https://user-images.githubusercontent.com/116673155/204577350-57ec0318-676c-4984-96aa-fce1b19986bd.mp4
 
@@ -1303,11 +1315,11 @@ We also implement some letter clicks using keyboard
 -"D" to move Down
 
 We will share some screenshots using our implements                                            
--First Pressing Mouse left side to make our model bigger then pressing mouse right to turn it to smaller:
+#### -First Pressing Mouse left side to make our model bigger then pressing mouse right to turn it to smaller:
 
 https://user-images.githubusercontent.com/116673155/204604742-034e83d6-9fd4-4dda-9e33-c61094b94154.mp4
 
--Using "U" to move the model UP ,"D" to move the model DOWN,"L" to move the model LIFT,"R" to the model RIGHT
+#### -Using "U" to move the model UP ,"D" to move the model DOWN,"L" to move the model LIFT,"R" to the model RIGHT
 
 https://user-images.githubusercontent.com/116673155/204613210-263737d5-552e-4ed3-b3a0-4cc2ab5a0633.mp4
 
