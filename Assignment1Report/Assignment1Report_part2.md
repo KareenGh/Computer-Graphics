@@ -4,7 +4,7 @@
 
 ## 1.Load a small mesh and output it’s vertices and faces to the console.
 
-**in order to do that we add two lines to the Utils file, if (lineType == "v") or if (lineType == "f") we add a cout line to print the vertices and faces.**
+**in order to do that we add two lines to the Utils file, if (lineType == "v") or if (lineType == "f") we add a cout line to print the vertices and faces. (same for lineType == "f")**
 
 ![Q1_code](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Q1_code.png)
 
@@ -1279,6 +1279,7 @@ rotation at every one of three axis in accordance in world.
 then we multiply the result by Translation_mat that translate the object then we will multiply by the result until now x_rotate * y_rotate * z_rotate that every one of those three matrices responsible about
 rotation at every one of three axis in accordance. 
 and at the end multiply by Scale_mat that scale the object locally.
+
 **(Transformate = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;)**
 
 ![TranslateScaleRotate_Gui](https://user-images.githubusercontent.com/116673155/204549692-ec494089-1bae-4064-9202-d2cb9909bb4e.png)
@@ -1286,13 +1287,13 @@ and at the end multiply by Scale_mat that scale the object locally.
 ## 5.Compute the transformations, and in the renderer, apply them to the vertices (by multi-plying) before drawing the lines. You should be able to see the model being transformed as you change the parameters of the transformation. Show two screenshots comparing the difference between translating in the model frame and then rotating in the world frame,vs. translating in the world frame and then rotating in the local frame.
 
 #### This is screenshots of:
-#### -translating teapot model in the model then rotating in the world frame***
+#### -translating teapot model in the model then rotating in the world frame:
 
 ![teapot-modelTranslate-then-worlRotation1](https://user-images.githubusercontent.com/116673155/204620094-5dd26886-1cbb-4c89-add4-84b32beb3395.png)
 
 ![teapot-modelTranslate-then-worlRotation2](https://user-images.githubusercontent.com/116673155/204620118-2a9521a6-562f-454c-b1fc-4c5f3c47d45e.png)
 
-#### -translating teapot model in the world then rotating in the model frame
+#### -translating teapot model in the world then rotating in the model frame:
 
 ![teapot-worldTranslate-then-modelRotation1](https://user-images.githubusercontent.com/116673155/204620265-861f8122-99ca-4e46-b9ef-91a1cb23b34b.png)
 
