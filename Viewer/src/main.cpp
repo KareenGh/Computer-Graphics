@@ -133,6 +133,7 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 	if (frameBufferWidth != renderer.GetViewportWidth() || frameBufferHeight != renderer.GetViewportHeight())
 	{
 		// TODO: Set new aspect ratio
+		Renderer rend_for_changed_window = Renderer(frameBufferWidth, frameBufferHeight);
 	}
 	
 	if (!io.WantCaptureKeyboard)
