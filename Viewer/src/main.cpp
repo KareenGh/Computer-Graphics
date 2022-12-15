@@ -16,6 +16,7 @@
 /**
  * Fields
  */
+static bool orthograph = false;
 int models_number = 0;
 static bool inWorld = false;
 bool show_demo_window = false;
@@ -57,6 +58,10 @@ int main(int argc, char** argv)
 
 	Renderer renderer = Renderer(frameBufferWidth, frameBufferHeight);
 	Scene scene = Scene();
+	shared_ptr <Camera> new_camera = std::make_shared<Camera>();
+	scene.AddCamera(new_camera);
+	//scene.active_camera_index = 0;
+
 
 	ImGuiIO& io = SetupDearImgui(window);
 	glfwSetScrollCallback(window, ScrollCallback);
@@ -205,7 +210,10 @@ void RenderFrame(GLFWwindow* window, Scene& scene, Renderer& renderer, ImGuiIO& 
 	renderer.SwapBuffers();
 
 	if (scene.GetModelCount())
+	{
 		scene.GetActiveModel().SetTransformate();
+		scene.GetActiveCamera().SetTransformate();
+	}
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	glfwMakeContextCurrent(window);
 	glfwSwapBuffers(window);
@@ -343,5 +351,32 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::SliderFloat("zWorld_Scale", &scene.GetActiveModel().w_scale[2][2], 0, 1000);
 		}
 		ImGui::End();
+		if (scene.GetModelCount())
+		{
+			ImGui::Begin("Camera-Change View Volume");
+			
+			if (ImGui::Button("Next_model"))
+				scene.SetActiveModelIndex((scene.GetActiveModelIndex() + 1) % scene.GetModelCount());
+ 
+			if (orthograph)
+			{
+				ImGui::SliderFloat("up_orthographic", &scene.GetActiveCamera().up, -5, 5);
+				ImGui::SliderFloat("down_orthographic", &scene.GetActiveCamera().down, -5, 5);
+				ImGui::SliderFloat("left_orthographic", &scene.GetActiveCamera().left, -5, 5);
+				ImGui::SliderFloat("right_orthographic", &scene.GetActiveCamera().right, -5, 5);
+
+			}
+			else
+			{
+				ImGui::SliderFloat("up_orthographic", &scene.GetActiveCamera().up, -5, 5);
+				ImGui::SliderFloat("down_orthographic", &scene.GetActiveCamera().down, -5, 5);
+				ImGui::SliderFloat("left_orthographic", &scene.GetActiveCamera().left, -5, 5);
+				ImGui::SliderFloat("right_orthographic", &scene.GetActiveCamera().right, -5, 5);
+				ImGui::SliderFloat("Near_orthographic", &scene.GetActiveCamera().near1, -5, 5);
+				ImGui::SliderFloat("Far_orthographic", &scene.GetActiveCamera().far1, -5, 5);
+
+			}
+			ImGui::End();
+		}
 	}
 }

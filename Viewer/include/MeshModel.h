@@ -20,8 +20,9 @@ public:
 	//int GetMax() const;
 	//void PrintFaces() const;
 	float x = 0, y = 0, z = 0, xw = 0, yw = 0, zw = 0;
+
 	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
-	glm::mat4x4 Scale_mat = glm::mat4x4(3);
+	glm::mat4x4 Scale_mat = glm::mat4x4(500, 0, 0, 0, 0, 500, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	glm::mat4x4 Translation_mat = glm::mat4x4(1);
 	glm::mat4x4 w_scale = glm::mat4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	glm::mat4x4 w_translate = glm::mat4x4(1);

@@ -28,6 +28,7 @@ public:
 	void SetActiveModelIndex(int index);
 	int GetActiveModelIndex() const;
 	
+	shared_ptr<MeshModel> camera1;
 private:
 	vector<shared_ptr<MeshModel>> mesh_models;
 	vector<shared_ptr<Camera>> cameras;

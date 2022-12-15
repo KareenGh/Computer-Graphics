@@ -6,6 +6,8 @@
 #include "InitShader.h"
 #include <iostream>
 #include <glm/gtx/string_cast.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/transform.hpp>
 
 
 #define INDEX(width,x,y,c) ((x)+(y)*(width))*3+(c)
@@ -255,8 +257,14 @@ void Renderer::Render(const Scene& scene)
 	glm::mat4x4 TransMat;
 	glm::ivec3 color(1 , 0.57 , 1.31);
 	glm::mat4x4 Changer;
+	glm::mat4x4 CameraTr = glm::mat4x4(1);
 
+	Camera& act_camera = temp_scene.GetActiveCamera();
 
+	
+			
+	if (act_camera.orth)
+		CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up);
 	if (scene.GetModelCount()) {
 		//we use for loop to enable more than one object to be active 
 		for (int j = 0; j < scene.GetModelCount(); j++)
@@ -265,7 +273,7 @@ void Renderer::Render(const Scene& scene)
 			ScaleTransMat = MyModel.GetSTMatrix();
 			TransMat = MyModel.GetTransformMat();
 			ScaleTransMat = TransMat * ScaleTransMat;
-			Changer = MyModel.Transformate;
+			Changer =CameraTr*MyModel.Transformate;
 
 			for (int i = 0; i < MyModel.GetFacesCount(); i++)
 			{
@@ -278,6 +286,7 @@ void Renderer::Render(const Scene& scene)
 				point1 /= point1.w;
 				point2 /= point2.w;
 				point3 /= point3.w;
+
 
 				DrawLine(point1, point2, color);	//MyModel.ObjectColor
 				DrawLine(point1, point3, color);
