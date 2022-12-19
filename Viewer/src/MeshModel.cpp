@@ -117,4 +117,5 @@ void MeshModel::SetTransformate()
 	zw_rotate[1][0] = -sin(alfa);
 
 	Transformate = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;
+	Axis_World_Trans = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * Scale_mat;
 }

@@ -264,7 +264,7 @@ void Renderer::Render(const Scene& scene)
 	
 			
 	if (act_camera.orth)
-		CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up);
+		CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up)*glm::lookAt(act_camera.Eye,glm::vec3(0,0,0),glm::vec3(0,1,0))*glm::inverse(act_camera.CamTransformate);
 	if (scene.GetModelCount()) {
 		//we use for loop to enable more than one object to be active 
 		for (int j = 0; j < scene.GetModelCount(); j++)
