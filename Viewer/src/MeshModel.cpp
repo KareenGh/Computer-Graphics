@@ -29,7 +29,7 @@ MeshModel::MeshModel(std::vector<Face> faces, std::vector<glm::vec3> vertices, s
 	STMatrix(Matrix),
 	TransformMat(glm::mat4x4(1.0f))
 {
-
+	Find_Max_Min_BB();
 }
 
 MeshModel::~MeshModel()
@@ -68,6 +68,32 @@ const glm::mat4x4 MeshModel::GetSTMatrix() const
 
 const glm::mat4x4 MeshModel::GetTransformMat() const {
 	return TransformMat;
+}
+
+void MeshModel::Find_Max_Min_BB()
+{
+	glm::vec3 ModelVer = vertices[0];
+	min_x = ModelVer[0], max_x = ModelVer[0], min_y = ModelVer[1], max_y = ModelVer[1], min_z = ModelVer[2], max_z = ModelVer[2];
+	for (int i = 0; i < faces.size(); i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			ModelVer = vertices[faces[i].GetVertexIndex(j) - 1];
+			if (min_x > ModelVer[0])
+				min_x = ModelVer[0];
+			if (max_x < ModelVer[0])
+				max_x = ModelVer[0];
+			if (min_y > ModelVer[1])
+				min_y = ModelVer[1];
+			if (max_y < ModelVer[1])
+				max_y = ModelVer[1];
+			if (min_z > ModelVer[2])
+				min_z = ModelVer[2];
+			if (max_z < ModelVer[2])
+				max_z = ModelVer[2];
+
+		}
+	}
 }
 
 //void MeshModel::SetTransforMat()

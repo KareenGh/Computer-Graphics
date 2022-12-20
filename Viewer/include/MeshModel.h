@@ -17,13 +17,18 @@ public:
 	const glm::vec3 GetVertix(int i) const;
 	const glm::mat4x4 GetSTMatrix() const;
 	const glm::mat4x4 GetTransformMat() const;
+	void MeshModel::Find_Max_Min_BB();
+	void MeshModel::FacesNormaCompute();
+	void MeshModel::VerticesNormaCompute();
 	//int GetMax() const;
 	//void PrintFaces() const;
 	float x = 0, y = 0, z = 0, xw = 0, yw = 0, zw = 0;
-
+	float max_x, max_y, max_z, min_x, min_y, min_z;
+	bool bounding_box = false;
+	bool face_normals = false, vertex_normals = false;
 	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
-	glm::mat4x4 Scale_mat = glm::mat4x4(200, 0, 0, 0, 0, 200, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-	glm::mat4x4 Translation_mat = glm::mat4x4(1);
+	glm::mat4x4 Scale_mat = glm::mat4x4(200, 0, 0, 0, 0, 200, 0, 0, 0, 0, 200, 0, 0, 0, 0, 1);
+	glm::mat4x4 Translation_mat = glm::mat4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	glm::mat4x4 w_scale = glm::mat4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
 	glm::mat4x4 w_translate = glm::mat4x4(1);
 	glm::mat4x4 x_rotate = glm::mat4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);

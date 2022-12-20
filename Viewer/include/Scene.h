@@ -29,10 +29,11 @@ public:
 	int GetActiveModelIndex() const;
 	
 	shared_ptr<MeshModel> camera1;
+	int active_camera_index;
 private:
 	vector<shared_ptr<MeshModel>> mesh_models;
 	vector<shared_ptr<Camera>> cameras;
 
-	int active_camera_index;
+	
 	int active_model_index;
 };

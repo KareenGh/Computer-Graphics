@@ -19,8 +19,10 @@
 static bool orthograph = false;
 int models_number = 0;
 static bool inWorld = false;
+static bool cam_transform = false;
 bool show_demo_window = false;
 bool show_another_window = false;
+
 //glm::vec4 clear_color = glm::vec4(0.8f, 0.8f, 0.8f, 1.00f);
 glm::vec4 clear_color = glm::vec4(0.3f, 0.3f, 0.3f, 0.00f); ///
 
@@ -55,13 +57,15 @@ int main(int argc, char** argv)
 	int frameBufferWidth, frameBufferHeight;
 	glfwMakeContextCurrent(window);
 	glfwGetFramebufferSize(window, &frameBufferWidth, &frameBufferHeight);
-
+	
 	Renderer renderer = Renderer(frameBufferWidth, frameBufferHeight);
 	Scene scene = Scene();
-	shared_ptr <Camera> new_camera = std::make_shared<Camera>();
+	shared_ptr <Camera> new_camera = make_shared<Camera>();
 	scene.AddCamera(new_camera);
-	//scene.active_camera_index = 0;
+	
 
+	scene.active_camera_index = 0;
+	
 
 	ImGuiIO& io = SetupDearImgui(window);
 	glfwSetScrollCallback(window, ScrollCallback);
@@ -354,11 +358,25 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		ImGui::End();
 		if (scene.GetModelCount())
 		{
-			ImGui::Begin("Camera-Change View Volume");
+			ImGui::Begin("Camera-Change View Volume-Transform & Rotate");
 			
 			if (ImGui::Button("Next_model"))
 				scene.SetActiveModelIndex((scene.GetActiveModelIndex() + 1) % scene.GetModelCount());
  
+			ImGui::Checkbox("Camera_Transformation", &cam_transform);
+			ImGui::Checkbox("Bounding Box", &scene.GetActiveModel().bounding_box);
+			if (cam_transform)
+			{
+				ImGui::SliderFloat("xCamera_Translate", &scene.GetActiveCamera().TranslationCam_mat[3][0], -1000, 1000);
+				ImGui::SliderFloat("yCamera_Translate", &scene.GetActiveCamera().TranslationCam_mat[3][1], -1000, 1000);
+				ImGui::SliderFloat("zCamera_Translate", &scene.GetActiveCamera().TranslationCam_mat[3][2], -1000, 1000);
+				ImGui::SliderFloat("xCamera_Rotate", &scene.GetActiveCamera().x_cam, -360, 360);
+				ImGui::SliderFloat("yCamera_Rotate", &scene.GetActiveCamera().y_cam, -360, 360);
+				ImGui::SliderFloat("zCamera_Rotate", &scene.GetActiveCamera().z_cam, -360, 360);
+				ImGui::SliderFloat("Eye's_x", &scene.GetActiveCamera().Eye.x, -10, 10);
+				ImGui::SliderFloat("Eye's_y", &scene.GetActiveCamera().Eye.y, -10, 10);
+				ImGui::SliderFloat("Eye's_z", &scene.GetActiveCamera().Eye.z,-10,10);
+			}
 			if (orthograph)
 			{
 				ImGui::SliderFloat("up_orthographic", &scene.GetActiveCamera().up, -5, 5);
@@ -377,6 +395,13 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				ImGui::SliderFloat("Far_orthographic", &scene.GetActiveCamera().far1, -5, 5);
 
 			}
+			if (ImGui::Button("Add Camera"))
+			{
+				shared_ptr <Camera> new_camera = make_shared<Camera>();
+				scene.AddCamera(new_camera);
+			}
+			if (ImGui::Button("Next Camera"))
+				scene.SetActiveCameraIndex((scene.GetActiveCameraIndex() + 1) % scene.GetCameraCount());
 			ImGui::End();
 		}
 	}

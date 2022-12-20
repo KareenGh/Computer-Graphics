@@ -265,6 +265,35 @@ void Renderer::Render(const Scene& scene)
 			
 	if (act_camera.orth)
 		CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up)*glm::lookAt(act_camera.Eye,glm::vec3(0,0,0),glm::vec3(0,1,0))*glm::inverse(act_camera.CamTransformate);
+	else
+		CameraTr = glm::perspective(act_camera.fovy, act_camera.aspect, act_camera.near1, act_camera.far1) * glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::inverse(act_camera.CamTransformate);
+
+	MeshModel& MyModel = *scene.camera1;
+	for (int c1 = 0; c1 < scene.GetCameraCount(); c1++)
+	{
+		Changer = CameraTr * act_camera.CamTransformate;
+		Camera camera1 = temp_scene.GetCamera(c1);
+		if (c1 != scene.GetActiveCameraIndex())
+		{
+			for (int c2 = 0; c2 < MyModel.GetFacesCount(); c2++)
+			{
+				
+				point1 = Changer * glm::vec4(MyModel.GetVertix(c2, 0), 1);
+				point2 = Changer * glm::vec4(MyModel.GetVertix(c2, 1), 1);
+				point3 = Changer * glm::vec4(MyModel.GetVertix(c2, 2), 1);
+
+					
+				point1 /= point1.w;
+				point2 /= point2.w;
+				point3 /= point3.w;
+
+
+				DrawLine(point1, point2, color);	
+				DrawLine(point1, point3, color);
+				DrawLine(point2, point3, color);
+			}
+		}
+	}
 	if (scene.GetModelCount()) {
 		//we use for loop to enable more than one object to be active 
 		for (int j = 0; j < scene.GetModelCount(); j++)
@@ -287,10 +316,59 @@ void Renderer::Render(const Scene& scene)
 				point2 /= point2.w;
 				point3 /= point3.w;
 
+				point1[0] += viewport_width/2;
+				point1[1] += viewport_height/2;
+				point2[0] += viewport_width/2;
+				point2[1] += viewport_height/2;
+				point3[0] += viewport_width/2;
+				point3[1] += viewport_height/2;
+
 
 				DrawLine(point1, point2, color);	//MyModel.ObjectColor
 				DrawLine(point1, point3, color);
 				DrawLine(point2, point3, color);
+			}
+			if (MyModel.bounding_box)
+			{
+				glm::vec4 point01 = Changer * glm::vec4(MyModel.min_x, MyModel.min_y, MyModel.min_z, 1);
+				glm::vec4 point02 = Changer * glm::vec4(MyModel.min_x, MyModel.min_y, MyModel.max_z, 1);
+				glm::vec4 point03 = Changer * glm::vec4(MyModel.min_x, MyModel.max_y, MyModel.min_z, 1);
+				glm::vec4 point04 = Changer * glm::vec4(MyModel.min_x, MyModel.max_y, MyModel.max_z, 1);
+				glm::vec4 point05 = Changer * glm::vec4(MyModel.max_x, MyModel.min_y, MyModel.min_z, 1);
+				glm::vec4 point06 = Changer * glm::vec4(MyModel.max_x, MyModel.min_y, MyModel.max_z, 1);
+				glm::vec4 point07 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.min_z, 1);
+				glm::vec4 point08 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.max_z, 1);
+
+				point01[0] += viewport_width / 2;
+				point02[0] += viewport_width / 2;
+				point03[0] += viewport_width / 2;
+				point04[0] += viewport_width / 2;
+				point05[0] += viewport_width / 2;
+				point06[0] += viewport_width / 2;
+				point07[0] += viewport_width / 2;
+				point08[0] += viewport_width / 2;
+
+				point01[1] += viewport_height / 2;
+				point02[1] += viewport_height / 2;
+				point03[1] += viewport_height / 2;
+				point04[1] += viewport_height / 2;
+				point05[1] += viewport_height / 2;
+				point06[1] += viewport_height / 2;
+				point07[1] += viewport_height / 2;
+				point08[1] += viewport_height / 2;
+
+				DrawLine(point01, point02, glm::vec3(1, 1, 0));
+				DrawLine(point01, point03, glm::vec3(1, 1, 0));
+				DrawLine(point01, point05, glm::vec3(1, 1, 0));
+				DrawLine(point02, point04, glm::vec3(1, 1, 0));
+				DrawLine(point02, point06, glm::vec3(1, 1, 0));
+				DrawLine(point03, point04, glm::vec3(1, 1, 0));
+				DrawLine(point03, point07, glm::vec3(1, 1, 0));
+				DrawLine(point04, point08, glm::vec3(1, 1, 0));
+				DrawLine(point05, point06, glm::vec3(1, 1, 0));
+				DrawLine(point05, point07, glm::vec3(1, 1, 0));
+				DrawLine(point06, point08, glm::vec3(1, 1, 0));
+				DrawLine(point07, point08, glm::vec3(1, 1, 0));
 			}
 		}
 	}
@@ -331,4 +409,6 @@ void Renderer::DrawObject(MeshModel& Model)
 			DrawLine(point2, point3, MyModel.ObjectColor);
 		}
 	}
+
+	
 }
