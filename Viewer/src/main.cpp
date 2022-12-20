@@ -16,7 +16,7 @@
 /**
  * Fields
  */
-static bool orthograph = false;
+static bool orthograph = true;
 int models_number = 0;
 static bool inWorld = false;
 static bool cam_transform = false;
@@ -365,6 +365,9 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
  
 			ImGui::Checkbox("Camera_Transformation", &cam_transform);
 			ImGui::Checkbox("Bounding Box", &scene.GetActiveModel().bounding_box);
+			ImGui::Checkbox("faces_normal", &scene.GetActiveModel().face_normals);
+			ImGui::Checkbox("vertices_normal", &scene.GetActiveModel().vertex_normals);
+
 			if (cam_transform)
 			{
 				ImGui::SliderFloat("xCamera_Translate", &scene.GetActiveCamera().TranslationCam_mat[3][0], -1000, 1000);

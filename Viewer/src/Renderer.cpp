@@ -252,7 +252,7 @@ void Renderer::ClearColorBuffer(const glm::vec3& color)
 void Renderer::Render(const Scene& scene) 
 {
 	Scene temp_scene = scene;
-	glm::vec4 point1, point2, point3;
+	glm::vec4 point1, point2, point3,p1,p2,p3;
 	glm::mat4x4 ScaleTransMat;
 	glm::mat4x4 TransMat;
 	glm::ivec3 color(1 , 0.57 , 1.31);
@@ -306,10 +306,13 @@ void Renderer::Render(const Scene& scene)
 
 			for (int i = 0; i < MyModel.GetFacesCount(); i++)
 			{
+				p1= glm::vec4(MyModel.GetVertix(i, 0), 1);
+			    p2= glm::vec4(MyModel.GetVertix(i, 1), 1);
+			    p3= glm::vec4(MyModel.GetVertix(i, 2), 1);
 				// turn a vec3 to vec4, then mul to sacle and translation matrix
-				point1 = Changer * glm::vec4(MyModel.GetVertix(i, 0), 1);
-				point2 = Changer * glm::vec4(MyModel.GetVertix(i, 1), 1);
-				point3 = Changer * glm::vec4(MyModel.GetVertix(i, 2), 1);
+				point1 = Changer * p1;
+				point2 = Changer * p2;
+				point3 = Changer * p3;
 
 				// turn back to vec3	
 				point1 /= point1.w;
@@ -322,6 +325,32 @@ void Renderer::Render(const Scene& scene)
 				point2[1] += viewport_height/2;
 				point3[0] += viewport_width/2;
 				point3[1] += viewport_height/2;
+
+
+				if (MyModel.face_normals)
+				{
+					glm::vec3 fn1 = p1 - p2;
+					glm::vec3 fn2 = p2 - p3;
+					glm::vec4 facenormal = glm::vec4(glm::cross(fn1, fn2), 0);
+					glm::vec4 f_average = (point1 + point2 + point3);
+					f_average /= 3;
+					facenormal *= 1200;
+					DrawLine(f_average, f_average + facenormal, glm::vec3(12, 156, 31));
+
+				}
+
+				if (MyModel.vertex_normals)
+				{
+					const Face& fv = MyModel.GetFace(i);
+					glm::vec3 vn_color = glm::vec3(76, 153, 0);
+					glm::vec4 vn1 = glm::vec4(MyModel.normals[fv.GetNormalIndex(0)-1],0);
+					glm::vec4 vn2 = glm::vec4(MyModel.normals[fv.GetNormalIndex(1)-1],0);
+					glm::vec4 vn3 = glm::vec4(MyModel.normals[fv.GetNormalIndex(2)-1],0);
+					vn1 *= 15, vn2 *= 15, vn3 *= 15;
+					DrawLine(point1, point1 + vn1, vn_color);
+					DrawLine(point2, point2 + vn2, vn_color);
+					DrawLine(point3, point3 + vn3, vn_color);
+				}
 
 
 				DrawLine(point1, point2, color);	//MyModel.ObjectColor
@@ -357,19 +386,20 @@ void Renderer::Render(const Scene& scene)
 				point07[1] += viewport_height / 2;
 				point08[1] += viewport_height / 2;
 
-				DrawLine(point01, point02, glm::vec3(1, 1, 0));
-				DrawLine(point01, point03, glm::vec3(1, 1, 0));
-				DrawLine(point01, point05, glm::vec3(1, 1, 0));
-				DrawLine(point02, point04, glm::vec3(1, 1, 0));
-				DrawLine(point02, point06, glm::vec3(1, 1, 0));
-				DrawLine(point03, point04, glm::vec3(1, 1, 0));
-				DrawLine(point03, point07, glm::vec3(1, 1, 0));
-				DrawLine(point04, point08, glm::vec3(1, 1, 0));
-				DrawLine(point05, point06, glm::vec3(1, 1, 0));
-				DrawLine(point05, point07, glm::vec3(1, 1, 0));
-				DrawLine(point06, point08, glm::vec3(1, 1, 0));
-				DrawLine(point07, point08, glm::vec3(1, 1, 0));
-			}
+				DrawLine(point01, point02, glm::vec3(0, 0, 153));
+				DrawLine(point01, point03, glm::vec3(0, 0, 153));
+				DrawLine(point01, point05, glm::vec3(0, 0, 153));
+				DrawLine(point02, point04, glm::vec3(0, 0, 153));
+				DrawLine(point02, point06, glm::vec3(0, 0, 153));
+				DrawLine(point03, point04, glm::vec3(0, 0, 153));
+				DrawLine(point03, point07, glm::vec3(0, 0, 153));
+				DrawLine(point04, point08, glm::vec3(0, 0, 153));
+				DrawLine(point05, point06, glm::vec3(0, 0, 153));
+				DrawLine(point05, point07, glm::vec3(0, 0, 153));
+				DrawLine(point06, point08, glm::vec3(0, 0, 153));
+				DrawLine(point07, point08, glm::vec3(0, 0, 153));
+			}											
+
 		}
 	}
 }
