@@ -264,7 +264,7 @@ void Renderer::Render(const Scene& scene)
 	
 			
 	if (act_camera.orth)
-		CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up)*glm::lookAt(act_camera.Eye,glm::vec3(0,0,0),glm::vec3(0,1,0))*glm::inverse(act_camera.CamTransformate);
+		CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up)*glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0))* glm::inverse(act_camera.CamTransformate);
 	else
 		CameraTr = glm::perspective(act_camera.fovy, act_camera.aspect, act_camera.near1, act_camera.far1) * glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::inverse(act_camera.CamTransformate);
 
@@ -287,7 +287,14 @@ void Renderer::Render(const Scene& scene)
 				point2 /= point2.w;
 				point3 /= point3.w;
 
-
+				/*point1[0] += viewport_width / 2;
+				point1[1] += viewport_height / 2;
+				point2[0] += viewport_width / 2;
+				point2[1] += viewport_height / 2;
+				point3[0] += viewport_width / 2;
+				point3[1] += viewport_height / 2;
+				*/
+				
 				DrawLine(point1, point2, color);	
 				DrawLine(point1, point3, color);
 				DrawLine(point2, point3, color);
@@ -306,9 +313,9 @@ void Renderer::Render(const Scene& scene)
 
 			for (int i = 0; i < MyModel.GetFacesCount(); i++)
 			{
-				p1= glm::vec4(MyModel.GetVertix(i, 0), 1);
-			    p2= glm::vec4(MyModel.GetVertix(i, 1), 1);
-			    p3= glm::vec4(MyModel.GetVertix(i, 2), 1);
+				p1 = glm::vec4(MyModel.GetVertix(i, 0), 1);
+				p2 = glm::vec4(MyModel.GetVertix(i, 1), 1);
+				p3 = glm::vec4(MyModel.GetVertix(i, 2), 1);
 				// turn a vec3 to vec4, then mul to sacle and translation matrix
 				point1 = Changer * p1;
 				point2 = Changer * p2;
@@ -319,12 +326,12 @@ void Renderer::Render(const Scene& scene)
 				point2 /= point2.w;
 				point3 /= point3.w;
 
-				point1[0] += viewport_width/2;
-				point1[1] += viewport_height/2;
-				point2[0] += viewport_width/2;
-				point2[1] += viewport_height/2;
-				point3[0] += viewport_width/2;
-				point3[1] += viewport_height/2;
+				/*point1[0] += viewport_width / 2;
+				point1[1] += viewport_height / 2;
+				point2[0] += viewport_width / 2;
+				point2[1] += viewport_height / 2;
+				point3[0] += viewport_width / 2;
+				point3[1] += viewport_height / 2;*/
 
 
 				if (MyModel.face_normals)
@@ -343,9 +350,9 @@ void Renderer::Render(const Scene& scene)
 				{
 					const Face& fv = MyModel.GetFace(i);
 					glm::vec3 vn_color = glm::vec3(76, 153, 0);
-					glm::vec4 vn1 = glm::vec4(MyModel.normals[fv.GetNormalIndex(0)-1],0);
-					glm::vec4 vn2 = glm::vec4(MyModel.normals[fv.GetNormalIndex(1)-1],0);
-					glm::vec4 vn3 = glm::vec4(MyModel.normals[fv.GetNormalIndex(2)-1],0);
+					glm::vec4 vn1 = glm::vec4(MyModel.normals[fv.GetNormalIndex(0) - 1], 0);
+					glm::vec4 vn2 = glm::vec4(MyModel.normals[fv.GetNormalIndex(1) - 1], 0);
+					glm::vec4 vn3 = glm::vec4(MyModel.normals[fv.GetNormalIndex(2) - 1], 0);
 					vn1 *= 15, vn2 *= 15, vn3 *= 15;
 					DrawLine(point1, point1 + vn1, vn_color);
 					DrawLine(point2, point2 + vn2, vn_color);
@@ -356,49 +363,50 @@ void Renderer::Render(const Scene& scene)
 				DrawLine(point1, point2, color);	//MyModel.ObjectColor
 				DrawLine(point1, point3, color);
 				DrawLine(point2, point3, color);
+
+				if (MyModel.bounding_box)
+				{
+					glm::vec4 point01 = Changer * glm::vec4(MyModel.min_x, MyModel.min_y, MyModel.min_z, 1);
+					glm::vec4 point02 = Changer * glm::vec4(MyModel.min_x, MyModel.min_y, MyModel.max_z, 1);
+					glm::vec4 point03 = Changer * glm::vec4(MyModel.min_x, MyModel.max_y, MyModel.min_z, 1);
+					glm::vec4 point04 = Changer * glm::vec4(MyModel.min_x, MyModel.max_y, MyModel.max_z, 1);
+					glm::vec4 point05 = Changer * glm::vec4(MyModel.max_x, MyModel.min_y, MyModel.min_z, 1);
+					glm::vec4 point06 = Changer * glm::vec4(MyModel.max_x, MyModel.min_y, MyModel.max_z, 1);
+					glm::vec4 point07 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.min_z, 1);
+					glm::vec4 point08 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.max_z, 1);
+
+					/*point01[0] += viewport_width / 2;
+					point02[0] += viewport_width / 2;
+					point03[0] += viewport_width / 2;
+					point04[0] += viewport_width / 2;
+					point05[0] += viewport_width / 2;
+					point06[0] += viewport_width / 2;
+					point07[0] += viewport_width / 2;
+					point08[0] += viewport_width / 2;
+
+					point01[1] += viewport_height / 2;
+					point02[1] += viewport_height / 2;
+					point03[1] += viewport_height / 2;
+					point04[1] += viewport_height / 2;
+					point05[1] += viewport_height / 2;
+					point06[1] += viewport_height / 2;
+					point07[1] += viewport_height / 2;
+					point08[1] += viewport_height / 2;*/
+
+					DrawLine(point01, point02, glm::vec3(0, 0, 153));
+					DrawLine(point01, point03, glm::vec3(0, 0, 153));
+					DrawLine(point01, point05, glm::vec3(0, 0, 153));
+					DrawLine(point02, point04, glm::vec3(0, 0, 153));
+					DrawLine(point02, point06, glm::vec3(0, 0, 153));
+					DrawLine(point03, point04, glm::vec3(0, 0, 153));
+					DrawLine(point03, point07, glm::vec3(0, 0, 153));
+					DrawLine(point04, point08, glm::vec3(0, 0, 153));
+					DrawLine(point05, point06, glm::vec3(0, 0, 153));
+					DrawLine(point05, point07, glm::vec3(0, 0, 153));
+					DrawLine(point06, point08, glm::vec3(0, 0, 153));
+					DrawLine(point07, point08, glm::vec3(0, 0, 153));
+				}
 			}
-			if (MyModel.bounding_box)
-			{
-				glm::vec4 point01 = Changer * glm::vec4(MyModel.min_x, MyModel.min_y, MyModel.min_z, 1);
-				glm::vec4 point02 = Changer * glm::vec4(MyModel.min_x, MyModel.min_y, MyModel.max_z, 1);
-				glm::vec4 point03 = Changer * glm::vec4(MyModel.min_x, MyModel.max_y, MyModel.min_z, 1);
-				glm::vec4 point04 = Changer * glm::vec4(MyModel.min_x, MyModel.max_y, MyModel.max_z, 1);
-				glm::vec4 point05 = Changer * glm::vec4(MyModel.max_x, MyModel.min_y, MyModel.min_z, 1);
-				glm::vec4 point06 = Changer * glm::vec4(MyModel.max_x, MyModel.min_y, MyModel.max_z, 1);
-				glm::vec4 point07 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.min_z, 1);
-				glm::vec4 point08 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.max_z, 1);
-
-				point01[0] += viewport_width / 2;
-				point02[0] += viewport_width / 2;
-				point03[0] += viewport_width / 2;
-				point04[0] += viewport_width / 2;
-				point05[0] += viewport_width / 2;
-				point06[0] += viewport_width / 2;
-				point07[0] += viewport_width / 2;
-				point08[0] += viewport_width / 2;
-
-				point01[1] += viewport_height / 2;
-				point02[1] += viewport_height / 2;
-				point03[1] += viewport_height / 2;
-				point04[1] += viewport_height / 2;
-				point05[1] += viewport_height / 2;
-				point06[1] += viewport_height / 2;
-				point07[1] += viewport_height / 2;
-				point08[1] += viewport_height / 2;
-
-				DrawLine(point01, point02, glm::vec3(0, 0, 153));
-				DrawLine(point01, point03, glm::vec3(0, 0, 153));
-				DrawLine(point01, point05, glm::vec3(0, 0, 153));
-				DrawLine(point02, point04, glm::vec3(0, 0, 153));
-				DrawLine(point02, point06, glm::vec3(0, 0, 153));
-				DrawLine(point03, point04, glm::vec3(0, 0, 153));
-				DrawLine(point03, point07, glm::vec3(0, 0, 153));
-				DrawLine(point04, point08, glm::vec3(0, 0, 153));
-				DrawLine(point05, point06, glm::vec3(0, 0, 153));
-				DrawLine(point05, point07, glm::vec3(0, 0, 153));
-				DrawLine(point06, point08, glm::vec3(0, 0, 153));
-				DrawLine(point07, point08, glm::vec3(0, 0, 153));
-			}											
 
 		}
 	}

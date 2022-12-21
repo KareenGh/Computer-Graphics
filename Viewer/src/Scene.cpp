@@ -12,7 +12,7 @@ Scene::Scene() :
 void Scene::AddModel(const std::shared_ptr<MeshModel>& mesh_model)
 {
 	mesh_models.push_back(mesh_model);
-	//active_model_index = mesh_model.size() - 1;
+	active_model_index = GetModelCount() - 1;
 }
 
 int Scene::GetModelCount() const
@@ -33,6 +33,7 @@ MeshModel& Scene::GetActiveModel() const
 void Scene::AddCamera(const std::shared_ptr<Camera>& camera)
 {
 	cameras.push_back(camera);
+	active_camera_index = GetCameraCount() - 1;
 }
 
 int Scene::GetCameraCount() const

@@ -16,7 +16,7 @@
 /**
  * Fields
  */
-static bool orthograph = true;
+static bool orthograph = false;
 int models_number = 0;
 static bool inWorld = false;
 static bool cam_transform = false;
@@ -363,10 +363,11 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			if (ImGui::Button("Next_model"))
 				scene.SetActiveModelIndex((scene.GetActiveModelIndex() + 1) % scene.GetModelCount());
  
-			ImGui::Checkbox("Camera_Transformation", &cam_transform);
+			ImGui::Checkbox("Camera_Transformation",&cam_transform);
 			ImGui::Checkbox("Bounding Box", &scene.GetActiveModel().bounding_box);
 			ImGui::Checkbox("faces_normal", &scene.GetActiveModel().face_normals);
 			ImGui::Checkbox("vertices_normal", &scene.GetActiveModel().vertex_normals);
+			//ImGui::Checkbox("Orthograhic / Perspective", &scene.GetActiveCamera().orth);
 
 			if (cam_transform)
 			{
@@ -396,15 +397,18 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				ImGui::SliderFloat("right_orthographic", &scene.GetActiveCamera().right, -5, 5);
 				ImGui::SliderFloat("Near_orthographic", &scene.GetActiveCamera().near1, -5, 5);
 				ImGui::SliderFloat("Far_orthographic", &scene.GetActiveCamera().far1, -5, 5);
+				//ImGui::SliderFloat("Aspect_perspective", &scene.GetActiveCamera().aspect, -50, 50);
+				//ImGui::SliderFloat("Fovy_perspective", &scene.GetActiveCamera().fovy, -0.4, 0.8);
 
 			}
-			if (ImGui::Button("Add Camera"))
-			{
-				shared_ptr <Camera> new_camera = make_shared<Camera>();
-				scene.AddCamera(new_camera);
-			}
-			if (ImGui::Button("Next Camera"))
-				scene.SetActiveCameraIndex((scene.GetActiveCameraIndex() + 1) % scene.GetCameraCount());
+
+			//if (ImGui::Button("Add Camera"))
+			//{
+			//	shared_ptr <Camera> new_camera = make_shared<Camera>();
+			//	scene.AddCamera(new_camera);
+			//}
+			//if (ImGui::Button("Next Camera"))
+			//	scene.SetActiveCameraIndex((scene.GetActiveCameraIndex() + 1) % scene.GetCameraCount());
 			ImGui::End();
 		}
 	}

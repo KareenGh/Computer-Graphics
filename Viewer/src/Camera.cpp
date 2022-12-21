@@ -17,7 +17,7 @@ const glm::mat4x4& Camera::GetProjectionTransformation() const
 	//return projection_transformation;
 	if (orth)
 		return glm::ortho(left, right, down, up);
-	return glm::perspective(fovy,aspect,near1,far1);
+	//return glm::perspective(fovy,aspect,near1,far1);
 }
 
 const glm::mat4x4& Camera::GetViewTransformation() const

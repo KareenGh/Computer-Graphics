@@ -18,8 +18,6 @@ public:
 	const glm::mat4x4 GetSTMatrix() const;
 	const glm::mat4x4 GetTransformMat() const;
 	void MeshModel::Find_Max_Min_BB();
-	void MeshModel::FacesNormaCompute();
-	void MeshModel::VerticesNormaCompute();
 	//int GetMax() const;
 	//void PrintFaces() const;
 	float x = 0, y = 0, z = 0, xw = 0, yw = 0, zw = 0;
