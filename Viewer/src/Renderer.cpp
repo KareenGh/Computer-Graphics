@@ -265,8 +265,8 @@ void Renderer::Render(const Scene& scene)
 			
 	if (act_camera.orth)
 		CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up)*glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0))* glm::inverse(act_camera.CamTransformate);
-	/*else
-		CameraTr = glm::perspective(act_camera.fovy, act_camera.aspect, act_camera.near1, act_camera.far1) * glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::inverse(act_camera.CamTransformate);*/
+	else
+		CameraTr = glm::perspective(act_camera.fovy, act_camera.aspect, act_camera.near1, act_camera.far1) * glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::inverse(act_camera.CamTransformate);
 
 	MeshModel& MyModel = *scene.camera1;
 	for (int c1 = 0; c1 < scene.GetCameraCount(); c1++)

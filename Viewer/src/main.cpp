@@ -367,7 +367,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::Checkbox("Bounding Box", &scene.GetActiveModel().bounding_box);
 			ImGui::Checkbox("faces_normal", &scene.GetActiveModel().face_normals);
 			ImGui::Checkbox("vertices_normal", &scene.GetActiveModel().vertex_normals);
-			//ImGui::Checkbox("Orthograhic / Perspective", &scene.GetActiveCamera().orth);
+			ImGui::Checkbox("Orthograhic / Perspective", &scene.GetActiveCamera().orth);
 
 			if (cam_transform)
 			{
@@ -397,8 +397,8 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				ImGui::SliderFloat("right_orthographic", &scene.GetActiveCamera().right, -5, 5);
 				ImGui::SliderFloat("Near_orthographic", &scene.GetActiveCamera().near1, -5, 5);
 				ImGui::SliderFloat("Far_orthographic", &scene.GetActiveCamera().far1, -5, 5);
-				//ImGui::SliderFloat("Aspect_perspective", &scene.GetActiveCamera().aspect, -50, 50);
-				//ImGui::SliderFloat("Fovy_perspective", &scene.GetActiveCamera().fovy, -0.4, 0.8);
+				ImGui::SliderFloat("Aspect_perspective", &scene.GetActiveCamera().aspect, -50, 50);
+				ImGui::SliderFloat("Fovy_perspective", &scene.GetActiveCamera().fovy, -0.4, 0.8);
 
 			}
 
