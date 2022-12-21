@@ -28,7 +28,7 @@ public:
 	glm::mat4x4 CamTransformate = glm::mat4x4(1);
 	glm::mat4x4 OrthTransformations = glm::mat4x4(1);
 	float up = 1, down = -1, left = -1, right = 1,far1=-1,near1=1;
-	float fovy=0.3 ,aspect =1 ;
+	//float fovy=0.3 ,aspect =2 ;
 	void SetTransformate();
 private:
 	glm::mat4x4 view_transformation;

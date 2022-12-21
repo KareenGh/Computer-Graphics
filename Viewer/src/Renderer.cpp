@@ -265,8 +265,8 @@ void Renderer::Render(const Scene& scene)
 			
 	if (act_camera.orth)
 		CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up)*glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0))* glm::inverse(act_camera.CamTransformate);
-	else
-		CameraTr = glm::perspective(act_camera.fovy, act_camera.aspect, act_camera.near1, act_camera.far1) * glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::inverse(act_camera.CamTransformate);
+	/*else
+		CameraTr = glm::perspective(act_camera.fovy, act_camera.aspect, act_camera.near1, act_camera.far1) * glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::inverse(act_camera.CamTransformate);*/
 
 	MeshModel& MyModel = *scene.camera1;
 	for (int c1 = 0; c1 < scene.GetCameraCount(); c1++)
@@ -331,8 +331,8 @@ void Renderer::Render(const Scene& scene)
 				point2[0] += viewport_width / 2;
 				point2[1] += viewport_height / 2;
 				point3[0] += viewport_width / 2;
-				point3[1] += viewport_height / 2;*/
-
+				point3[1] += viewport_height / 2;
+*/
 
 				if (MyModel.face_normals)
 				{
@@ -375,23 +375,23 @@ void Renderer::Render(const Scene& scene)
 					glm::vec4 point07 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.min_z, 1);
 					glm::vec4 point08 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.max_z, 1);
 
-					/*point01[0] += viewport_width / 2;
-					point02[0] += viewport_width / 2;
-					point03[0] += viewport_width / 2;
-					point04[0] += viewport_width / 2;
-					point05[0] += viewport_width / 2;
-					point06[0] += viewport_width / 2;
-					point07[0] += viewport_width / 2;
-					point08[0] += viewport_width / 2;
+					//point01[0] += viewport_width / 2;
+					//point02[0] += viewport_width / 2;
+					//point03[0] += viewport_width / 2;
+					//point04[0] += viewport_width / 2;
+					//point05[0] += viewport_width / 2;
+					//point06[0] += viewport_width / 2;
+					//point07[0] += viewport_width / 2;
+					//point08[0] += viewport_width / 2;
 
-					point01[1] += viewport_height / 2;
-					point02[1] += viewport_height / 2;
-					point03[1] += viewport_height / 2;
-					point04[1] += viewport_height / 2;
-					point05[1] += viewport_height / 2;
-					point06[1] += viewport_height / 2;
-					point07[1] += viewport_height / 2;
-					point08[1] += viewport_height / 2;*/
+					//point01[1] += viewport_height / 2;
+					//point02[1] += viewport_height / 2;
+					//point03[1] += viewport_height / 2;
+					//point04[1] += viewport_height / 2;
+					//point05[1] += viewport_height / 2;
+					//point06[1] += viewport_height / 2;
+					//point07[1] += viewport_height / 2;
+					//point08[1] += viewport_height / 2;
 
 					DrawLine(point01, point02, glm::vec3(0, 0, 153));
 					DrawLine(point01, point03, glm::vec3(0, 0, 153));
