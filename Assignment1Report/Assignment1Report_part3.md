@@ -39,9 +39,11 @@ T2: zRotate - 36
 
 ### Apllying T1 in model frame and T2 in world frame:
 
+![ModelWorld](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/3C.5%20-%20ModelWorld.png)
 
 ### Applying T1 in world frame and T1 in world frame:
 
+![WorldModel](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/3C.5%20-%20WorldModel.png)
 
 
 ## 6. Implement and display the bounding box of the object, in local and world coordinates. Demonstrate the differences between them.
