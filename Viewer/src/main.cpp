@@ -407,7 +407,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				ImGui::SliderFloat("Fovy_perspective", &scene.GetActiveCamera().fovy, -0.4, 0.8);*/
 				ImGui::InputFloat("fovy", &scene.GetActiveCamera().fovy, 10, 180);
 				float aspectRatio = ((scene.GetActiveCamera().right - scene.GetActiveCamera().left) / (scene.GetActiveCamera().up - scene.GetActiveCamera().down));
-				scene.GetActiveCamera().SetPerspectiveProjection((scene.GetActiveCamera().fovy), scene.GetActiveCamera().aspect, scene.GetActiveCamera().near1, scene.GetActiveCamera().far1);
+				scene.GetActiveCamera().SetPerspectiveProjection(glm::radians(scene.GetActiveCamera().fovy), scene.GetActiveCamera().aspect, scene.GetActiveCamera().near1, scene.GetActiveCamera().far1);
 				//				scene.GetActiveCamera().SetPerspectiveProjection(glm::radians(scene.GetActiveCamera().fovy), aspectRatio, scene.GetActiveCamera().near1, scene.GetActiveCamera().far1);
 			}
 

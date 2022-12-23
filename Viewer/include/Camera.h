@@ -18,7 +18,7 @@ public:
 	bool orth = false;
 	bool Perspective = false;
 	bool WorldAxis = false;
-	glm::vec3 Eye = glm::vec3(0, 0, 1);
+	glm::vec3 Eye = glm::vec3(0, 0, 10);
 	glm::mat4x4 TranslationCam_mat = glm::mat4x4(1);
 	glm::mat4x4 WorldTranslationCam_mat = glm::mat4x4(1);
 	glm::mat4x4 xCam_rotate = glm::mat4x4(1);
@@ -30,7 +30,7 @@ public:
 	glm::mat4x4 CamTransformate = glm::mat4x4(1);
 	glm::mat4x4 OrthTransformations = glm::mat4x4(1);
 	glm::mat4x4 PerspectiveTrans = glm::mat4x4(1);
-	float up = 1, down = -1, left = -1, right = 1,far1=-1,near1=1;
+	float up = 1, down = -1, left = -1, right = 1,far1=100,near1=0.0001;
 //	float fovy=glm::radians(180.0f), aspect = 2;
 	float fovy = 45.0f, aspect = 800.0f / 600.0f;
 	void SetTransformate();
