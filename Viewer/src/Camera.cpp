@@ -88,7 +88,7 @@ void Camera::SetTransformate()
 
 glm::mat4x4 Camera::GetOrthTransformation() const
 {
-	return OrthTransformations * glm::lookAt(Eye, glm::vec3(0, 0, 0.5), glm::vec3(0, 1, 0.5)) * glm::inverse(CamTransformate);;
+	return OrthTransformations * glm::lookAt(Eye, glm::vec3(0, 0, 0.5), glm::vec3(0, 1, 0.5)) * glm::inverse(CamTransformate);
 }
 
 void Camera::SetOrthographicProjection(float left, float right, float bottom, float top, float near1, float far1)

@@ -261,9 +261,9 @@ void Renderer::Render(const Scene& scene)
 
 	Camera& act_camera = temp_scene.GetActiveCamera();
 
-	if(act_camera.Orthograhic)
+	if(act_camera.orth)
 		CameraTr = act_camera.GetOrthTransformation();
-	else// if(act_camera.Perspective)
+	else //if(act_camera.Perspective)
 		CameraTr = act_camera.GetPerspectiveProjection();
 
 //	if (act_camera.orth)
@@ -296,9 +296,9 @@ void Renderer::Render(const Scene& scene)
 				point3 = Changer * glm::vec4(MyModel.GetVertix(c2, 2), 1);
 
 
-				point1 /= point1.w;
-				point2 /= point2.w;
-				point3 /= point3.w;
+				//point1 /= point1.w;
+				//point2 /= point2.w;
+				//point3 /= point3.w;
 
 				point1[0] += viewport_width / 2;
 				point1[1] += viewport_height / 2;
@@ -335,9 +335,9 @@ void Renderer::Render(const Scene& scene)
 				point3 = Changer * p3;
 
 				// turn back to vec3	
-				point1 /= point1.w;
+		/*		point1 /= point1.w;
 				point2 /= point2.w;
-				point3 /= point3.w;
+				point3 /= point3.w;*/
 
 				point1[0] += viewport_width / 2;
 				point1[1] += viewport_height / 2;
