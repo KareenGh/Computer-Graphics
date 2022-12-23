@@ -4,7 +4,9 @@ using namespace std;
 
 Camera::Camera()
 {
-	
+	//far1 = -1, near1 = 1;
+	//fovy = 45.0f;
+	//aspectRatio = 16.0f / 9.0f;
 }
 
 Camera::~Camera()
@@ -80,4 +82,26 @@ void Camera::SetTransformate()
 	zwCam_rotate[1][0] = -sin(alfa);
 
 	CamTransformate = WorldTranslationCam_mat * xwCam_rotate * ywCam_rotate * zwCam_rotate * TranslationCam_mat * xCam_rotate * yCam_rotate * zCam_rotate;
+//	CamTransformate = zwCam_rotate * ywCam_rotate * xwCam_rotate * WorldTranslationCam_mat * zCam_rotate * yCam_rotate * xCam_rotate * TranslationCam_mat;
+
+}
+
+glm::mat4x4 Camera::GetOrthTransformation() const
+{
+	return OrthTransformations * glm::lookAt(Eye, glm::vec3(0, 0, 0.5), glm::vec3(0, 1, 0.5)) * glm::inverse(CamTransformate);;
+}
+
+void Camera::SetOrthographicProjection(float left, float right, float bottom, float top, float near1, float far1)
+{
+	OrthTransformations = glm::ortho(left, right, bottom, top);// * glm::lookAt(Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::inverse(CamTransformate);
+}
+
+void Camera::SetPerspectiveProjection(float fovy, float aspectRatio, float near1, float far1)
+{
+	PerspectiveTrans = glm::perspective(fovy, aspectRatio, near1, far1);
+}
+
+glm::mat4x4 Camera::GetPerspectiveProjection() const
+{
+	return PerspectiveTrans * glm::inverse(glm::lookAt(Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0))); // * glm::inverse(CamTransformate);
 }

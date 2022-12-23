@@ -261,14 +261,27 @@ void Renderer::Render(const Scene& scene)
 
 	Camera& act_camera = temp_scene.GetActiveCamera();
 
-	
-			
-	if (act_camera.orth)
-		CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up)*glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0))* glm::inverse(act_camera.CamTransformate);
-	else
-		CameraTr = glm::perspective(act_camera.fovy, act_camera.aspect, act_camera.near1, act_camera.far1) * glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::inverse(act_camera.CamTransformate);
+	if(act_camera.Orthograhic)
+		CameraTr = act_camera.GetOrthTransformation();
+	else// if(act_camera.Perspective)
+		CameraTr = act_camera.GetPerspectiveProjection();
+
+//	if (act_camera.orth)
+//		CameraTr = act_camera.GetOrthTransformation();
+//			CameraTr = glm::ortho(act_camera.left, act_camera.right, act_camera.down, act_camera.up)*glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0))* glm::inverse(act_camera.CamTransformate);
+//	else
+//		CameraTr = act_camera.GetPerspectiveProjection();
+////		CameraTr = glm::perspective(act_camera.fovy, act_camera.aspectRatio, act_camera.near1, act_camera.far1) * glm::lookAt(act_camera.Eye, glm::vec3(0, 0, 0), glm::vec3(0, 1, 0)) * glm::inverse(act_camera.CamTransformate);
 
 	MeshModel& MyModel = *scene.camera1;
+	//for (int i = 0; i < 4; i++)
+	//{
+	//	for (int j = 0; j < 4; j++)
+	//	{
+	//		cout << act_camera.CamTransformate[i][j] << " ";
+	//	}
+	//	cout << endl;
+	//}
 	for (int c1 = 0; c1 < scene.GetCameraCount(); c1++)
 	{
 		Changer = CameraTr * act_camera.CamTransformate;
@@ -282,18 +295,18 @@ void Renderer::Render(const Scene& scene)
 				point2 = Changer * glm::vec4(MyModel.GetVertix(c2, 1), 1);
 				point3 = Changer * glm::vec4(MyModel.GetVertix(c2, 2), 1);
 
-					
+
 				point1 /= point1.w;
 				point2 /= point2.w;
 				point3 /= point3.w;
 
-				/*point1[0] += viewport_width / 2;
+				point1[0] += viewport_width / 2;
 				point1[1] += viewport_height / 2;
 				point2[0] += viewport_width / 2;
 				point2[1] += viewport_height / 2;
 				point3[0] += viewport_width / 2;
 				point3[1] += viewport_height / 2;
-				*/
+				
 				
 				DrawLine(point1, point2, color);	
 				DrawLine(point1, point3, color);
@@ -309,7 +322,7 @@ void Renderer::Render(const Scene& scene)
 			ScaleTransMat = MyModel.GetSTMatrix();
 			TransMat = MyModel.GetTransformMat();
 			ScaleTransMat = TransMat * ScaleTransMat;
-			Changer =CameraTr*MyModel.Transformate;
+			Changer = CameraTr * MyModel.Transformate;
 
 			for (int i = 0; i < MyModel.GetFacesCount(); i++)
 			{
@@ -326,12 +339,12 @@ void Renderer::Render(const Scene& scene)
 				point2 /= point2.w;
 				point3 /= point3.w;
 
-				/*point1[0] += viewport_width / 2;
+				point1[0] += viewport_width / 2;
 				point1[1] += viewport_height / 2;
 				point2[0] += viewport_width / 2;
 				point2[1] += viewport_height / 2;
 				point3[0] += viewport_width / 2;
-				point3[1] += viewport_height / 2;*/
+				point3[1] += viewport_height / 2;
 
 
 				if (MyModel.face_normals)
@@ -405,6 +418,63 @@ void Renderer::Render(const Scene& scene)
 					DrawLine(point05, point07, glm::vec3(0, 0, 153));
 					DrawLine(point06, point08, glm::vec3(0, 0, 153));
 					DrawLine(point07, point08, glm::vec3(0, 0, 153));
+				}
+
+				/* Model Axis */
+				if (MyModel.ModelAxis)
+				{
+					MeshModel model = temp_scene.GetActiveModel();
+					glm::mat4x4 transform = act_camera.GetOrthTransformation() * model.Axis_World_Trans;
+
+					glm::vec4 x_left = transform * glm::vec4(model.min_x, (model.min_y + model.max_y) / 2, (model.min_z + model.max_z) / 2, 1);
+					glm::vec4 x_right = transform * glm::vec4(model.max_x, (model.min_y + model.max_y) / 2, (model.min_z + model.max_z) / 2, 1);
+					glm::vec4 y_top = transform * glm::vec4((model.min_x + model.max_x) / 2, model.max_y, (model.min_z + model.max_z) / 2, 1);
+					glm::vec4 y_bottom = transform * glm::vec4((model.min_x + model.max_x) / 2, model.min_y, (model.min_z + model.max_z) / 2, 1);
+					glm::vec4 z_top = transform * glm::vec4((model.min_x + model.max_x) / 2, (model.min_y + model.max_y) / 2, model.max_z, 1);
+					glm::vec4 z_bottom = transform * glm::vec4((model.min_x + model.max_x) / 2, (model.min_y + model.max_y) / 2, model.min_z, 1);
+
+					// start in the middle 
+					x_left[0] += viewport_width / 2;
+					x_left[1] += viewport_height / 2;
+					x_right[0] += viewport_width / 2;
+					x_right[1] += viewport_height / 2;
+					y_top[0] += viewport_width / 2;
+					y_top[1] += viewport_height / 2;
+					y_bottom[0] += viewport_width / 2;
+					y_bottom[1] += viewport_height / 2;
+					z_top[0] += viewport_width / 2;
+					z_top[1] += viewport_height / 2;
+					z_bottom[0] += viewport_width / 2;
+					z_bottom[1] += viewport_height / 2;
+
+					DrawLine(x_left, x_right, glm::vec3(1, 0, 0));
+					DrawLine(y_top, y_bottom, glm::vec3(0, 1, 0));
+					DrawLine(z_top, z_bottom, glm::vec3(0, 0, 1));
+				}
+
+				/* World Axis */
+				if (act_camera.WorldAxis)
+				{
+					
+					glm::mat4x4 transformWorld = act_camera.OrthTransformations * glm::lookAt(act_camera.Eye, glm::vec3{ 0,0,0 }, glm::vec3{ 0,1,0 })
+						* glm::inverse(act_camera.GetOrthTransformation());
+
+					glm::vec4 point_left = transformWorld * glm::vec4(-viewport_width, 0, 0, 1);
+					glm::vec4 point_right = transformWorld * glm::vec4(viewport_width, 0, 0, 1);
+					glm::vec4 point_top = transformWorld * glm::vec4(0, viewport_height, 0, 1);
+					glm::vec4 point_bottom = transformWorld * glm::vec4(0, -viewport_height, 0, 1);
+
+					point_left[0] += viewport_width / 2;
+					point_left[1] += viewport_height / 2;
+					point_right[0] += viewport_width / 2;
+					point_right[1] += viewport_height / 2;
+					point_top[0] += viewport_width / 2;
+					point_top[1] += viewport_height / 2;
+					point_bottom[0] += viewport_width / 2;
+					point_bottom[1] += viewport_height / 2;
+
+					DrawLine(point_left, point_right, glm::vec3(0.8f, 0.8f, 0.8f));
+					DrawLine(point_top, point_bottom, glm::vec3(0.8f, 0.8f, 0.8f));
 				}
 			}
 

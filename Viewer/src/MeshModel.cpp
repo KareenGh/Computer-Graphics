@@ -30,6 +30,7 @@ MeshModel::MeshModel(std::vector<Face> faces, std::vector<glm::vec3> vertices, s
 	TransformMat(glm::mat4x4(1.0f))
 {
 	Find_Max_Min_BB();
+	//Translation_mat[3][2] = -30;
 }
 
 MeshModel::~MeshModel()
@@ -143,5 +144,6 @@ void MeshModel::SetTransformate()
 	zw_rotate[1][0] = -sin(alfa);
 
 	Transformate = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;
-	Axis_World_Trans = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * Scale_mat;
+	//Axis_World_Trans = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate *Translation_mat* Scale_mat;
+	Axis_World_Trans = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Scale_mat;
 }
