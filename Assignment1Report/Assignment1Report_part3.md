@@ -13,6 +13,9 @@ https://user-images.githubusercontent.com/116673155/209305683-60202113-85c0-4176
 
 ## 3. Allow the user to set the view volume automatically based on the window’s size, and show the result on two window sizes. The proportions of the drawn object must remain the same! Verify your result using a sanity check and explain it in the report.
 
+We set a new aspect ratio using a new Renderer variable called rend_for_changed_window and it get frameBufferWidth and frameBufferHeight that changed according to window's size.
+Here is a video of how it working while changing window size:
+
 
 
 ## 4. Implement a feature in the renderer that draws the axes of the model and the world frames (as short lines or arrows). Show the difference between transforming a model in the world frame and in the model frame while its axes are visible. Transforming in the model frame should keep the model axes fixed, while transforming in the world frame will transform the axes too.
@@ -48,7 +51,13 @@ https://user-images.githubusercontent.com/116673155/209308093-5ab55c8d-e2e1-4c22
 
 ## 8. Load a mesh, and move the camera away from it. implement a perspective projection and compare the orthographic projection vs. the perspective projection.
 
+Here is a Orthographic Projection on bunny object:
+![Orthographic-1C-8](https://user-images.githubusercontent.com/116673155/209394470-95b0f7ce-b828-410b-b3b6-a1ce07e88990.png)
 
+And Here is a Perspective Projection on bunny object:
+![Perspective-1C-8](https://user-images.githubusercontent.com/116673155/209394537-22221b4f-3d80-4c4c-9a7e-437758b17ec1.png)
+
+We can see obviously the different if we look at bunny's legs.
 
 ## 9. Set the projection to perspective. Show the difference between changing the zoom (by changing the size of the frustum) and moving closer or farther from the model.
 
