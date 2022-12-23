@@ -6,44 +6,31 @@
 
 https://user-images.githubusercontent.com/116673155/209305683-60202113-85c0-4176-8675-c6539b27bd02.mp4
 
-
 ## 2. Allow the user to reposition the camera in the camera frame and the world frame using incremental changes. Explain how you implemented them and show results.
 
+Here we create a new gui for camera transformation that u can see if we move the camera right (according to x) the model moving left ,and the same for y if we move the camera up the model will be moving down because it will be far from the model.
+so we compute Camera transformation using the same idea when we compute model transformation at previous homework.It will be computed by the following:
+CamTransformate = WorldTranslationCam_mat * xwCam_rotate * ywCam_rotate * zwCam_rotate * TranslationCam_mat * xCam_rotate * yCam_rotate * zCam_rotate;
+First we have WorldTranslationCam_mat that responisble about translate in world according to camera then multiplied by xwCam_rotate * ywCam_rotate * zwCam_rotate that every one of these matrices responsible about rotating camira arround each axis in world
+then multiplying by TranslationCam_mat that responsible about camera translation at model frame then multiplying by xCam_rotate * yCam_rotate * zCam_rotate that every one of these matrices responsible about rotating camira arround each axis at model frame.
+Here a video showing incremental changes:
+Uploading Assign1C-2.mp4…
 
 
 ## 3. Allow the user to set the view volume automatically based on the window’s size, and show the result on two window sizes. The proportions of the drawn object must remain the same! Verify your result using a sanity check and explain it in the report.
 
 We set a new aspect ratio using a new Renderer variable called rend_for_changed_window and it get frameBufferWidth and frameBufferHeight that changed according to window's size.
 Here is a video of how it working while changing window size:
+https://user-images.githubusercontent.com/116673155/209406451-18fa6931-afae-40d8-9fd4-d89faa3ff26f.mp4
 
 
 
 ## 4. Implement a feature in the renderer that draws the axes of the model and the world frames (as short lines or arrows). Show the difference between transforming a model in the world frame and in the model frame while its axes are visible. Transforming in the model frame should keep the model axes fixed, while transforming in the world frame will transform the axes too.
 
-### Starting Axis:
-
-![Axis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(2).jpg)
-
-### Transforming in World frame:
-
-![WorldAxis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(1).jpg)
-
-## Tranforming in Model frame:
-![ModelAxis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(3).jpg)
 
 
 ## 5. Load a different mesh and pick two non-commuting transformations T1, T2. Compare the results of applying T1 in model frame and T2 in world frame vs. T1 in world frame and T1 in world frame. Explain the differences.
 
-T1: xTranslate - 200
-T2: zRotate - 36
-
-### Apllying T1 in model frame and T2 in world frame:
-
-![ModelWorld](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/3C.5%20-%20ModelWorld.png)
-
-### Applying T1 in world frame and T1 in world frame:
-
-![WorldModel](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/3C.5%20-%20WorldModel.png)
 
 
 ## 6. Implement and display the bounding box of the object, in local and world coordinates. Demonstrate the differences between them.
