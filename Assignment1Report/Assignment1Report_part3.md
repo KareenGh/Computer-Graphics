@@ -14,6 +14,7 @@ CamTransformate = WorldTranslationCam_mat * xwCam_rotate * ywCam_rotate * zwCam_
 First we have WorldTranslationCam_mat that responisble about translate in world according to camera then multiplied by xwCam_rotate * ywCam_rotate * zwCam_rotate that every one of these matrices responsible about rotating camira arround each axis in world
 then multiplying by TranslationCam_mat that responsible about camera translation at model frame then multiplying by xCam_rotate * yCam_rotate * zCam_rotate that every one of these matrices responsible about rotating camira arround each axis at model frame.
 Here a video showing incremental changes:
+
 Uploading Assign1C-2.mp4…
 
 
