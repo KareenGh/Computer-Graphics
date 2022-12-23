@@ -70,6 +70,7 @@ We can see obviously the different if we look at bunny's legs.
 
 ## 9. Set the projection to perspective. Show the difference between changing the zoom (by changing the size of the frustum) and moving closer or farther from the model.
 
+https://user-images.githubusercontent.com/116673155/209410547-50307c63-919d-427e-b5b4-5773fba7c42f.mp4
 
 
 ## 10. Set the camera position to (a, a, a) and orient it towards the origin using LookAt. Pick a such that the model is clearly visible.
