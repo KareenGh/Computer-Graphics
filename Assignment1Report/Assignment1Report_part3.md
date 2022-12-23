@@ -21,6 +21,7 @@ Uploading Assign1C-2.mp4…
 
 We set a new aspect ratio using a new Renderer variable called rend_for_changed_window and it get frameBufferWidth and frameBufferHeight that changed according to window's size.
 Here is a video of how it working while changing window size:
+
 https://user-images.githubusercontent.com/116673155/209406451-18fa6931-afae-40d8-9fd4-d89faa3ff26f.mp4
 
 
