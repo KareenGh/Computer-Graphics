@@ -388,7 +388,7 @@ void Renderer::Render(const Scene& scene)
 					glm::vec4 point07 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.min_z, 1);
 					glm::vec4 point08 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.max_z, 1);
 
-					/*point01[0] += viewport_width / 2;
+					point01[0] += viewport_width / 2;
 					point02[0] += viewport_width / 2;
 					point03[0] += viewport_width / 2;
 					point04[0] += viewport_width / 2;
@@ -404,7 +404,7 @@ void Renderer::Render(const Scene& scene)
 					point05[1] += viewport_height / 2;
 					point06[1] += viewport_height / 2;
 					point07[1] += viewport_height / 2;
-					point08[1] += viewport_height / 2;*/
+					point08[1] += viewport_height / 2;
 
 					DrawLine(point01, point02, glm::vec3(0, 0, 153));
 					DrawLine(point01, point03, glm::vec3(0, 0, 153));

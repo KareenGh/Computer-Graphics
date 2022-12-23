@@ -16,9 +16,7 @@
 /**
  * Fields
  */
-//static bool orthograph = false;
-int orthograph = 0;
-int perspictive = 0;
+static bool orthograph = false;
 int models_number = 0;
 static bool inWorld = false;
 static bool cam_transform = false;
@@ -333,7 +331,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			scene.SetActiveModelIndex((scene.GetActiveModelIndex() + 1) % scene.GetModelCount());
 
 		ImGui::Checkbox("tranformate_world", &inWorld);
-		if (!inWorld) //Model transformation
+		if (!inWorld)
 		{
 			ImGui::SliderFloat("xTranslate", &scene.GetActiveModel().Translation_mat[3][0], -1000, 1000);
 			ImGui::SliderFloat("yTranslate", &scene.GetActiveModel().Translation_mat[3][1], -1000, 1000);
@@ -345,7 +343,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::SliderFloat("yScale", &scene.GetActiveModel().Scale_mat[1][1], 0, 1000);
 			ImGui::SliderFloat("zScale", &scene.GetActiveModel().Scale_mat[2][2], 0, 1000);
 		}
-		else //World transformation
+		else
 		{
 			ImGui::SliderFloat("xWorld_Translate", &scene.GetActiveModel().w_translate[3][0], -1000, 1000);
 			ImGui::SliderFloat("yWorld_Translate", &scene.GetActiveModel().w_translate[3][1], -1000, 1000);
@@ -368,18 +366,8 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::Checkbox("Camera_Transformation",&cam_transform);
 			ImGui::Checkbox("Bounding Box", &scene.GetActiveModel().bounding_box);
 			ImGui::Checkbox("faces_normal", &scene.GetActiveModel().face_normals);
-			ImGui::SameLine();
 			ImGui::Checkbox("vertices_normal", &scene.GetActiveModel().vertex_normals);
-			//ImGui::Checkbox("Orthograhic / Perspective", &scene.GetActiveCamera().orth);
-			/*ImGui::RadioButton("Orthograhic", &orthograph, 1);
-			ImGui::RadioButton("Perspective", &perspictive, 1);*/
-			ImGui::Checkbox("Orthograhic", &scene.GetActiveCamera().Orthograhic);
-			ImGui::SameLine();
-			ImGui::Checkbox("Perspective", &scene.GetActiveCamera().Perspective);
-			ImGui::Checkbox("World Axis", &scene.GetActiveCamera().WorldAxis);
-			ImGui::SameLine();
-			ImGui::Checkbox("Model Axis", &scene.GetActiveModel().ModelAxis);
-
+			ImGui::Checkbox("Orthograhic / Perspective", &scene.GetActiveCamera().orth);
 
 			if (cam_transform)
 			{
@@ -393,29 +381,24 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 				ImGui::SliderFloat("Eye's_y", &scene.GetActiveCamera().Eye.y, -10, 10);
 				ImGui::SliderFloat("Eye's_z", &scene.GetActiveCamera().Eye.z,-10,10);
 			}
-			if (scene.GetActiveCamera().Orthograhic)
+			if (orthograph)
 			{
 				ImGui::SliderFloat("up_orthographic", &scene.GetActiveCamera().up, -5, 5);
 				ImGui::SliderFloat("down_orthographic", &scene.GetActiveCamera().down, -5, 5);
 				ImGui::SliderFloat("left_orthographic", &scene.GetActiveCamera().left, -5, 5);
 				ImGui::SliderFloat("right_orthographic", &scene.GetActiveCamera().right, -5, 5);
 
-				scene.GetActiveCamera().SetOrthographicProjection(scene.GetActiveCamera().left, scene.GetActiveCamera().right, scene.GetActiveCamera().down, scene.GetActiveCamera().up, 1, -1);
 			}
-			if (scene.GetActiveCamera().Perspective)
+			else
 			{
-				/*ImGui::SliderFloat("Up_Perspective", &scene.GetActiveCamera().up, -5, 5);
-				ImGui::SliderFloat("Down_Perspective", &scene.GetActiveCamera().down, -5, 5);
-				ImGui::SliderFloat("Left_Perspective", &scene.GetActiveCamera().left, -5, 5);
-				ImGui::SliderFloat("Right_Perspective", &scene.GetActiveCamera().right, -5, 5);*/
-				ImGui::SliderFloat("Near_Perspective", &scene.GetActiveCamera().near1, -5, 5);
-				ImGui::SliderFloat("Far_Perspective", &scene.GetActiveCamera().far1, -5, 5);
-				/*ImGui::SliderFloat("Aspect_perspective", &scene.GetActiveCamera().aspect, -50, 50);
-				ImGui::SliderFloat("Fovy_perspective", &scene.GetActiveCamera().fovy, -0.4, 0.8);*/
-				ImGui::InputFloat("fovy", &scene.GetActiveCamera().fovy, 10, 180);
-				float aspectRatio = ((scene.GetActiveCamera().right - scene.GetActiveCamera().left) / (scene.GetActiveCamera().up - scene.GetActiveCamera().down));
-				scene.GetActiveCamera().SetPerspectiveProjection((scene.GetActiveCamera().fovy), scene.GetActiveCamera().aspectRatio, scene.GetActiveCamera().near1, scene.GetActiveCamera().far1);
-//				scene.GetActiveCamera().SetPerspectiveProjection(glm::radians(scene.GetActiveCamera().fovy), aspectRatio, scene.GetActiveCamera().near1, scene.GetActiveCamera().far1);
+				ImGui::SliderFloat("up_orthographic", &scene.GetActiveCamera().up, -5, 5);
+				ImGui::SliderFloat("down_orthographic", &scene.GetActiveCamera().down, -5, 5);
+				ImGui::SliderFloat("left_orthographic", &scene.GetActiveCamera().left, -5, 5);
+				ImGui::SliderFloat("right_orthographic", &scene.GetActiveCamera().right, -5, 5);
+				ImGui::SliderFloat("Near_orthographic", &scene.GetActiveCamera().near1, -5, 5);
+				ImGui::SliderFloat("Far_orthographic", &scene.GetActiveCamera().far1, -5, 5);
+				ImGui::SliderFloat("Aspect_perspective", &scene.GetActiveCamera().aspect, -50, 50);
+				ImGui::SliderFloat("Fovy_perspective", &scene.GetActiveCamera().fovy, -0.4, 0.8);
 
 			}
 
