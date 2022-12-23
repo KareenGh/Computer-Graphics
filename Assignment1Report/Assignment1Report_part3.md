@@ -8,14 +8,16 @@ https://user-images.githubusercontent.com/116673155/209305683-60202113-85c0-4176
 
 ## 2. Allow the user to reposition the camera in the camera frame and the world frame using incremental changes. Explain how you implemented them and show results.
 
+
+Uploading Assign1C-2.mp4…
+
+
 Here we create a new gui for camera transformation that u can see if we move the camera right (according to x) the model moving left ,and the same for y if we move the camera up the model will be moving down because it will be far from the model.
 so we compute Camera transformation using the same idea when we compute model transformation at previous homework.It will be computed by the following:
 CamTransformate = WorldTranslationCam_mat * xwCam_rotate * ywCam_rotate * zwCam_rotate * TranslationCam_mat * xCam_rotate * yCam_rotate * zCam_rotate;
 First we have WorldTranslationCam_mat that responisble about translate in world according to camera then multiplied by xwCam_rotate * ywCam_rotate * zwCam_rotate that every one of these matrices responsible about rotating camira arround each axis in world
 then multiplying by TranslationCam_mat that responsible about camera translation at model frame then multiplying by xCam_rotate * yCam_rotate * zCam_rotate that every one of these matrices responsible about rotating camira arround each axis at model frame.
 Here a video showing incremental changes:
-
-Uploading Assign1C-2.mp4…
 
 
 ## 3. Allow the user to set the view volume automatically based on the window’s size, and show the result on two window sizes. The proportions of the drawn object must remain the same! Verify your result using a sanity check and explain it in the report.
