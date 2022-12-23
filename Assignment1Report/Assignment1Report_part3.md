@@ -20,7 +20,16 @@ Here is a video of how it working while changing window size:
 
 ## 4. Implement a feature in the renderer that draws the axes of the model and the world frames (as short lines or arrows). Show the difference between transforming a model in the world frame and in the model frame while its axes are visible. Transforming in the model frame should keep the model axes fixed, while transforming in the world frame will transform the axes too.
 
-![Axis]([Assignment1Report/Assign1C-4(2).jpg](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(2).jpg))
+### Starting Axis:
+
+![Axis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(2).jpg)
+
+### Transforming in World frame:
+
+![WorldAxis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(1).jpg)
+
+## Tranforming in Model frame:
+![ModelAxis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(3).jpg)
 
 
 ## 5. Load a different mesh and pick two non-commuting transformations T1, T2. Compare the results of applying T1 in model frame and T2 in world frame vs. T1 in world frame and T1 in world frame. Explain the differences.
