@@ -45,8 +45,8 @@ A video to show the transformation and how the axes changes:
 
 ## 5. Load a different mesh and pick two non-commuting transformations T1, T2. Compare the results of applying T1 in model frame and T2 in world frame vs. T1 in world frame and T1 in world frame. Explain the differences.
 
-T1: xTranslate - 200
-T2: zRotate - 36 
+#### T1: xTranslate - 200
+#### T2: zRotate - 36 
 
 ### T1 in Model frame and T2 in world frame: 
 ![ModelWorld](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/3C.5%20-%20ModelWorld.png)
