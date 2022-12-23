@@ -29,16 +29,16 @@ https://user-images.githubusercontent.com/116673155/209406451-18fa6931-afae-40d8
 
 ## 4. Implement a feature in the renderer that draws the axes of the model and the world frames (as short lines or arrows). Show the difference between transforming a model in the world frame and in the model frame while its axes are visible. Transforming in the model frame should keep the model axes fixed, while transforming in the world frame will transform the axes too.
 
-The starting position:
+#### The starting position:
 ![Axis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(2).jpg)
 
-Transforming a model in the world frame, we see that the model axes are transformed too:
+#### Transforming a model in the world frame, we see that the model axes are transformed too:
 ![WorldAxis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(1).jpg)
 
-Transforming in the model frame, the model axes fixed:
+#### Transforming in the model frame, the model axes fixed:
 ![modelAxis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(3).jpg)
 
-A video to show the transformation and how the axes changes:
+#### A video to show the transformation and how the axes changes:
 
 ![videoAxis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Axis.mp4)
 
@@ -56,22 +56,22 @@ A video to show the transformation and how the axes changes:
 
 ## 6. Implement and display the bounding box of the object, in local and world coordinates. Demonstrate the differences between them.
 
-This is a picture of bounding box of bunny object:
+#### This is a picture of bounding box of bunny object:
 ![Assign1C-BoundingBox](https://user-images.githubusercontent.com/116673155/209305910-142616bd-b156-4fb6-9138-ee880f3eae36.png)
 
-This is a video how it working if we rotate or translate or scale:
+#### This is a video how it working if we rotate or translate or scale:
 
 https://user-images.githubusercontent.com/116673155/209306142-f6d37b45-3838-48ef-8000-94194ee844f7.mp4
 
 ## 7. Compute and display the face normals and vertex normals.
 
-Face Normals:
+#### Face Normals:
 ![Assign1C-FN](https://user-images.githubusercontent.com/116673155/209306809-362fc987-5873-4ab4-b8bb-5343c98d8775.png)
 
 https://user-images.githubusercontent.com/116673155/209306844-bb6e1233-7da8-4d45-a615-1dbc41fbc937.mp4
 
 
-Vertex Normals:
+#### Vertex Normals:
 ![Assign1C-VN](https://user-images.githubusercontent.com/116673155/209308064-dc18c78b-61da-4c05-b670-8b4840fb786e.png)
 
 https://user-images.githubusercontent.com/116673155/209308093-5ab55c8d-e2e1-4c22-ab83-793ce3237711.mp4
@@ -79,10 +79,10 @@ https://user-images.githubusercontent.com/116673155/209308093-5ab55c8d-e2e1-4c22
 
 ## 8. Load a mesh, and move the camera away from it. implement a perspective projection and compare the orthographic projection vs. the perspective projection.
 
-Here is a Orthographic Projection on bunny object:
+#### Here is a Orthographic Projection on bunny object:
 ![Orthographic-1C-8](https://user-images.githubusercontent.com/116673155/209394470-95b0f7ce-b828-410b-b3b6-a1ce07e88990.png)
 
-And Here is a Perspective Projection on bunny object:
+#### And Here is a Perspective Projection on bunny object:
 ![Perspective-1C-8](https://user-images.githubusercontent.com/116673155/209394537-22221b4f-3d80-4c4c-9a7e-437758b17ec1.png)
 
 We can see obviously the different if we look at bunny's legs.
@@ -94,10 +94,10 @@ https://user-images.githubusercontent.com/116673155/209410547-50307c63-919d-427e
 
 ## 10. Set the camera position to (a, a, a) and orient it towards the origin using LookAt. Pick a such that the model is clearly visible.
 
-Here is a picture when we set a to be 20:
+#### Here is a picture when we set a to be 20:
 ![Assign1C-10(a=20)](https://user-images.githubusercontent.com/116673155/209306512-ad05461f-0083-4f95-8ba4-7cb5f4684547.png)
 
-Here is a picture when we set a to be 33:
+#### Here is a picture when we set a to be 33:
 ![Assign1C-10(a=33)](https://user-images.githubusercontent.com/116673155/209306621-3f304e90-4451-49f0-bdf9-94f0663ae9d9.png)
 
 
