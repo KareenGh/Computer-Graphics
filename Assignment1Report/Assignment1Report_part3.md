@@ -54,6 +54,8 @@ https://user-images.githubusercontent.com/116673155/209406451-18fa6931-afae-40d8
 ### T1 in World frame and T2 in Model frame:
 ![WorldModel](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/3C.5%20-%20WorldModel.png)
 
+We can see that there is a difference in the location of thu bunny, and that shows the difference between the transformations in the local and world frame.
+
 ## 6. Implement and display the bounding box of the object, in local and world coordinates. Demonstrate the differences between them.
 
 #### This is a picture of bounding box of bunny object:
