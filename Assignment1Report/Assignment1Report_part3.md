@@ -110,10 +110,15 @@ https://user-images.githubusercontent.com/116673155/209410547-50307c63-919d-427e
 
 
 ## 13. Put a screenshot showing as much of your GUI as possible.
+### Local Transformation:
 ![Gui1](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20Local.png)
+### Orthographic Projection:
 ![Gui2](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20Orth.png)
+### Perspective Projection:
 ![Gui3](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20Perspictive.png)
+### Camera Transformation:
 ![Gui4](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20Transformation.png)
+### World Transformation:
 ![Gui5](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20World.png)
 
 ## 14. Describe any additional features or bonuses you implemented.
