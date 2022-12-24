@@ -40,7 +40,6 @@ https://user-images.githubusercontent.com/116673155/209406451-18fa6931-afae-40d8
 
 #### A video to show the transformation and how the axes changes:
 
-![videoAxis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Axis.mp4)
 ![AxisGif](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Axis.gif)
 
 
