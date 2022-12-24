@@ -100,20 +100,23 @@ https://user-images.githubusercontent.com/116673155/209410547-50307c63-919d-427e
 #### Here is a picture when we set a to be 33:
 ![Assign1C-10(a=33)](https://user-images.githubusercontent.com/116673155/209306621-3f304e90-4451-49f0-bdf9-94f0663ae9d9.png)
 
-
-## 11. mplement a dolly zoom (the vertigo effect), and use a slider to control it. Show the result.
-
-
-
 ## 12. Put at least two screenshots showing multiple models and cameras on screen.
 
-
-
 ## 13. Put a screenshot showing as much of your GUI as possible.
+### Local Transformation:
+![Gui1](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20Local.png)
+### Orthographic Projection:
+![Gui2](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20Orth.png)
+### Perspective Projection:
+![Gui3](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20Perspictive.png)
+### Camera Transformation:
+![Gui4](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20Transformation.png)
+### World Transformation:
+![Gui5](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20World.png)
 
 
 ## 14. Describe any additional features or bonuses you implemented.
-
-
+We added a Gui check box for every question; the user can select to show any time the faces normal, vertices normal, World axes, local axes, bounding box.
+In addition to all the transformations and projection Gui needed.
 
 
