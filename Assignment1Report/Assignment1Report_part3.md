@@ -101,7 +101,7 @@ https://user-images.githubusercontent.com/116673155/209410547-50307c63-919d-427e
 ![Assign1C-10(a=33)](https://user-images.githubusercontent.com/116673155/209306621-3f304e90-4451-49f0-bdf9-94f0663ae9d9.png)
 
 
-## 11. mplement a dolly zoom (the vertigo effect), and use a slider to control it. Show the result.
+## 11. Implement a dolly zoom (the vertigo effect), and use a slider to control it. Show the result.
 
 
 
