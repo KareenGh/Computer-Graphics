@@ -30,7 +30,7 @@ https://user-images.githubusercontent.com/116673155/209406451-18fa6931-afae-40d8
 ## 4. Implement a feature in the renderer that draws the axes of the model and the world frames (as short lines or arrows). Show the difference between transforming a model in the world frame and in the model frame while its axes are visible. Transforming in the model frame should keep the model axes fixed, while transforming in the world frame will transform the axes too.
 
 #### The starting position:
-![Axis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbari)ky/blob/master/Assignment1Report/Assign1C-4(2).jpg)
+![Axis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(2).jpg)
 
 #### Transforming a model in the world frame, we see that the model axes are transformed too:
 ![WorldAxis](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/Assign1C-4(1).jpg)
