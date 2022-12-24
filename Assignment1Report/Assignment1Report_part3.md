@@ -102,6 +102,9 @@ https://user-images.githubusercontent.com/116673155/209410547-50307c63-919d-427e
 
 ## 12. Put at least two screenshots showing multiple models and cameras on screen.
 
+![12](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/12.1.jpg)
+![12.1](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/12.2.png)
+
 ## 13. Put a screenshot showing as much of your GUI as possible.
 ### Local Transformation:
 ![Gui1](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment1Report/GUI%20Local.png)
