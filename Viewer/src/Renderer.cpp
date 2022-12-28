@@ -255,7 +255,7 @@ void Renderer::Render(const Scene& scene)
 	glm::vec4 point1, point2, point3,p1,p2,p3;
 	glm::mat4x4 ScaleTransMat;
 	glm::mat4x4 TransMat;
-	glm::ivec3 color(1 , 0.57 , 1.31);
+	glm::ivec3 color(0 , 0 , 0);
 	glm::mat4x4 Changer;
 	glm::mat4x4 CameraTr = glm::mat4x4(1);
 
@@ -372,7 +372,19 @@ void Renderer::Render(const Scene& scene)
 					DrawLine(point3, point3 + vn3, vn_color);
 				}
 
+				float min_x = min(min(point1.x,point2.x),point3.x);
+				float max_x = max(max(point1.x, point2.x),point3.x);
+				float min_y = min(min(point1.y, point2.y), point3.y);
+				float max_y = max(max(point1.y, point2.y), point3.y);
+				glm::vec3 pick_color = glm::vec3(rand() / 5000, rand() / 5000, rand() / 5000);
 
+				if (scene.GetActiveModel().bounding_rectangle)
+				{
+					DrawLine(glm::vec2(min_x, min_y), glm::vec2(min_x, max_y), pick_color);
+					DrawLine(glm::vec2(min_x, min_y), glm::vec2(max_x, min_y), pick_color);
+					DrawLine(glm::vec2(max_x, max_y), glm::vec2(min_x, max_y), pick_color);
+					DrawLine(glm::vec2(max_x, max_y), glm::vec2(max_x, min_y), pick_color);
+				}
 				DrawLine(point1, point2, color);	//MyModel.ObjectColor
 				DrawLine(point1, point3, color);
 				DrawLine(point2, point3, color);

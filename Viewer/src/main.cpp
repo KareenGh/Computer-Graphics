@@ -60,9 +60,11 @@ int main(int argc, char** argv)
 	
 	Renderer renderer = Renderer(frameBufferWidth, frameBufferHeight);
 	Scene scene = Scene();
+	//Camera camera2 = Camera();
 	shared_ptr <Camera> new_camera = make_shared<Camera>();
 	scene.AddCamera(new_camera);
-	
+	//shared_ptr<MeshModel> camera = Utils::LoadMeshModel("camera.obj");
+	//scene.camera1 = camera;
 
 	scene.active_camera_index = 0;
 	
@@ -418,6 +420,13 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			//}
 			//if (ImGui::Button("Next Camera"))
 			//	scene.SetActiveCameraIndex((scene.GetActiveCameraIndex() + 1) % scene.GetCameraCount());
+			ImGui::End();
+		}
+
+		if (scene.GetModelCount())
+		{
+			ImGui::Begin("Triangle fill and z-buffer");
+			ImGui::Checkbox("Bounding Rectangle", &scene.GetActiveModel().bounding_rectangle);
 			ImGui::End();
 		}
 	}
