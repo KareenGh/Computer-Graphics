@@ -488,6 +488,12 @@ void Renderer::Render(const Scene& scene)
 					DrawLine(point_left, point_right, glm::vec3(0.8f, 0.8f, 0.8f));
 					DrawLine(point_top, point_bottom, glm::vec3(0.8f, 0.8f, 0.8f));
 				}
+
+				/* Color Triangles */
+				if (MyModel.GetTriColors())
+				{
+					PaintTriangles(glm::vec3(point1.x, point1.y, point1.z), glm::vec3(point2.x, point2.y, point2.z), glm::vec3(point3.x, point3.y, point3.z));
+				}
 			}
 
 		}
@@ -509,10 +515,10 @@ void Renderer::DrawObject(MeshModel& Model)
 	glm::vec4 point1 = glm::vec4(0.0f);
 	glm::vec4 point2 = glm::vec4(0.0f);
 	glm::vec4 point3 = glm::vec4(0.0f);
-
+	
 	MeshModel MyModel = Model;
 	glm::mat4x4 Changer = MyModel.w_move * MyModel.w_scale * MyModel.xw_rotate * MyModel.yw_rotate * MyModel.zw_rotate * MyModel.Translation_mat * MyModel.x_rotate * MyModel.y_rotate * MyModel.z_rotate * MyModel.Scale_mat;
-	;
+	
 	for (int i = 0; i < Model.GetFacesCount(); i++)
 	{
 		point1 = glm::vec4(MyModel.GetVertix(i, 0),1);
@@ -530,5 +536,116 @@ void Renderer::DrawObject(MeshModel& Model)
 		}
 	}
 
-	
+
+}
+
+//float Renderer::EdgeFunction(glm::vec3 v1, glm::vec3 v2, glm::vec3 p)
+//{
+//	return (p.x - v1.x) * (v2.y - v1.y) - (p.y - v1.y) * (v2.x - v1.x);
+//}
+//
+//bool Renderer::Overlaps(const glm::vec3 v1, const glm::vec3 v2, const glm::vec3 v3, const glm::vec3 point)
+//{
+//	bool doesOverlap = true;
+//
+//	std::vector<float> isLeft;
+//	isLeft.push_back(EdgeFunction(v2, v3, point));
+//	isLeft.push_back(EdgeFunction(v3, v1, point));
+//	isLeft.push_back(EdgeFunction(v1, v2, point));
+//
+//	// Get edges of triangles
+//	std::vector<glm::vec3> edges;
+//	edges.push_back(v3 - v2);
+//	edges.push_back(v1 - v3);
+//	edges.push_back(v2 - v1);
+//
+//	for (int i = 0; i < 3; i++)
+//	{
+//		if (isLeft[i])
+//		{
+//			doesOverlap &= isLeft[i] > 0;
+//		}
+//		else
+//		{
+//			// Check if the edge is a left edge or top edge
+//			doesOverlap &= (edges[i].y == 0 && edges[i].x > 0) || (edges[i].y > 0);
+//		}
+//	}
+//
+//	return doesOverlap;
+//}
+//
+//void Renderer::EdgeWalking(const Face& face, const MeshModel& model, const Camera& camera, const glm::vec3 color)
+//{
+//	std::vector<glm::vec3> transformedVecs;
+//	for (int i = 0; i < 3; i++)
+//	{
+//		transformedVecs.push_back(TransVector(model.GetVertice(face.GetVertexIndex(i) - 1), model, camera));
+//	}
+//
+//	auto boundingRect = model.GetBoundingRectangle(transformedVecs);
+//	for (int i = boundingRect[0].x; i <= boundingRect[1].x; i++)
+//	{
+//		for (int j = boundingRect[2].y; j <= boundingRect[1].y; j++)
+//		{
+//			glm::vec3 currPoint(i, j, 0);
+//			if (Overlaps(transformedVecs[0], transformedVecs[1], transformedVecs[2], currPoint))
+//			{
+//				PutPixel(i, j, color);
+//			}
+//		}
+//	}
+//}
+
+void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3)
+{
+	float minY = std::min(std::min(p1.y, p2.y), p3.y);
+	float maxY = std::max(std::max(p1.y, p2.y), p3.y);
+	float minX = std::min(std::min(p1.x, p2.x), p3.x);
+	float maxX = std::max(std::max(p1.x, p2.x), p3.x);
+	float temp = 255 * 255;
+	glm::vec3 random_color = glm::vec3(static_cast <float>(rand() / temp), static_cast <float>(rand() / temp), static_cast <float>(rand() / temp));
+	for (int j = maxY; j >= minY; j--)
+	{
+		for (int i = minX; i <= maxX; i++)
+		{
+			if (InsidetheTriangle(i, j, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y))
+			{
+				PutPixel(i, j, random_color);
+				//glm::vec3 z = Calc_z(i, j, p1, p2, p3, p1, p2, p3);
+				//if (z.z <= Get_Z_value(i, j))
+				//{
+				//	PutPixel(i, j, random_color);
+				//}
+
+			}
+		}
+	}
+}
+
+/* A function to check whether point P(x, y) lies inside the triangle formed
+   by A(x1, y1), B(x2, y2) and C(x3, y3) */ //https://www.geeksforgeeks.org/check-whether-a-given-point-lies-inside-a-triangle-or-not/
+bool Renderer::InsidetheTriangle(int x, int y, int x1, int y1, int x2, int y2, int x3, int y3)
+{
+	/* Calculate area of triangle ABC */
+	float A = area(x1, y1, x2, y2, x3, y3);
+
+	/* Calculate area of triangle PBC */
+	float A1 = area(x, y, x2, y2, x3, y3);
+
+	/* Calculate area of triangle PAC */
+	float A2 = area(x1, y1, x, y, x3, y3);
+
+	/* Calculate area of triangle PAB */
+	float A3 = area(x1, y1, x2, y2, x, y);
+
+	/* Check if sum of A1, A2 and A3 is same as A */
+	return (A == A1 + A2 + A3);
+}
+
+/* A utility function to calculate area of triangle formed by (x1, y1),
+   (x2, y2) and (x3, y3) */
+float Renderer::area(int x1, int y1, int x2, int y2, int x3, int y3)
+{
+	return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
 }

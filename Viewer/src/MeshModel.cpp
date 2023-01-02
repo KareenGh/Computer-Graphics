@@ -147,3 +147,12 @@ void MeshModel::SetTransformate()
 	//Axis_World_Trans = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate *Translation_mat* Scale_mat;
 	Axis_World_Trans = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Scale_mat;
 }
+
+void MeshModel::SetTriColors(int color)
+{
+	colors = color; // 1 -> colors			0 -> gray
+}
+int MeshModel::GetTriColors() const
+{
+	return colors;
+}

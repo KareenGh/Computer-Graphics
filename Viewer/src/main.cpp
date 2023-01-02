@@ -427,6 +427,18 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		{
 			ImGui::Begin("Triangle fill and z-buffer");
 			ImGui::Checkbox("Bounding Rectangle", &scene.GetActiveModel().bounding_rectangle);
+
+			int Colourful = ImGui::Button("Colorful Model");
+			if (Colourful)
+			{
+				scene.GetActiveModel().SetTriColors(1);
+			}
+			int Gray = ImGui::Button("Gray Model");
+			if (Gray)
+			{
+				scene.GetActiveModel().SetTriColors(0);
+			}
+
 			ImGui::End();
 		}
 	}

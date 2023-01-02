@@ -42,6 +42,9 @@ public:
 	glm::mat4x4 Axis_World_Trans = glm::mat4x4(1);
 	glm::mat4x4 Axis_Model_Trans = glm::mat4x4(1);
 	void SetTransformate();
+	void SetTriColors(int color); ///
+	int GetTriColors() const; ///
+	int colors = 0; ///
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
 private:
