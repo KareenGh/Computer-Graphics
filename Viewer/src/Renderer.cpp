@@ -684,9 +684,9 @@ void Renderer::SetMaxZBuffer()
 		{
 			Z_Buffer[Z_INDEX(viewport_width, i, j)] = FLT_MAX;
 
-			color_buffer[INDEX(viewport_width, i, j, 0)] = 0.f;
-			color_buffer[INDEX(viewport_width, i, j, 1)] = 0.f;
-			color_buffer[INDEX(viewport_width, i, j, 2)] = 0.f;
+			//color_buffer[INDEX(viewport_width, i, j, 0)] = 0.f;
+			//color_buffer[INDEX(viewport_width, i, j, 1)] = 0.f;
+			//color_buffer[INDEX(viewport_width, i, j, 2)] = 0.f;
 		}
 	}
 }
