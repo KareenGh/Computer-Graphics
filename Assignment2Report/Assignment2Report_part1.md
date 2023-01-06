@@ -55,5 +55,15 @@ To do the grey scale image we added a function that iterates over all the points
 
 Z-Buffer Off            |  Z-Buffer On
 :-------------------------:|:-------------------------:
-![Bunny]([../../main/Pictures_As2/1a.png "Bunny No Z-Buffer"](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Z_Buffer%20Off%20(1).png))  |  ![bunny]([../../main/Pictures_As2/1b.png "Bunny Z-Buffer"](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Z_Buffer%20On%20(1).png))
+![Bunny](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/bae4eef7ec4314c592221773d6401c280bfa5298/Assignment2Report/Z_Buffer%20Off%20(1).png)  |  ![bunny](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/bae4eef7ec4314c592221773d6401c280bfa5298/Assignment2Report/Z_Buffer%20On%20(1).png)
+
+
+Z-Buffer Off            |  Z-Buffer On
+:-------------------------:|:-------------------------:
+![Demo](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/bae4eef7ec4314c592221773d6401c280bfa5298/Assignment2Report/Z_Buffer%20Off%20(2).png)  |   ![Demo](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/bae4eef7ec4314c592221773d6401c280bfa5298/Assignment2Report/Z_Buffer%20On%20(2).png)
+
+
+Z-Buffer Off            |  Z-Buffer On
+:-------------------------:|:-------------------------:
+![Camera](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/bae4eef7ec4314c592221773d6401c280bfa5298/Assignment2Report/Z_Buffer%20Off%20(3).png)    |   ![camera](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/bae4eef7ec4314c592221773d6401c280bfa5298/Assignment2Report/Z_Buffer%20On%20(3).png)
 
