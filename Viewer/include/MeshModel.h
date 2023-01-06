@@ -45,6 +45,7 @@ public:
 	void SetTriColors(int color); ///
 	int GetTriColors() const; ///
 	int colors = 0; ///
+	bool ZBufferOn = 0; ///
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
 private:

@@ -438,6 +438,11 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			{
 				scene.GetActiveModel().SetTriColors(2);
 			}
+			int ZBuffer = ImGui::Button("ZBuffer");
+			if (ZBuffer)
+			{
+				scene.GetActiveModel().ZBufferOn = 1;
+			}
 
 			ImGui::End();
 		}

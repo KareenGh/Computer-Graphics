@@ -16,7 +16,9 @@ public:
 	void Renderer::DrawObject(MeshModel& Model);
 
 
-	void PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3); ///
+	void PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3);
+	void PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, MeshModel& Model); ///
+	///
 	bool InsidetheTriangle(int x, int y, int x1, int y1, int x2, int y2, int x3, int y3); ///
 	float area(int x1, int y1, int x2, int y2, int x3, int y3); ///
 	void ZBuffer(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3); ///
