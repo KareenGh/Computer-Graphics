@@ -553,64 +553,6 @@ void Renderer::DrawObject(MeshModel& Model)
 
 }
 
-//float Renderer::EdgeFunction(glm::vec3 v1, glm::vec3 v2, glm::vec3 p)
-//{
-//	return (p.x - v1.x) * (v2.y - v1.y) - (p.y - v1.y) * (v2.x - v1.x);
-//}
-//
-//bool Renderer::Overlaps(const glm::vec3 v1, const glm::vec3 v2, const glm::vec3 v3, const glm::vec3 point)
-//{
-//	bool doesOverlap = true;
-//
-//	std::vector<float> isLeft;
-//	isLeft.push_back(EdgeFunction(v2, v3, point));
-//	isLeft.push_back(EdgeFunction(v3, v1, point));
-//	isLeft.push_back(EdgeFunction(v1, v2, point));
-//
-//	// Get edges of triangles
-//	std::vector<glm::vec3> edges;
-//	edges.push_back(v3 - v2);
-//	edges.push_back(v1 - v3);
-//	edges.push_back(v2 - v1);
-//
-//	for (int i = 0; i < 3; i++)
-//	{
-//		if (isLeft[i])
-//		{
-//			doesOverlap &= isLeft[i] > 0;
-//		}
-//		else
-//		{
-//			// Check if the edge is a left edge or top edge
-//			doesOverlap &= (edges[i].y == 0 && edges[i].x > 0) || (edges[i].y > 0);
-//		}
-//	}
-//
-//	return doesOverlap;
-//}
-//
-//void Renderer::EdgeWalking(const Face& face, const MeshModel& model, const Camera& camera, const glm::vec3 color)
-//{
-//	std::vector<glm::vec3> transformedVecs;
-//	for (int i = 0; i < 3; i++)
-//	{
-//		transformedVecs.push_back(TransVector(model.GetVertice(face.GetVertexIndex(i) - 1), model, camera));
-//	}
-//
-//	auto boundingRect = model.GetBoundingRectangle(transformedVecs);
-//	for (int i = boundingRect[0].x; i <= boundingRect[1].x; i++)
-//	{
-//		for (int j = boundingRect[2].y; j <= boundingRect[1].y; j++)
-//		{
-//			glm::vec3 currPoint(i, j, 0);
-//			if (Overlaps(transformedVecs[0], transformedVecs[1], transformedVecs[2], currPoint))
-//			{
-//				PutPixel(i, j, color);
-//			}
-//		}
-//	}
-//}
-
 void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, MeshModel& Model)
 {	
 	MeshModel MyModel = Model;
@@ -619,8 +561,13 @@ void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const gl
 	float maxY = max(max(p1.y, p2.y), p3.y);
 	float minX = min(min(p1.x, p2.x), p3.x);
 	float maxX = max(max(p1.x, p2.x), p3.x);
-	float temp = 255 * 255;
-	glm::vec3 random_color = glm::vec3(static_cast <float>(rand() / temp), static_cast <float>(rand() / temp), static_cast <float>(rand() / temp));
+	
+	/* Generate a random color for every triangle */
+	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+	glm::vec3 random_color(r, g, b);
+
 	for (int j = maxY; j >= minY; j--)
 	{
 		for (int i = minX; i <= maxX; i++)
@@ -639,12 +586,6 @@ void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const gl
 				{
 					PutPixel(i, j, random_color);
 				}
-				//PutPixel(i, j, random_color);
-				/*glm::vec3 z = Z_Calculate(i, j, p1, p2, p3, p1, p2, p3);
-				if (z.z <= GetZ(i, j))
-				{
-					PutPixel(i, j, random_color);
-				}*/
 			}
 		}
 	}
@@ -751,30 +692,6 @@ void Renderer::SetMaxZBuffer()
 }
 
 /* Gray Scale */
-//void Renderer::PaintTrianglesGray()
-//{
-//	for (int i = 0; i < viewport_width; i++)
-//	{
-//		for (int j = 0; j < viewport_height; j++)
-//		{
-//			float z = GetZ(i, j);
-//			if (z != FLT_MAX)
-//			{
-//				PutPixel(i, j, GetGrayColor(z));
-//			}
-//		}
-//	}
-//}
-//
-//glm::vec3 Renderer::GetGrayColor(float z)
-//{
-//	float a = 1 / (maxbufferZ - minbufferZ);
-//	float b = -1 * a * minbufferZ;
-//	float c = 1 - (a * z + b);
-//
-//	return glm::vec3(c, c, c);
-//}
-
 void Renderer::PaintTrianglesGray() 
 {
 	// Calculate the scale and offset parameters for the linear transformation
