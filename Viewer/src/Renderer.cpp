@@ -751,26 +751,51 @@ void Renderer::SetMaxZBuffer()
 }
 
 /* Gray Scale */
-void Renderer::PaintTrianglesGray()
+//void Renderer::PaintTrianglesGray()
+//{
+//	for (int i = 0; i < viewport_width; i++)
+//	{
+//		for (int j = 0; j < viewport_height; j++)
+//		{
+//			float z = GetZ(i, j);
+//			if (z != FLT_MAX)
+//			{
+//				PutPixel(i, j, GetGrayColor(z));
+//			}
+//		}
+//	}
+//}
+//
+//glm::vec3 Renderer::GetGrayColor(float z)
+//{
+//	float a = 1 / (maxbufferZ - minbufferZ);
+//	float b = -1 * a * minbufferZ;
+//	float c = 1 - (a * z + b);
+//
+//	return glm::vec3(c, c, c);
+//}
+
+void Renderer::PaintTrianglesGray() 
 {
-	for (int i = 0; i < viewport_width; i++)
+	// Calculate the scale and offset parameters for the linear transformation
+	float a = 1 / (maxbufferZ - minbufferZ);
+	float b = -1 * a * minbufferZ;
+
+	for (int i = 0; i < viewport_width; i++) 
 	{
-		for (int j = 0; j < viewport_height; j++)
+		for (int j = 0; j < viewport_height; j++) 
 		{
+			// Check if the point (i, j) has a valid z-value
 			float z = GetZ(i, j);
-			if (z != FLT_MAX)
+			if (z != FLT_MAX) 
 			{
-				PutPixel(i, j, GetGrayColor(z));
+				// Calculate the gray color of the point (i, j) using the z-value
+				float c = 1 - (a * z + b);
+				glm::vec3 color(c, c, c);
+
+				// Set the color of the point (i, j)
+				PutPixel(i, j, color);
 			}
 		}
 	}
-}
-
-glm::vec3 Renderer::GetGrayColor(float z)
-{
-	float a = 1 / (maxbufferZ - minbufferZ);
-	float b = -1 * a * minbufferZ;
-	float c = 1 - (a * z + b);
-
-	return glm::vec3(c, c, c);
 }
