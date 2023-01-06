@@ -150,8 +150,9 @@ void MeshModel::SetTransformate()
 
 void MeshModel::SetTriColors(int color)
 {
-	colors = color; // 1 -> colors			0 -> gray
+	colors = color; // 1 -> colors			2 -> gray
 }
+
 int MeshModel::GetTriColors() const
 {
 	return colors;

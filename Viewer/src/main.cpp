@@ -436,7 +436,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			int Gray = ImGui::Button("Gray Model");
 			if (Gray)
 			{
-				scene.GetActiveModel().SetTriColors(0);
+				scene.GetActiveModel().SetTriColors(2);
 			}
 
 			ImGui::End();

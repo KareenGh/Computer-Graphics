@@ -27,6 +27,7 @@ Renderer::Renderer(int viewport_width, int viewport_height) :
 Renderer::~Renderer()
 {
 	delete[] color_buffer;
+	delete[] Z_Buffer;
 }
 
 void Renderer::PutPixel(int i, int j, const glm::vec3& color)
@@ -110,6 +111,10 @@ void Renderer::CreateBuffers(int w, int h)
 	CreateOpenglBuffer(); //Do not remove this line.
 	color_buffer = new float[3 * w * h];
 	ClearColorBuffer(glm::vec3(0.0f, 0.0f, 0.0f));
+
+	/*Ass 2a*/
+	Z_Buffer = new float[w * h];
+	SetMaxZBuffer();
 }
 
 //##############################
@@ -296,9 +301,9 @@ void Renderer::Render(const Scene& scene)
 				point3 = Changer * glm::vec4(MyModel.GetVertix(c2, 2), 1);
 
 
-				//point1 /= point1.w;
-				//point2 /= point2.w;
-				//point3 /= point3.w;
+				point1 /= point1.w;
+				point2 /= point2.w;
+				point3 /= point3.w;
 
 				point1[0] += viewport_width / 2;
 				point1[1] += viewport_height / 2;
@@ -314,6 +319,7 @@ void Renderer::Render(const Scene& scene)
 			}
 		}
 	}
+	SetMaxZBuffer(); ///
 	if (scene.GetModelCount()) {
 		//we use for loop to enable more than one object to be active 
 		for (int j = 0; j < scene.GetModelCount(); j++)
@@ -335,9 +341,9 @@ void Renderer::Render(const Scene& scene)
 				point3 = Changer * p3;
 
 				// turn back to vec3	
-		/*		point1 /= point1.w;
+				point1 /= point1.w;
 				point2 /= point2.w;
-				point3 /= point3.w;*/
+				point3 /= point3.w;
 
 				point1[0] += viewport_width / 2;
 				point1[1] += viewport_height / 2;
@@ -385,9 +391,9 @@ void Renderer::Render(const Scene& scene)
 					DrawLine(glm::vec2(max_x, max_y), glm::vec2(min_x, max_y), pick_color);
 					DrawLine(glm::vec2(max_x, max_y), glm::vec2(max_x, min_y), pick_color);
 				}
-				DrawLine(point1, point2, color);	//MyModel.ObjectColor
-				DrawLine(point1, point3, color);
-				DrawLine(point2, point3, color);
+				//DrawLine(point1, point2, color);	//MyModel.ObjectColor
+				//DrawLine(point1, point3, color);
+				//DrawLine(point2, point3, color);
 
 				if (MyModel.bounding_box)
 				{
@@ -490,12 +496,17 @@ void Renderer::Render(const Scene& scene)
 				}
 
 				/* Color Triangles */
-				if (MyModel.GetTriColors())
+				ZBuffer(glm::vec3(point1.x, point1.y, point1.z), glm::vec3(point2.x, point2.y, point2.z), glm::vec3(point3.x, point3.y, point3.z));
+				if (MyModel.GetTriColors() == 1)
 				{
 					PaintTriangles(glm::vec3(point1.x, point1.y, point1.z), glm::vec3(point2.x, point2.y, point2.z), glm::vec3(point3.x, point3.y, point3.z));
 				}
-			}
 
+				if (MyModel.GetTriColors() == 2)
+				{
+					PaintTrianglesGray();
+				}
+			}
 		}
 	}
 }
@@ -599,10 +610,10 @@ void Renderer::DrawObject(MeshModel& Model)
 
 void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3)
 {
-	float minY = std::min(std::min(p1.y, p2.y), p3.y);
-	float maxY = std::max(std::max(p1.y, p2.y), p3.y);
-	float minX = std::min(std::min(p1.x, p2.x), p3.x);
-	float maxX = std::max(std::max(p1.x, p2.x), p3.x);
+	float minY = min(min(p1.y, p2.y), p3.y);
+	float maxY = max(max(p1.y, p2.y), p3.y);
+	float minX = min(min(p1.x, p2.x), p3.x);
+	float maxX = max(max(p1.x, p2.x), p3.x);
 	float temp = 255 * 255;
 	glm::vec3 random_color = glm::vec3(static_cast <float>(rand() / temp), static_cast <float>(rand() / temp), static_cast <float>(rand() / temp));
 	for (int j = maxY; j >= minY; j--)
@@ -611,41 +622,142 @@ void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const gl
 		{
 			if (InsidetheTriangle(i, j, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y))
 			{
-				PutPixel(i, j, random_color);
-				//glm::vec3 z = Calc_z(i, j, p1, p2, p3, p1, p2, p3);
-				//if (z.z <= Get_Z_value(i, j))
-				//{
-				//	PutPixel(i, j, random_color);
-				//}
-
+				//PutPixel(i, j, random_color);
+				glm::vec3 z = Z_Calculate(i, j, p1, p2, p3, p1, p2, p3);
+				if (z.z <= GetZ(i, j))
+				{
+					PutPixel(i, j, random_color);
+				}
 			}
 		}
 	}
 }
 
-/* A function to check whether point P(x, y) lies inside the triangle formed
-   by A(x1, y1), B(x2, y2) and C(x3, y3) */ //https://www.geeksforgeeks.org/check-whether-a-given-point-lies-inside-a-triangle-or-not/
+/* A function to check whether point P(x, y) lies inside the triangle formed by A(x1, y1), B(x2, y2) and C(x3, y3) */ 
+// https://www.geeksforgeeks.org/check-whether-a-given-point-lies-inside-a-triangle-or-not/
 bool Renderer::InsidetheTriangle(int x, int y, int x1, int y1, int x2, int y2, int x3, int y3)
 {
-	/* Calculate area of triangle ABC */
 	float A = area(x1, y1, x2, y2, x3, y3);
-
-	/* Calculate area of triangle PBC */
 	float A1 = area(x, y, x2, y2, x3, y3);
-
-	/* Calculate area of triangle PAC */
 	float A2 = area(x1, y1, x, y, x3, y3);
-
-	/* Calculate area of triangle PAB */
 	float A3 = area(x1, y1, x2, y2, x, y);
 
 	/* Check if sum of A1, A2 and A3 is same as A */
 	return (A == A1 + A2 + A3);
 }
 
-/* A utility function to calculate area of triangle formed by (x1, y1),
-   (x2, y2) and (x3, y3) */
+/* A utility function to calculate area of triangle formed by (x1, y1), (x2, y2) and (x3, y3) */
 float Renderer::area(int x1, int y1, int x2, int y2, int x3, int y3)
 {
 	return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
+}
+
+/* Z-buffer */
+void Renderer::ZBuffer(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3)
+{
+	float minY = min(min(p1.y, p2.y), p3.y);
+	float maxY = max(max(p1.y, p2.y), p3.y);
+	float minX = min(min(p1.x, p2.x), p3.x);
+	float maxX = max(max(p1.x, p2.x), p3.x);
+	for (int j = maxY; j >= minY; j--)
+	{
+		for (int i = minX; i <= maxX; i++)
+		{
+			if (InsidetheTriangle(i, j, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y))
+			{
+				glm::vec3 z = Z_Calculate(i, j, p1, p2, p3, p1, p2, p3);
+				if (z.z <= GetZ(i, j))
+				{
+					maxbufferZ = std::max(maxbufferZ, z.z);
+					minbufferZ = std::min(minbufferZ, z.z);
+					SetZ(i, j, z.z);
+				}
+			}
+		}
+	}
+}
+
+glm::vec3 Renderer::Z_Calculate(int x, int y, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec3& val1, const glm::vec3& val2, const glm::vec3& val3)
+{
+	float A1 = area(x, y, p1.x, p1.y, p2.x, p2.y);
+	float A2 = area(x, y, p1.x, p1.y, p3.x, p3.y);
+	float A3 = area(x, y, p3.x, p3.y, p2.x, p2.y);
+	float A = A1 + A2 + A3;
+	glm::vec3 alpha = (A1 / A) * val3;
+	glm::vec3 beta = (A2 / A) * val2;
+	glm::vec3 gamma = (A3 / A) * val1;
+	return (alpha + beta + gamma);
+}
+
+float Renderer::GetZ(int i, int j)
+{
+	if (i < 0) 
+		return 0;
+	if (i >= viewport_width) 
+		return 0;
+	if (j < 0) 
+		return 0;
+	if (j >= viewport_height) 
+		return 0;
+	
+	return Z_Buffer[Z_INDEX(viewport_width, i, j)];
+}
+
+void Renderer::SetZ(int i, int j, float z)
+{
+	if (i < 0) 
+		return; 
+	if (i >= viewport_width) 
+		return;
+	if (j < 0) 
+		return; 
+	if (j >= viewport_height) 
+		return;
+
+	Z_Buffer[Z_INDEX(viewport_width, i, j)] = z;
+}
+
+void Renderer::SetMaxZBuffer()
+{
+	minbufferZ = FLT_MAX;
+	maxbufferZ = FLT_MIN;
+	for (int i = 0; i < viewport_width; i++)
+	{
+		for (int j = 0; j < viewport_height; j++)
+		{
+			Z_Buffer[Z_INDEX(viewport_width, i, j)] = FLT_MAX;
+
+			color_buffer[INDEX(viewport_width, i, j, 0)] = 0.f;
+			color_buffer[INDEX(viewport_width, i, j, 1)] = 0.f;
+			color_buffer[INDEX(viewport_width, i, j, 2)] = 0.f;
+		}
+	}
+}
+
+/* Gray Scale */
+void Renderer::PaintTrianglesGray()
+{
+	glm::vec3 _color;
+
+	for (int i = 0; i < viewport_width; i++)
+	{
+		for (int j = 0; j < viewport_height; j++)
+		{
+			float z = GetZ(i, j);
+			if (z != FLT_MAX)
+			{
+				_color = GetGrayColor(z);
+				PutPixel(i, j, _color);
+			}
+		}
+	}
+}
+
+glm::vec3 Renderer::GetGrayColor(float z)
+{
+	float a = 1 / (maxbufferZ - minbufferZ);
+	float b = -1 * a * minbufferZ;
+	float c = 1 - (a * z + b);
+	glm::vec3 _color(c, c, c);
+	return _color;
 }
