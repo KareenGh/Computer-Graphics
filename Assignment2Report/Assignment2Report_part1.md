@@ -33,7 +33,7 @@ In order to do this we added PaintTriangles function:
 ## 4. Implement the z-buffer algorithm. Create a buffer the same size as the color buffer but with one floating point value per pixel. Update the z-buffer in the DrawTriangle function. The issue mentioned above should not occur anymore. The z-buffer can be visualized as a grey scale image (as in the lecture). Show side-by-side pictures of the color buffer and z-buffer, for several models or viewpoints.
 
 ### Z-Buffer Algorithm: 
-To implement the Z-buffer algorithm we added an array (buffer) storing the depth (Z coordinate) of each pixel and using it to decide which pixel should be drawn at each screen coordinate.
+To implement the Z-buffer algorithm we added an array (buffer) storing the depth (Z coordinate) of each pixel and using it to decide which pixel should be drawn at each screen coordinate. And then we implemented the z-buffer algorithm we saw in the lecture.
 
 first We added a SetMaxZBuffer function to set all values in the buffer to a maximum value.
 Next, in the ZBuffer function: 
@@ -43,7 +43,8 @@ Next, in the ZBuffer function:
     - If the calculated Z value is less than the value stored in the Z-buffer at that pixel location if (z.z <= GetZ(x, y)), update the Z-buffer with the new Z value.
     - We call the PaintTriangles and draw the pixel with the appropriate color.
 
-(2) Z_Calculate function: calculates the Z value of a pixel (x, y) within a triangle formed by three vertices with known Z values (p1, p2, p3) by interpolating the Z values of the triangle's vertices based on the areas of the sub-triangles formed by the point (x, y) and the triangle's vertices.
+(2) Z_Calculate function: we implemented the "Linear interpolation on triangles Barycentric coordinates" that we learned in the lecture. 
+We calculates the Z value of a pixel (x, y) within a triangle created by three vertices with known Z values (p1, p2, p3) by interpolating the Z values of the triangle's vertices based on the areas of the sub-triangles (A1, A2, A3) formed by the point (x, y) and the triangle's vertices.
 
 ### Grey Scale:
 To do the grey scale image we added a function that iterates over all the points in the viewport and checks if each point has a valid z-value. If a point has a valid z-value, the function calculates a gray color for the point based on its z-value using a linear transformation, which scales and offsets the z-value to the range [0, 1]. The function then sets the color of the point to the calculated gray color using the PutPixel function. This results in a grayscale image where points closer to the viewer are darker and points farther from the viewer are lighter.
