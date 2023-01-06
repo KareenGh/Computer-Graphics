@@ -13,4 +13,20 @@ It's a screenshot and a video that showing our implement:
 https://user-images.githubusercontent.com/116673155/209837168-62286a13-15f3-4de8-bf81-f4870828ab59.mp4
 
 
+## 2. We implemented the edge walking approach.
+
+
+## 3. Change the DrawTriangle function such that it fills the entire triangle. Place a model in the scene such that it is clearly visible. Pick a random color for every triangle and place a screenshot of the result in your report. Note that you will see triangles overlapping; triangles in the back might be occluding triangles in the front.
+
+In order to do this we added PaintTriangles function:
+1. Calculate the min and max x and y coordinates of the triangle by taking the minimum and maximum values of the x and y coordinates of the three vertices.
+2. Generate a random color.
+3. Iterates over the pixels of the triangle, and for each pixel, it checks whether the pixel is inside the triangle using the InsidetheTriangle function (1).
+4. The function calls the PutPixel function to set the color of the pixel to the random color.
+
+(1) InsidetheTriangle function: The InsidetheTriangle function is used to determine whether a given point (x, y) lies inside a triangle defined by three points (x1, y1), (x2, y2), and (x3, y3).
+
+![Chain](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Colorful%20Models%202a%20(1).png)
+![Tea](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Colorful%20Models%202a%20(2).png)
+![Bunny](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Colorful%20Models%202a%20(3).png)
 
