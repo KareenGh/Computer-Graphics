@@ -68,6 +68,9 @@ int main(int argc, char** argv)
 
 	scene.active_camera_index = 0;
 	
+	Light a_light = Light();
+	std::shared_ptr<Light> lighting = std::make_shared<Light>(a_light);
+	scene.lights.push_back(lighting);
 
 	ImGuiIO& io = SetupDearImgui(window);
 	glfwSetScrollCallback(window, ScrollCallback);
@@ -446,5 +449,19 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 
 			ImGui::End();
 		}
+		ImGui::Begin("Lighting & Shading");
+		//ImGui::RadioButton("Flat Shading", &scene.GetActiveModel().shading, 1);
+		ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -200, 200);
+		ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -200, 200);
+		ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -200, 200);
+		ImGui::SliderFloat("alfa", &scene.GetActiveModel().alfa, 0, 360);
+		ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene.lights[0]->ambient_ref);
+		ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene.lights[0]->diffuse_ref);
+		ImGui::ColorEdit3("Specular_Reflection", (float*)&scene.lights[0]->specular_ref);
+		/*for materials*/
+		ImGui::ColorEdit3("Material_Ambient_Reflection", (float*)&scene.GetActiveModel().Ambient_ref);
+		ImGui::ColorEdit3("Material_Diffuse_Reflection", (float*)&scene.GetActiveModel().Diffuse_ref);
+		ImGui::ColorEdit3("Material_Specular_Reflection", (float*)&scene.GetActiveModel().Specular_ref);
+		ImGui::End();
 	}
 }

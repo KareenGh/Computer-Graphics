@@ -10,6 +10,7 @@
 #include <glm/gtx/transform.hpp>
 
 
+
 #define INDEX(width,x,y,c) ((x)+(y)*(width))*3+(c)
 #define Z_INDEX(width,x,y) ((x)+(y)*(width))
 
@@ -352,26 +353,26 @@ void Renderer::Render(const Scene& scene)
 				point3[0] += viewport_width / 2;
 				point3[1] += viewport_height / 2;
 
-
+				glm::vec3 fn1 = p1 - p2;
+				glm::vec3 fn2 = p2 - p3;
+				glm::vec4 facenormal = glm::vec4(glm::cross(fn1, fn2), 0);
+				glm::vec4 f_average = (point1 + point2 + point3);
+				f_average /= 3;
 				if (MyModel.face_normals)
 				{
-					glm::vec3 fn1 = p1 - p2;
-					glm::vec3 fn2 = p2 - p3;
-					glm::vec4 facenormal = glm::vec4(glm::cross(fn1, fn2), 0);
-					glm::vec4 f_average = (point1 + point2 + point3);
-					f_average /= 3;
 					facenormal *= 1200;
 					DrawLine(f_average, f_average + facenormal, glm::vec3(12, 156, 31));
 
 				}
 
+				const Face& fv = MyModel.GetFace(i);
+				glm::vec3 vn_color = glm::vec3(76, 153, 0);
+				glm::vec4 vn1 = glm::vec4(MyModel.normals[fv.GetNormalIndex(0) - 1], 0);
+				glm::vec4 vn2 = glm::vec4(MyModel.normals[fv.GetNormalIndex(1) - 1], 0);
+				glm::vec4 vn3 = glm::vec4(MyModel.normals[fv.GetNormalIndex(2) - 1], 0);
 				if (MyModel.vertex_normals)
 				{
-					const Face& fv = MyModel.GetFace(i);
 					glm::vec3 vn_color = glm::vec3(76, 153, 0);
-					glm::vec4 vn1 = glm::vec4(MyModel.normals[fv.GetNormalIndex(0) - 1], 0);
-					glm::vec4 vn2 = glm::vec4(MyModel.normals[fv.GetNormalIndex(1) - 1], 0);
-					glm::vec4 vn3 = glm::vec4(MyModel.normals[fv.GetNormalIndex(2) - 1], 0);
 					vn1 *= 15, vn2 *= 15, vn3 *= 15;
 					DrawLine(point1, point1 + vn1, vn_color);
 					DrawLine(point2, point2 + vn2, vn_color);
@@ -502,7 +503,7 @@ void Renderer::Render(const Scene& scene)
 				}
 				if (MyModel.GetTriColors() == 1)
 				{
-					PaintTriangles(glm::vec3(point1.x, point1.y, point1.z), glm::vec3(point2.x, point2.y, point2.z), glm::vec3(point3.x, point3.y, point3.z), MyModel);
+					PaintTriangles(glm::vec3(point1.x, point1.y, point1.z), glm::vec3(point2.x, point2.y, point2.z), glm::vec3(point3.x, point3.y, point3.z), MyModel,temp_scene,facenormal);
 				}
 
 				if (MyModel.GetTriColors() == 2)
@@ -553,7 +554,7 @@ void Renderer::DrawObject(MeshModel& Model)
 
 }
 
-void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, MeshModel& Model)
+void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, MeshModel& Model,Scene& scene,const glm::vec3 normal)
 {	
 	MeshModel MyModel = Model;
 
@@ -574,9 +575,11 @@ void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const gl
 		{
 			if (InsidetheTriangle(i, j, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y))
 			{
+				glm::vec3 z = Z_Calculate(i, j, p1, p2, p3, p1, p2, p3);
+				z =z*glm::vec3(-1);
 				if (MyModel.ZBufferOn == 1)
 				{
-					glm::vec3 z = Z_Calculate(i, j, p1, p2, p3, p1, p2, p3);
+					
 					if (z.z <= GetZ(i, j))
 					{
 						PutPixel(i, j, random_color);
@@ -584,7 +587,9 @@ void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const gl
 				}
 				else
 				{
+					random_color = ChooseColor(MyModel, scene, p1, normal);
 					PutPixel(i, j, random_color);
+					SetZ(i, j, z.z);
 				}
 			}
 		}
@@ -715,4 +720,48 @@ void Renderer::PaintTrianglesGray()
 			}
 		}
 	}
+}
+
+glm::vec3 Renderer::ChooseColor(MeshModel& Model, Scene& scene, glm::vec3 a_point, glm::vec3 normal)
+{
+	int lightsize = scene.lights.size();
+	int c = 0;
+	glm::vec3 color = glm::vec3(0);
+	/*Defining vectors to save each reflection result*/
+		glm::vec3 Ia = glm::vec3(0); /*ambient*/ 
+		glm::vec3 Id = glm::vec3(0); /*diffuse*/
+		glm::vec3 Is = glm::vec3(0); /*specular*/
+
+		while (c < lightsize)
+		{
+			/* Ambient Reflection - Ia=La*Ka */
+			/* La-ambient light intensity, Ka-ambient color*/
+			glm::vec3 La = scene.lights[0]->ambient_ref;
+			glm::vec3 Ka = scene.GetActiveModel().Ambient_ref;
+			Ia = La * Ka;
+
+			/* Diffuse Reflection - Id=Kd(l*n)Ld */
+			/* Ld-Source diffuse intensity, Kd-Surface diffuse reflection coefficient ,(l*n)=cos teta */
+			glm::vec3 Kd = scene.GetActiveModel().Diffuse_ref;
+			glm::vec3 location = glm::vec3(scene.lights[0]->TranslateMat[3][0], scene.lights[0]->TranslateMat[3][1], scene.lights[0]->TranslateMat[3][2]);
+			glm::vec3 l = a_point - location;
+			glm::vec3 Ld = scene.lights[0]->diffuse_ref;
+			Id = Kd * max(0.0f, (glm::dot(l, glm::normalize(normal)))) * Ld;
+
+			/* Specular Reflection - Is=Ks(r*v)^alfa*Ls */
+			/*Ks-Surface specular reflection coefficient, (r*v)=cos teta, alfa-Shininess coefficient, Ls-Source specular intensity */
+			glm::vec3 Ks = scene.GetActiveModel().Specular_ref;
+			glm::vec3 r = l - 2 * glm::dot(l, glm::normalize(normal)) * glm::normalize(normal);
+			glm::vec3 v = a_point - scene.GetActiveCamera().Eye;
+			glm::vec3 Ls = scene.lights[0]->specular_ref;
+			Is = Ks * pow(glm::dot(r, v), (scene.GetActiveModel().alfa / 800)) * Ls;
+			glm::vec4 r_4 = glm::vec4(r, 1);
+			glm::vec4 l_4 = glm::vec4(l, 1);
+			r_4 /= 50;
+			l_4 /= -50;
+
+			color += (Ia);
+			c++;
+		}
+	return color;
 }

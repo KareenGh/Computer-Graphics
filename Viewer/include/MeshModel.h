@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <string>
 #include "Face.h"
+#include "Light.h"
 
 class MeshModel
 {
@@ -46,6 +47,11 @@ public:
 	int GetTriColors() const; ///
 	int colors = 0; ///
 	bool ZBufferOn = 0; ///
+	float alfa = 1;
+	glm::vec3 Ambient_ref=glm::vec3(1);
+	glm::vec3 Diffuse_ref= glm::vec3(1);
+	glm::vec3 Specular_ref= glm::vec3(1);
+
 	std::vector<glm::vec3> vertices;
 	std::vector<glm::vec3> normals;
 private:

@@ -5,6 +5,7 @@
 
 #include "Camera.h"
 #include "MeshModel.h"
+#include "Light.h"
 
 using namespace std;
 
@@ -27,7 +28,8 @@ public:
 
 	void SetActiveModelIndex(int index);
 	int GetActiveModelIndex() const;
-	
+
+	vector<shared_ptr<Light>> lights;
 	shared_ptr<MeshModel> camera1;
 	int active_camera_index;
 private:
