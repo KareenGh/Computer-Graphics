@@ -16,3 +16,4 @@ La-ambient light intensity
 Ka-ambient color
 
 Here we will show you the results we've got:
+![2B-1](https://user-images.githubusercontent.com/116673155/218284271-ba6101ca-5c95-4844-a086-c4357486afbf.png)
