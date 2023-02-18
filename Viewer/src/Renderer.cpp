@@ -21,6 +21,35 @@ Renderer::Renderer(int viewport_width, int viewport_height) :
 	viewport_width(viewport_width),
 	viewport_height(viewport_height)
 {
+	Z_Buffer = new float* [viewport_width];
+	colored = new glm::vec3* [viewport_width];
+
+	int z = 0, c;
+	while (z < viewport_width)
+	{
+		Z_Buffer[z] = new float[viewport_height];
+		z++;
+	}
+	z = 0;
+	while (z < viewport_width)
+	{
+		for (c = 0; c < viewport_height; c++)
+			Z_Buffer[z][c] = -INFINITY;
+		z++;
+	}
+	z = 0;
+	while (z < viewport_width)
+	{
+		colored[z] = new glm::vec3[viewport_height];
+		z++;
+	}
+	z = 0;
+	while (z < viewport_width)
+	{
+		for (c = 0; c < viewport_height; c++)
+			colored[z][c] = glm::vec3(0.5);
+		z++;
+	}
 	InitOpenglRendering();
 	CreateBuffers(viewport_width, viewport_height);
 }
@@ -28,7 +57,7 @@ Renderer::Renderer(int viewport_width, int viewport_height) :
 Renderer::~Renderer()
 {
 	delete[] color_buffer;
-	delete[] Z_Buffer;
+	//delete[] Z_Buffer;
 }
 
 void Renderer::PutPixel(int i, int j, const glm::vec3& color)
@@ -114,8 +143,8 @@ void Renderer::CreateBuffers(int w, int h)
 	ClearColorBuffer(glm::vec3(0.0f, 0.0f, 0.0f));
 
 	/*Ass 2a*/
-	Z_Buffer = new float[w * h];
-	SetMaxZBuffer();
+	//Z_Buffer = new float[w * h];
+	//SetMaxZBuffer();
 }
 
 //##############################
@@ -314,13 +343,13 @@ void Renderer::Render(const Scene& scene)
 				point3[1] += viewport_height / 2;
 				
 				
-				DrawLine(point1, point2, color);	
+			/*	DrawLine(point1, point2, color);	
 				DrawLine(point1, point3, color);
-				DrawLine(point2, point3, color);
+				DrawLine(point2, point3, color);*/
 			}
 		}
 	}
-	SetMaxZBuffer(); ///
+	//SetMaxZBuffer(); ///
 	if (scene.GetModelCount()) {
 		//we use for loop to enable more than one object to be active 
 		for (int j = 0; j < scene.GetModelCount(); j++)
@@ -496,8 +525,42 @@ void Renderer::Render(const Scene& scene)
 					DrawLine(point_top, point_bottom, glm::vec3(0.8f, 0.8f, 0.8f));
 				}
 
+				glm::vec3 fc;
+				int shade = scene.GetActiveModel().shade_type;
+				if (shade == 0)
+					fc = ChooseColor(scene.GetActiveModel(), temp_scene, point1, facenormal);
+				
+				for (int m = min_x; m < max_x + 1; m++)
+				{
+					for (int n = min_y; n < max_y + 1; n++)
+					{
+						if (m < viewport_width && n < viewport_height && m>0 && n>0)
+						{
+							bool is_in = InsidetheTriangle(m, n, point1.x, point1.y, point2.x, point2.y, point3.x, point3.y);
+							if (is_in)
+							{
+								float Z, A, A1, A2, A3;
+								A1 = area(m, n, point2.x, point2.y, point3.x, point3.y);
+								A2 = area(m, n, point1.x, point1.y, point3.x, point3.y);
+								A3 = area(m, n, point1.x, point1.y, point2.x, point2.y);
+								A = A1 + A2 + A3;
+								Z = (((A1 / A) * point1.z) + ((A2 / A) * point2.z) + ((A3 / A) * point3.z));
+								if (Z > maxbufferZ)
+									maxbufferZ = Z;
+								if (Z < minbufferZ)
+									minbufferZ = Z;
+								if (Z > Z_Buffer[m][n])
+								{
+									if (shade == 0)
+										colored[m][n] = fc;
+									Z_Buffer[m][n] = Z;
+								}
+							}
+						}
+					}
+				}
 				/* Color Triangles */
-				if (MyModel.ZBufferOn == 1)
+				/*if (MyModel.ZBufferOn == 1)
 				{
 					ZBuffer(glm::vec3(point1.x, point1.y, point1.z), glm::vec3(point2.x, point2.y, point2.z), glm::vec3(point3.x, point3.y, point3.z));
 				}
@@ -509,7 +572,20 @@ void Renderer::Render(const Scene& scene)
 				if (MyModel.GetTriColors() == 2)
 				{
 					PaintTrianglesGray();
-				}
+				}*/
+
+			}
+		}
+	}
+	for (int i = 0; i < viewport_width; i++)
+	{
+		for (int j = 0; j < viewport_height; j++)
+		{
+			if (Z_Buffer[i][j] > -INFINITY)
+			{
+				float sub = 1 - ((maxbufferZ - Z_Buffer[i][j]) / (maxbufferZ - minbufferZ));
+				PutPixel(i, j, sub * colored[i][j]);
+				Z_Buffer[i][j] = -INFINITY;
 			}
 		}
 	}
@@ -554,47 +630,47 @@ void Renderer::DrawObject(MeshModel& Model)
 
 }
 
-void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, MeshModel& Model,Scene& scene,const glm::vec3 normal)
-{	
-	MeshModel MyModel = Model;
-
-	float minY = min(min(p1.y, p2.y), p3.y);
-	float maxY = max(max(p1.y, p2.y), p3.y);
-	float minX = min(min(p1.x, p2.x), p3.x);
-	float maxX = max(max(p1.x, p2.x), p3.x);
-	
-	/* Generate a random color for every triangle */
-	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-	glm::vec3 random_color(r, g, b);
-
-	for (int j = maxY; j >= minY; j--)
-	{
-		for (int i = minX; i <= maxX; i++)
-		{
-			if (InsidetheTriangle(i, j, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y))
-			{
-				glm::vec3 z = Z_Calculate(i, j, p1, p2, p3, p1, p2, p3);
-				z =z*glm::vec3(-1);
-				if (MyModel.ZBufferOn == 1)
-				{
-					
-					if (z.z <= GetZ(i, j))
-					{
-						PutPixel(i, j, random_color);
-					}
-				}
-				else
-				{
-					random_color = ChooseColor(MyModel, scene, p1, normal);
-					PutPixel(i, j, random_color);
-					SetZ(i, j, z.z);
-				}
-			}
-		}
-	}
-}
+//void Renderer::PaintTriangles(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, MeshModel& Model,Scene& scene,const glm::vec3 normal)
+//{	
+//	MeshModel MyModel = Model;
+//
+//	float minY = min(min(p1.y, p2.y), p3.y);
+//	float maxY = max(max(p1.y, p2.y), p3.y);
+//	float minX = min(min(p1.x, p2.x), p3.x);
+//	float maxX = max(max(p1.x, p2.x), p3.x);
+//	
+//	/* Generate a random color for every triangle */
+//	float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+//	float g = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+//	float b = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+//	glm::vec3 random_color(r, g, b);
+//
+//	for (int j = maxY; j >= minY; j--)
+//	{
+//		for (int i = minX; i <= maxX; i++)
+//		{
+//			if (InsidetheTriangle(i, j, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y))
+//			{
+//				glm::vec3 z = Z_Calculate(i, j, p1, p2, p3, p1, p2, p3);
+//				z =z*glm::vec3(-1);
+//				if (MyModel.ZBufferOn == 1)
+//				{
+//					
+//					if (z.z <= GetZ(i, j))
+//					{
+//						PutPixel(i, j, random_color);
+//					}
+//				}
+//				else
+//				{
+//					random_color = ChooseColor(MyModel, scene, p1, normal);
+//					PutPixel(i, j, random_color);
+//					SetZ(i, j, z.z);
+//				}
+//			}
+//		}
+//	}
+//}
 
 bool Renderer::InsidetheTriangle(int x, int y, int x1, int y1, int x2, int y2, int x3, int y3)
 {
@@ -616,111 +692,111 @@ float Renderer::area(int x1, int y1, int x2, int y2, int x3, int y3)
 	return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
 }
 
-/* Z-buffer */
-void Renderer::ZBuffer(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3)
-{
-	float min_Y = min(min(p1.y, p2.y), p3.y);
-	float max_Y = max(max(p1.y, p2.y), p3.y);
-	float min_X = min(min(p1.x, p2.x), p3.x);
-	float max_X = max(max(p1.x, p2.x), p3.x);
+///* Z-buffer */
+//void Renderer::ZBuffer(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3)
+//{
+//	float min_Y = min(min(p1.y, p2.y), p3.y);
+//	float max_Y = max(max(p1.y, p2.y), p3.y);
+//	float min_X = min(min(p1.x, p2.x), p3.x);
+//	float max_X = max(max(p1.x, p2.x), p3.x);
+//
+//	// Loop over the pixels of the bounding rectangle
+//	for (int y = min_Y; y <= max_Y; y++) 
+//	{
+//		for (int x = min_X; x <= max_X; x++) 
+//		{
+//			// Check if the point (x, y) is inside the triangle
+//			if (InsidetheTriangle(x, y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)) 
+//			{
+//				glm::vec3 z = Z_Calculate(x, y, p1, p2, p3, p1, p2, p3);
+//
+//				if (z.z <= GetZ(x, y)) 
+//				{
+//					maxbufferZ = max(maxbufferZ, z.z);
+//					minbufferZ = min(minbufferZ, z.z);
+//					SetZ(x, y, z.z);
+//				}
+//			}
+//		}
+//	}
+//}
 
-	// Loop over the pixels of the bounding rectangle
-	for (int y = min_Y; y <= max_Y; y++) 
-	{
-		for (int x = min_X; x <= max_X; x++) 
-		{
-			// Check if the point (x, y) is inside the triangle
-			if (InsidetheTriangle(x, y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y)) 
-			{
-				glm::vec3 z = Z_Calculate(x, y, p1, p2, p3, p1, p2, p3);
+//glm::vec3 Renderer::Z_Calculate(int x, int y, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec3& val1, const glm::vec3& val2, const glm::vec3& val3)
+//{
+//	float A1 = area(x, y, p1.x, p1.y, p2.x, p2.y);
+//	float A2 = area(x, y, p1.x, p1.y, p3.x, p3.y);
+//	float A3 = area(x, y, p3.x, p3.y, p2.x, p2.y);
+//	float A = A1 + A2 + A3;
+//
+//	return (((A1 / A) * val3) + ((A2 / A) * val2) + ((A3 / A) * val1));
+//}
 
-				if (z.z <= GetZ(x, y)) 
-				{
-					maxbufferZ = max(maxbufferZ, z.z);
-					minbufferZ = min(minbufferZ, z.z);
-					SetZ(x, y, z.z);
-				}
-			}
-		}
-	}
-}
+//float Renderer::GetZ(int i, int j)
+//{
+//	// Check if the point (i, j) is inside the viewport
+//	if (i < 0 || i >= viewport_width || j < 0 || j >= viewport_height) 
+//	{
+//		return 0;
+//	}
+//
+//	// Return the z-value of the point (i, j) from the Z-buffer
+//	return Z_Buffer[Z_INDEX(viewport_width, i, j)];
+//}
 
-glm::vec3 Renderer::Z_Calculate(int x, int y, const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec3& val1, const glm::vec3& val2, const glm::vec3& val3)
-{
-	float A1 = area(x, y, p1.x, p1.y, p2.x, p2.y);
-	float A2 = area(x, y, p1.x, p1.y, p3.x, p3.y);
-	float A3 = area(x, y, p3.x, p3.y, p2.x, p2.y);
-	float A = A1 + A2 + A3;
+//void Renderer::SetZ(int i, int j, float z)
+//{	
+//	// Check if the point (i, j) is inside the viewport
+//	if (i < 0 || i >= viewport_width || j < 0 || j >= viewport_height) 
+//	{
+//		return;
+//	}
+//
+//	// Set the z-value of the point (i, j) in the Z-buffer
+//	Z_Buffer[Z_INDEX(viewport_width, i, j)] = z;
+//}
 
-	return (((A1 / A) * val3) + ((A2 / A) * val2) + ((A3 / A) * val1));
-}
-
-float Renderer::GetZ(int i, int j)
-{
-	// Check if the point (i, j) is inside the viewport
-	if (i < 0 || i >= viewport_width || j < 0 || j >= viewport_height) 
-	{
-		return 0;
-	}
-
-	// Return the z-value of the point (i, j) from the Z-buffer
-	return Z_Buffer[Z_INDEX(viewport_width, i, j)];
-}
-
-void Renderer::SetZ(int i, int j, float z)
-{	
-	// Check if the point (i, j) is inside the viewport
-	if (i < 0 || i >= viewport_width || j < 0 || j >= viewport_height) 
-	{
-		return;
-	}
-
-	// Set the z-value of the point (i, j) in the Z-buffer
-	Z_Buffer[Z_INDEX(viewport_width, i, j)] = z;
-}
-
-void Renderer::SetMaxZBuffer()
-{
-	minbufferZ = FLT_MAX;
-	maxbufferZ = FLT_MIN;
-	for (int i = 0; i < viewport_width; i++)
-	{
-		for (int j = 0; j < viewport_height; j++)
-		{
-			Z_Buffer[Z_INDEX(viewport_width, i, j)] = FLT_MAX;
-
-			//color_buffer[INDEX(viewport_width, i, j, 0)] = 0.f;
-			//color_buffer[INDEX(viewport_width, i, j, 1)] = 0.f;
-			//color_buffer[INDEX(viewport_width, i, j, 2)] = 0.f;
-		}
-	}
-}
+//void Renderer::SetMaxZBuffer()
+//{
+//	minbufferZ = FLT_MAX;
+//	maxbufferZ = FLT_MIN;
+//	for (int i = 0; i < viewport_width; i++)
+//	{
+//		for (int j = 0; j < viewport_height; j++)
+//		{
+//			Z_Buffer[Z_INDEX(viewport_width, i, j)] = FLT_MAX;
+//
+//			//color_buffer[INDEX(viewport_width, i, j, 0)] = 0.f;
+//			//color_buffer[INDEX(viewport_width, i, j, 1)] = 0.f;
+//			//color_buffer[INDEX(viewport_width, i, j, 2)] = 0.f;
+//		}
+//	}
+//}
 
 /* Gray Scale */
-void Renderer::PaintTrianglesGray() 
-{
-	// Calculate the scale and offset parameters for the linear transformation
-	float a = 1 / (maxbufferZ - minbufferZ);
-	float b = -1 * a * minbufferZ;
-
-	for (int i = 0; i < viewport_width; i++) 
-	{
-		for (int j = 0; j < viewport_height; j++) 
-		{
-			// Check if the point (i, j) has a valid z-value
-			float z = GetZ(i, j);
-			if (z != FLT_MAX) 
-			{
-				// Calculate the gray color of the point (i, j) using the z-value
-				float c = 1 - (a * z + b);
-				glm::vec3 color(c, c, c);
-
-				// Set the color of the point (i, j)
-				PutPixel(i, j, color);
-			}
-		}
-	}
-}
+//void Renderer::PaintTrianglesGray() 
+//{
+//	// Calculate the scale and offset parameters for the linear transformation
+//	float a = 1 / (maxbufferZ - minbufferZ);
+//	float b = -1 * a * minbufferZ;
+//
+//	for (int i = 0; i < viewport_width; i++) 
+//	{
+//		for (int j = 0; j < viewport_height; j++) 
+//		{
+//			// Check if the point (i, j) has a valid z-value
+//			float z = GetZ(i, j);
+//			if (z != FLT_MAX) 
+//			{
+//				// Calculate the gray color of the point (i, j) using the z-value
+//				float c = 1 - (a * z + b);
+//				glm::vec3 color(c, c, c);
+//
+//				// Set the color of the point (i, j)
+//				PutPixel(i, j, color);
+//			}
+//		}
+//	}
+//}
 
 glm::vec3 Renderer::ChooseColor(MeshModel& Model, Scene& scene, glm::vec3 a_point, glm::vec3 normal)
 {
@@ -760,7 +836,7 @@ glm::vec3 Renderer::ChooseColor(MeshModel& Model, Scene& scene, glm::vec3 a_poin
 			r_4 /= 50;
 			l_4 /= -50;
 
-			color += (Ia);
+			color += (Ia+Id);
 			c++;
 		}
 	return color;

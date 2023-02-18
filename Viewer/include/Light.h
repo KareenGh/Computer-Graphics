@@ -2,6 +2,7 @@
 #include <glm/glm.hpp>
 #include <glad/glad.h>
 
+/*Defining a new class for Light*/
 class Light
 {
 public:

@@ -8,6 +8,7 @@ First of all we have defined a new class Called Light,we add the option for movi
 and specify a material for each model to.As we learned at lecture to compute lighting for ambient light is by using this equation - Ia = La * Ka when :
 La-ambient light intensity
 Ka-ambient color
+You can see that we got one colored model and not affected by any light moving
 
 Here we will show you the results we've got:
-![2B-1](https://user-images.githubusercontent.com/116673155/218284271-ba6101ca-5c95-4844-a086-c4357486afbf.png)
+Here u can see when the Ambient light is white we got a model colored with the material color 

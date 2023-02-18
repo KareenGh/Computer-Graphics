@@ -450,10 +450,10 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::End();
 		}
 		ImGui::Begin("Lighting & Shading");
-		//ImGui::RadioButton("Flat Shading", &scene.GetActiveModel().shading, 1);
-		ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -200, 200);
-		ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -200, 200);
-		ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -200, 200);
+		ImGui::RadioButton("Flat Shading", &scene.GetActiveModel().shade_type, 0);
+		ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -700, 700);
+		ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -700, 700);
+		ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -700, 700);
 		ImGui::SliderFloat("alfa", &scene.GetActiveModel().alfa, 0, 360);
 		ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene.lights[0]->ambient_ref);
 		ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene.lights[0]->diffuse_ref);
