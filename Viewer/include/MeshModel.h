@@ -26,7 +26,7 @@ public:
 	bool bounding_box = false;
 	bool face_normals = false, vertex_normals = false;
 	bool ModelAxis = false; //
-	bool bounding_rectangle = false;
+	bool bounding_rectangle = false, reflection_vec = false;
 	glm::vec3 ObjectColor = glm::vec3(1.0f, 0.0f, 0.0f);
 	glm::mat4x4 Scale_mat = glm::mat4x4(200, 0, 0, 0, 0, 200, 0, 0, 0, 0, 200, 0, 0, 0, 0, 1);
 	glm::mat4x4 Translation_mat = glm::mat4x4(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);

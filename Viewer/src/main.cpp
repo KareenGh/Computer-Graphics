@@ -450,8 +450,10 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::End();
 		}
 		ImGui::Begin("Lighting & Shading");
+		ImGui::Checkbox("reflection vector", &scene.GetActiveModel().reflection_vec);
 		ImGui::RadioButton("Flat Shading", &scene.GetActiveModel().shade_type, 0);
 		ImGui::RadioButton("Gouraud Shading", &scene.GetActiveModel().shade_type, 1);
+		ImGui::RadioButton("Phong Shading", &scene.GetActiveModel().shade_type, 2);
 		ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -1000, 1000);
 		ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -1000, 1000);
 		ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -1000, 1000);

@@ -290,7 +290,7 @@ void Renderer::Render(const Scene& scene)
 	glm::vec4 point1, point2, point3,p1,p2,p3;
 	glm::mat4x4 ScaleTransMat;
 	glm::mat4x4 TransMat;
-	glm::ivec3 color(0 , 0 , 0);
+	glm::ivec3 color(255 , 255 , 255);
 	glm::mat4x4 Changer;
 	glm::mat4x4 CameraTr = glm::mat4x4(1);
 	int height_half=viewport_height/2, width_half=viewport_width/2;
@@ -344,9 +344,9 @@ void Renderer::Render(const Scene& scene)
 				point3[1] += height_half;
 				
 				
-			/*	DrawLine(point1, point2, color);	
+				DrawLine(point1, point2, color);	
 				DrawLine(point1, point3, color);
-				DrawLine(point2, point3, color);*/
+				DrawLine(point2, point3, color);
 			}
 		}
 	}
@@ -422,9 +422,9 @@ void Renderer::Render(const Scene& scene)
 					DrawLine(glm::vec2(max_x, max_y), glm::vec2(min_x, max_y), pick_color);
 					DrawLine(glm::vec2(max_x, max_y), glm::vec2(max_x, min_y), pick_color);
 				}
-				//DrawLine(point1, point2, color);	//MyModel.ObjectColor
-				//DrawLine(point1, point3, color);
-				//DrawLine(point2, point3, color);
+				DrawLine(point1, point2, color);	//MyModel.ObjectColor
+				DrawLine(point1, point3, color);
+				DrawLine(point2, point3, color);
 
 				if (MyModel.bounding_box)
 				{
@@ -513,17 +513,25 @@ void Renderer::Render(const Scene& scene)
 					glm::vec4 point_top = transformWorld * glm::vec4(0, viewport_height, 0, 1);
 					glm::vec4 point_bottom = transformWorld * glm::vec4(0, -viewport_height, 0, 1);
 
-					point_left[0] += viewport_width / 2;
-					point_left[1] += viewport_height / 2;
-					point_right[0] += viewport_width / 2;
-					point_right[1] += viewport_height / 2;
-					point_top[0] += viewport_width / 2;
-					point_top[1] += viewport_height / 2;
-					point_bottom[0] += viewport_width / 2;
-					point_bottom[1] += viewport_height / 2;
+					point_left[0] += width_half;
+					point_left[1] += height_half;
+					point_right[0] += width_half;
+					point_right[1] += height_half;
+					point_top[0] += width_half;
+					point_top[1] += height_half;
+					point_bottom[0] += width_half;
+					point_bottom[1] += height_half;
 
 					DrawLine(point_left, point_right, glm::vec3(0.8f, 0.8f, 0.8f));
 					DrawLine(point_top, point_bottom, glm::vec3(0.8f, 0.8f, 0.8f));
+				}
+
+				if (scene.GetActiveModel().reflection_vec)
+				{
+					glm::vec3 newl = glm::vec3(scene.lights[0]->TranslateMat[3][0], scene.lights[0]->TranslateMat[3][1], scene.lights[0]->TranslateMat[3][2]) - glm::vec3(point1);
+					glm::vec3 newr = glm::vec3(2 * glm::dot(newl, glm::vec3(glm::normalize(facenormal)))) * glm::vec3(glm::normalize(facenormal)) - glm::vec3(newl);
+					DrawLine(f_average, glm::vec3(f_average) + newr / glm::vec3(25), glm::vec3(1, 0, 0));
+					DrawLine(f_average, glm::vec3(f_average) + newl / glm::vec3(15), glm::vec3(0, 0, 1));
 				}
 
 				glm::vec3 fc,gc1,gc2,gc3;
@@ -567,6 +575,12 @@ void Renderer::Render(const Scene& scene)
 										glm::vec3 colorgouraud = ((A1 / A) * gc1) + ((A2 / A) * gc2) + ((A3 / A) * gc3);
 										colored[m][n] = colorgouraud;
 									}
+									if (shade == 2)
+									{
+										glm::vec3 phong_nor = ((A1 / A) * vn1) + ((A2 / A) * vn2) + ((A3 / A) * vn3);
+										glm::vec3 p = glm::vec3(m, n, Z);
+										colored[m][n] = ChooseColor(scene.GetActiveModel(), temp_scene, p, phong_nor);
+									}
 									Z_Buffer[m][n] = Z;
 								}
 							}
@@ -591,7 +605,7 @@ void Renderer::Render(const Scene& scene)
 			}
 		}
 	}
-	for (int i = 0; i < viewport_width; i++)
+	/*for (int i = 0; i < viewport_width; i++)
 	{
 		for (int j = 0; j < viewport_height; j++)
 		{
@@ -602,7 +616,7 @@ void Renderer::Render(const Scene& scene)
 				Z_Buffer[i][j] = -INFINITY;
 			}
 		}
-	}
+	}*/
 }
 
 int Renderer::GetViewportWidth() const
@@ -836,7 +850,7 @@ glm::vec3 Renderer::ChooseColor(MeshModel& Model, Scene& scene, glm::vec3 a_poin
 			glm::vec3 location = glm::vec3(scene.lights[0]->TranslateMat[3][0], scene.lights[0]->TranslateMat[3][1], scene.lights[0]->TranslateMat[3][2]);
 			glm::vec3 l = location-a_point;
 			int type_of_shade = scene.GetActiveModel().shade_type;
-			if (type_of_shade == 1)
+			if (type_of_shade == 1 || type_of_shade == 2)
 				l *= (-1);
 			glm::vec3 Ld = scene.lights[0]->diffuse_ref;
 			Id = Kd * max(0.0f, (glm::dot(l, glm::normalize(normal)))) * Ld;
@@ -844,16 +858,18 @@ glm::vec3 Renderer::ChooseColor(MeshModel& Model, Scene& scene, glm::vec3 a_poin
 			/* Specular Reflection - Is=Ks(r*v)^alfa*Ls */
 			/*Ks-Surface specular reflection coefficient, (r*v)=cos teta, alfa-Shininess coefficient, Ls-Source specular intensity */
 			glm::vec3 Ks = scene.GetActiveModel().Specular_ref;
-			glm::vec3 r = l - 2 * glm::dot(l, glm::normalize(normal)) * glm::normalize(normal);
-			glm::vec3 v = a_point - scene.GetActiveCamera().Eye;
+			glm::vec3 r = normalize(l - 2 * glm::dot(l, glm::normalize(normal)) * glm::normalize(normal));
+			glm::vec3 v = glm::normalize(a_point - scene.GetActiveCamera().Eye);
 			glm::vec3 Ls = scene.lights[0]->specular_ref;
-			Is = Ks * pow(glm::dot(r, v), (scene.GetActiveModel().alfa / 800)) * Ls;
+			Is = Ks * pow(max(glm::dot(r, v), 0.0f), (scene.GetActiveModel().alfa)) * Ls;
 			glm::vec4 r_4 = glm::vec4(r, 1);
 			glm::vec4 l_4 = glm::vec4(l, 1);
 			r_4 /= 50;
 			l_4 /= -50;
 
 			color += (Ia+Id);
+			if (scene.GetActiveModel().shade_type)
+				color += Is;
 			c++;
 		}
 	return color;
