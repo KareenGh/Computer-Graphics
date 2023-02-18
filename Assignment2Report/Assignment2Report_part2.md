@@ -41,6 +41,23 @@ Here we will show an example on same scene on bunny model:
 ![Diffuse-Flat Shading](https://user-images.githubusercontent.com/116673155/219882424-94a05771-3261-462d-88c4-bb89098cc112.png)
 
 
+## 3.For pairs only: Compute Gouraud shading and compare the result to the previous result.
 
+
+
+
+
+
+## 4.Implement the function that computes the reflection vector used for specular lighting.Show the direction of the light from the center of each face and the direction of the reflected light as short lines (similar to how normal vectors were drawn in the first assignment).
+
+First of all we add Check box called reflection_vec to our Gui started as not choosen.
+
+Here is reflection vector applied on bunny model:
+
+![RV-bunny](https://user-images.githubusercontent.com/116673155/219893678-ff9cc184-d7f5-4ac1-81ee-05fd2c696e65.png)
+
+And this is another example for reflection vector applied on teapot:
+
+![RV-teapot](https://user-images.githubusercontent.com/116673155/219893861-5e72a36e-b3a3-462f-b3b5-5ef66644fe0d.png)
 
 
