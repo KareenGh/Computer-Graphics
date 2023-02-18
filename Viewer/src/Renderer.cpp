@@ -836,7 +836,7 @@ glm::vec3 Renderer::ChooseColor(MeshModel& Model, Scene& scene, glm::vec3 a_poin
 			r_4 /= 50;
 			l_4 /= -50;
 
-			color += (Ia+Id);
+			color += (Ia);
 			c++;
 		}
 	return color;
