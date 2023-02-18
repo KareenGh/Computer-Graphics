@@ -293,6 +293,7 @@ void Renderer::Render(const Scene& scene)
 	glm::ivec3 color(0 , 0 , 0);
 	glm::mat4x4 Changer;
 	glm::mat4x4 CameraTr = glm::mat4x4(1);
+	int height_half=viewport_height/2, width_half=viewport_width/2;
 
 	Camera& act_camera = temp_scene.GetActiveCamera();
 
@@ -335,12 +336,12 @@ void Renderer::Render(const Scene& scene)
 				point2 /= point2.w;
 				point3 /= point3.w;
 
-				point1[0] += viewport_width / 2;
-				point1[1] += viewport_height / 2;
-				point2[0] += viewport_width / 2;
-				point2[1] += viewport_height / 2;
-				point3[0] += viewport_width / 2;
-				point3[1] += viewport_height / 2;
+				point1[0] += width_half;
+				point1[1] += height_half;
+				point2[0] += width_half;
+				point2[1] += height_half;
+				point3[0] += width_half;
+				point3[1] += height_half;
 				
 				
 			/*	DrawLine(point1, point2, color);	
@@ -375,12 +376,12 @@ void Renderer::Render(const Scene& scene)
 				point2 /= point2.w;
 				point3 /= point3.w;
 
-				point1[0] += viewport_width / 2;
-				point1[1] += viewport_height / 2;
-				point2[0] += viewport_width / 2;
-				point2[1] += viewport_height / 2;
-				point3[0] += viewport_width / 2;
-				point3[1] += viewport_height / 2;
+				point1[0] += width_half;
+				point1[1] += height_half;
+				point2[0] += width_half;
+				point2[1] += height_half;
+				point3[0] += width_half;
+				point3[1] += height_half;
 
 				glm::vec3 fn1 = p1 - p2;
 				glm::vec3 fn2 = p2 - p3;
@@ -436,23 +437,23 @@ void Renderer::Render(const Scene& scene)
 					glm::vec4 point07 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.min_z, 1);
 					glm::vec4 point08 = Changer * glm::vec4(MyModel.max_x, MyModel.max_y, MyModel.max_z, 1);
 
-					point01[0] += viewport_width / 2;
-					point02[0] += viewport_width / 2;
-					point03[0] += viewport_width / 2;
-					point04[0] += viewport_width / 2;
-					point05[0] += viewport_width / 2;
-					point06[0] += viewport_width / 2;
-					point07[0] += viewport_width / 2;
-					point08[0] += viewport_width / 2;
+					point01[0] += width_half;
+					point02[0] += width_half;
+					point03[0] += width_half;
+					point04[0] += width_half;
+					point05[0] += width_half;
+					point06[0] += width_half;
+					point07[0] += width_half;
+					point08[0] += width_half;
 
-					point01[1] += viewport_height / 2;
-					point02[1] += viewport_height / 2;
-					point03[1] += viewport_height / 2;
-					point04[1] += viewport_height / 2;
-					point05[1] += viewport_height / 2;
-					point06[1] += viewport_height / 2;
-					point07[1] += viewport_height / 2;
-					point08[1] += viewport_height / 2;
+					point01[1] += height_half;
+					point02[1] += height_half;
+					point03[1] += height_half;
+					point04[1] += height_half;
+					point05[1] += height_half;
+					point06[1] += height_half;
+					point07[1] += height_half;
+					point08[1] += height_half;
 
 					DrawLine(point01, point02, glm::vec3(0, 0, 153));
 					DrawLine(point01, point03, glm::vec3(0, 0, 153));
@@ -482,18 +483,18 @@ void Renderer::Render(const Scene& scene)
 					glm::vec4 z_bottom = transform * glm::vec4((model.min_x + model.max_x) / 2, (model.min_y + model.max_y) / 2, model.min_z, 1);
 
 					// start in the middle 
-					x_left[0] += viewport_width / 2;
-					x_left[1] += viewport_height / 2;
-					x_right[0] += viewport_width / 2;
-					x_right[1] += viewport_height / 2;
-					y_top[0] += viewport_width / 2;
-					y_top[1] += viewport_height / 2;
-					y_bottom[0] += viewport_width / 2;
-					y_bottom[1] += viewport_height / 2;
-					z_top[0] += viewport_width / 2;
-					z_top[1] += viewport_height / 2;
-					z_bottom[0] += viewport_width / 2;
-					z_bottom[1] += viewport_height / 2;
+					x_left[0] += width_half;
+					x_left[1] += height_half;
+					x_right[0] += width_half;
+					x_right[1] += height_half;
+					y_top[0] += width_half;
+					y_top[1] += height_half;
+					y_bottom[0] += width_half;
+					y_bottom[1] += height_half;
+					z_top[0] += width_half;
+					z_top[1] += height_half;
+					z_bottom[0] += width_half;
+					z_bottom[1] += height_half;
 
 					DrawLine(x_left, x_right, glm::vec3(1, 0, 0));
 					DrawLine(y_top, y_bottom, glm::vec3(0, 1, 0));
@@ -545,6 +546,7 @@ void Renderer::Render(const Scene& scene)
 								A3 = area(m, n, point1.x, point1.y, point2.x, point2.y);
 								A = A1 + A2 + A3;
 								Z = (((A1 / A) * point1.z) + ((A2 / A) * point2.z) + ((A3 / A) * point3.z));
+								
 								if (Z > maxbufferZ)
 									maxbufferZ = Z;
 								if (Z < minbufferZ)
@@ -820,7 +822,7 @@ glm::vec3 Renderer::ChooseColor(MeshModel& Model, Scene& scene, glm::vec3 a_poin
 			/* Ld-Source diffuse intensity, Kd-Surface diffuse reflection coefficient ,(l*n)=cos teta */
 			glm::vec3 Kd = scene.GetActiveModel().Diffuse_ref;
 			glm::vec3 location = glm::vec3(scene.lights[0]->TranslateMat[3][0], scene.lights[0]->TranslateMat[3][1], scene.lights[0]->TranslateMat[3][2]);
-			glm::vec3 l = a_point - location;
+			glm::vec3 l = location-a_point;
 			glm::vec3 Ld = scene.lights[0]->diffuse_ref;
 			Id = Kd * max(0.0f, (glm::dot(l, glm::normalize(normal)))) * Ld;
 
@@ -836,7 +838,7 @@ glm::vec3 Renderer::ChooseColor(MeshModel& Model, Scene& scene, glm::vec3 a_poin
 			r_4 /= 50;
 			l_4 /= -50;
 
-			color += (Ia);
+			color += (Ia+Id);
 			c++;
 		}
 	return color;

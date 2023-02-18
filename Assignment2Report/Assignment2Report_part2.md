@@ -28,3 +28,16 @@ Here is a video showing that changing light position didnt affect:
 https://user-images.githubusercontent.com/116673155/219874719-f3ded833-9a68-43a2-9495-110bcec66691.mp4
 
 
+## 2.Compute the diffuse component with flat shading and show the result using the same scene.
+
+For computing diffuse component with flat shading we first calculated face normal at each point on the surface of an object,then we calculated amount light that reflected by the surface in the direction of light source.
+the amount of light reflected is proportional to the cosine of the angel between surface normal and the direction of light source.
+For doing that we use the equation for Diffuse reflect that we have seen at the lecture:
+Diffuse Reflection - Id=Kd(l*n)Ld
+when: Ld-Source diffuse intensity, Kd-Surface diffuse reflection coefficient ,(l*n)=cos teta
+
+Here we will show an example on same scene on bunny model:
+
+
+
+
