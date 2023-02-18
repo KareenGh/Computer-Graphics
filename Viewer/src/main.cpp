@@ -451,6 +451,7 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 		}
 		ImGui::Begin("Lighting & Shading");
 		ImGui::RadioButton("Flat Shading", &scene.GetActiveModel().shade_type, 0);
+		ImGui::RadioButton("Gouraud Shading", &scene.GetActiveModel().shade_type, 1);
 		ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -1000, 1000);
 		ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -1000, 1000);
 		ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -1000, 1000);

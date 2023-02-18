@@ -526,11 +526,18 @@ void Renderer::Render(const Scene& scene)
 					DrawLine(point_top, point_bottom, glm::vec3(0.8f, 0.8f, 0.8f));
 				}
 
-				glm::vec3 fc;
+				glm::vec3 fc,gc1,gc2,gc3;
 				int shade = scene.GetActiveModel().shade_type;
 				if (shade == 0)
 					fc = ChooseColor(scene.GetActiveModel(), temp_scene, point1, facenormal);
 				
+				if (shade == 1)
+				{
+					gc1 = ChooseColor(scene.GetActiveModel(), temp_scene, point1, vn1);
+					gc2 = ChooseColor(scene.GetActiveModel(), temp_scene, point2, vn2);
+					gc3 = ChooseColor(scene.GetActiveModel(), temp_scene, point3, vn3);
+				}
+
 				for (int m = min_x; m < max_x + 1; m++)
 				{
 					for (int n = min_y; n < max_y + 1; n++)
@@ -555,6 +562,11 @@ void Renderer::Render(const Scene& scene)
 								{
 									if (shade == 0)
 										colored[m][n] = fc;
+									if (shade == 1)
+									{
+										glm::vec3 colorgouraud = ((A1 / A) * gc1) + ((A2 / A) * gc2) + ((A3 / A) * gc3);
+										colored[m][n] = colorgouraud;
+									}
 									Z_Buffer[m][n] = Z;
 								}
 							}
@@ -823,6 +835,9 @@ glm::vec3 Renderer::ChooseColor(MeshModel& Model, Scene& scene, glm::vec3 a_poin
 			glm::vec3 Kd = scene.GetActiveModel().Diffuse_ref;
 			glm::vec3 location = glm::vec3(scene.lights[0]->TranslateMat[3][0], scene.lights[0]->TranslateMat[3][1], scene.lights[0]->TranslateMat[3][2]);
 			glm::vec3 l = location-a_point;
+			int type_of_shade = scene.GetActiveModel().shade_type;
+			if (type_of_shade == 1)
+				l *= (-1);
 			glm::vec3 Ld = scene.lights[0]->diffuse_ref;
 			Id = Kd * max(0.0f, (glm::dot(l, glm::normalize(normal)))) * Ld;
 
