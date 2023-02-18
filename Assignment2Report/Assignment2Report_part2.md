@@ -38,6 +38,9 @@ when: Ld-Source diffuse intensity, Kd-Surface diffuse reflection coefficient ,(l
 
 Here we will show an example on same scene on bunny model:
 
+![Diffuse-Flat Shading](https://user-images.githubusercontent.com/116673155/219882424-94a05771-3261-462d-88c4-bb89098cc112.png)
+
+
 
 
 
