@@ -11,4 +11,20 @@ Ka-ambient color
 You can see that we got one colored model and not affected by any light moving
 
 Here we will show you the results we've got:
-Here u can see when the Ambient light is white we got a model colored with the material color 
+Here u can see when the Ambient light is white we got a model colored with the material color ,We applied Ambient Reflection on bunny model when Ambient Material color is (0,0,255)
+
+![Ambient-blue](https://user-images.githubusercontent.com/116673155/219873189-9930f721-3872-4c54-9b64-32d36516cc90.png)
+
+And there is another example for Ambient Reflection applied on bunny model when ambient light color is black , we can see in this case no mater what Ambient material color is :
+
+![Ambient-black-light](https://user-images.githubusercontent.com/116673155/219873495-7d9d4a04-37ad-4821-9ab2-fdd3ffa0bdfd.png)
+
+This is an Ambient Reflection applied on bunny model when Ambient Material color is (223,234,60) and Ambient light color is (158,0,255):
+
+![AmbientRefTwoDiffColors](https://user-images.githubusercontent.com/116673155/219874053-3a8dc392-0e20-49de-9a7c-4b8fb6bd99ff.png)
+
+Here is a video showing that changing light position didnt affect:
+
+https://user-images.githubusercontent.com/116673155/219874719-f3ded833-9a68-43a2-9495-110bcec66691.mp4
+
+
