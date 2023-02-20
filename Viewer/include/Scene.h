@@ -32,6 +32,12 @@ public:
 	vector<shared_ptr<Light>> lights;
 	shared_ptr<MeshModel> camera1;
 	int active_camera_index;
+
+
+	bool lighting;
+	bool more_than_1_light;
+
+
 private:
 	vector<shared_ptr<MeshModel>> mesh_models;
 	vector<shared_ptr<Camera>> cameras;

@@ -46,7 +46,7 @@ public:
 	void SetTriColors(int color); ///
 	int GetTriColors() const; ///
 	int colors = 0; ///
-	bool ZBufferOn = 0; ///
+	bool ZBufferOn = 0; /// 
 	float alfa = 1;
 	int shade_type = 0; //0 for flat , 1 for gouraud ,2 for phong
 	glm::vec3 Ambient_ref=glm::vec3(1);

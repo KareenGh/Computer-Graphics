@@ -342,11 +342,11 @@ void Renderer::Render(const Scene& scene)
 				point2[1] += height_half;
 				point3[0] += width_half;
 				point3[1] += height_half;
-				
+				/*
 				
 				DrawLine(point1, point2, color);	
 				DrawLine(point1, point3, color);
-				DrawLine(point2, point3, color);
+				DrawLine(point2, point3, color);*/
 			}
 		}
 	}
@@ -422,9 +422,9 @@ void Renderer::Render(const Scene& scene)
 					DrawLine(glm::vec2(max_x, max_y), glm::vec2(min_x, max_y), pick_color);
 					DrawLine(glm::vec2(max_x, max_y), glm::vec2(max_x, min_y), pick_color);
 				}
-				DrawLine(point1, point2, color);	//MyModel.ObjectColor
-				DrawLine(point1, point3, color);
-				DrawLine(point2, point3, color);
+				//DrawLine(point1, point2, color);	//MyModel.ObjectColor
+				//DrawLine(point1, point3, color);
+				//DrawLine(point2, point3, color);
 
 				if (MyModel.bounding_box)
 				{
@@ -605,7 +605,7 @@ void Renderer::Render(const Scene& scene)
 			}
 		}
 	}
-	/*for (int i = 0; i < viewport_width; i++)
+	for (int i = 0; i < viewport_width; i++)
 	{
 		for (int j = 0; j < viewport_height; j++)
 		{
@@ -616,7 +616,7 @@ void Renderer::Render(const Scene& scene)
 				Z_Buffer[i][j] = -INFINITY;
 			}
 		}
-	}*/
+	}
 }
 
 int Renderer::GetViewportWidth() const

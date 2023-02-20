@@ -6,7 +6,8 @@ Scene::Scene() :
 	active_camera_index(0),
 	active_model_index(0)
 {
-
+	lighting = false;
+	more_than_1_light = false;
 }
 
 void Scene::AddModel(const std::shared_ptr<MeshModel>& mesh_model)

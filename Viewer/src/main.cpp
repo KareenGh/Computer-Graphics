@@ -450,21 +450,91 @@ void DrawImguiMenus(ImGuiIO& io, Scene& scene)
 			ImGui::End();
 		}
 		ImGui::Begin("Lighting & Shading");
+
 		ImGui::Checkbox("reflection vector", &scene.GetActiveModel().reflection_vec);
 		ImGui::RadioButton("Flat Shading", &scene.GetActiveModel().shade_type, 0);
 		ImGui::RadioButton("Gouraud Shading", &scene.GetActiveModel().shade_type, 1);
 		ImGui::RadioButton("Phong Shading", &scene.GetActiveModel().shade_type, 2);
-		ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -1000, 1000);
-		ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -1000, 1000);
-		ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -1000, 1000);
-		ImGui::SliderFloat("alfa", &scene.GetActiveModel().alfa, 0, 360);
-		ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene.lights[0]->ambient_ref);
-		ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene.lights[0]->diffuse_ref);
-		ImGui::ColorEdit3("Specular_Reflection", (float*)&scene.lights[0]->specular_ref);
-		/*for materials*/
-		ImGui::ColorEdit3("Material_Ambient_Reflection", (float*)&scene.GetActiveModel().Ambient_ref);
-		ImGui::ColorEdit3("Material_Diffuse_Reflection", (float*)&scene.GetActiveModel().Diffuse_ref);
-		ImGui::ColorEdit3("Material_Specular_Reflection", (float*)&scene.GetActiveModel().Specular_ref);
+
+
+		static int LightCount = 0;
+		static char* lights[5] = { "1","2","3","4","5" };
+		ImGui::Text("LightCount = %d", LightCount);
+		if (ImGui::Button("Add point light") && (LightCount < 3))
+		{
+			LightCount++;
+		}
+		if (LightCount)
+			scene.lighting = true;
+
+		if (LightCount == 1) {
+			ImGui::Combo("Choose Light", &LightCount, lights, LightCount);
+			ImGui::Text("Light RGB");
+			ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -1000, 1000);
+			ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -1000, 1000);
+			ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -1000, 1000);
+			ImGui::SliderFloat("alfa", &scene.GetActiveModel().alfa, 0, 360);
+
+			ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene.lights[0]->ambient_ref);
+			ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene.lights[0]->diffuse_ref);
+			ImGui::ColorEdit3("Specular_Reflection", (float*)&scene.lights[0]->specular_ref);
+ 		}
+		if (LightCount == 2) {
+			static int light_num = 1;
+			ImGui::RadioButton("Light 1", &light_num, 1); ImGui::SameLine();
+			ImGui::RadioButton("Light 2", &light_num, 2);
+			scene.more_than_1_light = true;
+
+
+			if (light_num == 1) {
+				ImGui::Combo("Choose Light", &LightCount, lights, LightCount);
+				ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -1000, 1000);
+				ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -1000, 1000);
+				ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -1000, 1000);
+				ImGui::SliderFloat("alfa", &scene.GetActiveModel().alfa, 0, 360);
+				ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene.lights[0]->ambient_ref);
+				ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene.lights[0]->diffuse_ref);
+				ImGui::ColorEdit3("Specular_Reflection", (float*)&scene.lights[0]->specular_ref);
+			}
+			else {
+
+				ImGui::Combo("Choose Light", &LightCount, lights, LightCount);
+				ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -1000, 1000);
+				ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -1000, 1000);
+				ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -1000, 1000);
+				ImGui::SliderFloat("alfa", &scene.GetActiveModel().alfa, 0, 360);
+				ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene.lights[0]->ambient_ref);
+				ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene.lights[0]->diffuse_ref);
+				ImGui::ColorEdit3("Specular_Reflection", (float*)&scene.lights[0]->specular_ref);
+			}
+		}
+
+		if (scene.GetModelCount())
+		{
+			/*for materials*/
+			ImGui::ColorEdit3("Material_Ambient_Reflection", (float*)&scene.GetActiveModel().Ambient_ref);
+			ImGui::ColorEdit3("Material_Diffuse_Reflection", (float*)&scene.GetActiveModel().Diffuse_ref);
+			ImGui::ColorEdit3("Material_Specular_Reflection", (float*)&scene.GetActiveModel().Specular_ref);
+
+		}
+
+
+
+		//ImGui::Checkbox("reflection vector", &scene.GetActiveModel().reflection_vec);
+		//ImGui::RadioButton("Flat Shading", &scene.GetActiveModel().shade_type, 0);
+		//ImGui::RadioButton("Gouraud Shading", &scene.GetActiveModel().shade_type, 1);
+		//ImGui::RadioButton("Phong Shading", &scene.GetActiveModel().shade_type, 2);
+		//ImGui::SliderFloat("MoveLight_x", &scene.lights[0]->TranslateMat[3][0], -1000, 1000);
+		//ImGui::SliderFloat("MoveLight_y", &scene.lights[0]->TranslateMat[3][1], -1000, 1000);
+		//ImGui::SliderFloat("MoveLight_z", &scene.lights[0]->TranslateMat[3][2], -1000, 1000);
+		//ImGui::SliderFloat("alfa", &scene.GetActiveModel().alfa, 0, 360);
+		//ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene.lights[0]->ambient_ref);
+		//ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene.lights[0]->diffuse_ref);
+		//ImGui::ColorEdit3("Specular_Reflection", (float*)&scene.lights[0]->specular_ref);
+		///*for materials*/
+		//ImGui::ColorEdit3("Material_Ambient_Reflection", (float*)&scene.GetActiveModel().Ambient_ref);
+		//ImGui::ColorEdit3("Material_Diffuse_Reflection", (float*)&scene.GetActiveModel().Diffuse_ref);
+		//ImGui::ColorEdit3("Material_Specular_Reflection", (float*)&scene.GetActiveModel().Specular_ref);
 		ImGui::End();
 	}
 }
