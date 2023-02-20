@@ -41,7 +41,7 @@ Here we will show an example on same scene on bunny model:
 ![Diffuse-Flat Shading](https://user-images.githubusercontent.com/116673155/219882424-94a05771-3261-462d-88c4-bb89098cc112.png)
 
 
-## 3.For pairs only: Compute Gouraud shading and compare the result to the previous result.
+## 3. Compute Gouraud shading and compare the result to the previous result.
 
 ![Gouraud1](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud1.jpg)
 ![Gouraud2](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud2.jpg)
