@@ -61,3 +61,7 @@ And this is another example for reflection vector applied on teapot:
 ![RV-teapot](https://user-images.githubusercontent.com/116673155/219893861-5e72a36e-b3a3-462f-b3b5-5ef66644fe0d.png)
 
 
+## 5. Compute the specular light with Phong shading and show a result.
+
+## 6. Demonstrate different models, lights and shadings and show the results in the report.
+
