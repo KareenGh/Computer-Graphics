@@ -45,6 +45,8 @@ Here we will show an example on same scene on bunny model:
 
 ![Gouraud1](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud1.jpg)
 ![Gouraud2](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud2.jpg)
+![Gouraud3](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud%203.jpg)
+![Gouraud3](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud%204.jpg)
 
 
 
