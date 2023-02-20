@@ -66,6 +66,8 @@ And this is another example for reflection vector applied on teapot:
 ![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong1.jpg)
 ![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong2.jpg)
 ![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong3.jpg)
+![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong4.jpg)
+
 
 ## 6. Demonstrate different models, lights and shadings and show the results in the report.
 
