@@ -59,8 +59,6 @@ And this is another example for reflection vector applied on teapot:
 
 ## 5. Compute the specular light with Phong shading and show a result.
 
-![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong1.jpg)
-![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong2.jpg)
 ![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong3.jpg)
 ![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong4.jpg)
 
