@@ -43,10 +43,6 @@ Here we will show an example on same scene on bunny model:
 
 ## 3. Compute Gouraud shading and compare the result to the previous result.
 
-![Gouraud](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud1.jpg)
-![Gouraud](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud2.jpg)
-![Gouraud](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud3.jpg)
-
 
 ## 4.Implement the function that computes the reflection vector used for specular lighting.Show the direction of the light from the center of each face and the direction of the reflected light as short lines (similar to how normal vectors were drawn in the first assignment).
 
