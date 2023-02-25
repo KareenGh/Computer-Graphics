@@ -3,6 +3,23 @@
 
 ## 1.The software renderer was built on top of OpenGL. The Renderer::SwapBuffer() function loads color_buffer into a texture on the GPU. Read the function Renderer::InitOpenGLRendering() and explain in the report how this texture is displayed. Remove all the now irrelevant code from the renderer.
 
+The Renderer::InitOpenGLRendering() function is responsible for creating a mapping of the color buffer to a texture, 
+and displaying that texture on the screen. To accomplish this, the function defines screen coordinates as two triangles, 
+and defines coordinates for the texture that will be mapped onto those triangles. It then binds both coordinate buffers to OpenGL,
+allocates space on the GPU, and copies the coordinate buffers to the GPU.
+
+After initializing the buffers, the function creates a unique ID for the OpenGL texture and one for the vertex array object using glGenTextures() and glGenVertexArrays().
+It then binds the vertex array object buffer to OpenGL using glBindVertexArray(). The buffer is responsible for transferring data to the GPU, so the function allocates and binds
+the buffer using glGenBuffers(), glBindBuffer(), and glBufferData().
+
+The function then loads and compiles shaders using InitShader(), which attaches OpenGL data to GLSL variables. To use the program, the function calls glUseProgram() with the program ID.
+It then passes data to the shader, including vertex position and texture coordinates, and tells the shader where to look for those variables using glGetAttribLocation() 
+and glVertexAttribPointer(). The function also sets uniform variables using glUniform1i().
+
+With these initial settings established, the Renderer::SwapBuffer() function is called to load the color buffer into the texture on the GPU. Finally, the texture is displayed on 
+the screen by mapping the texture onto the two triangles defined in Renderer::InitOpenGLRendering(), using glDrawArrays().
+
+
 ## 2.Update the MeshModel class to load the mesh on the GPU. Use the example OpenGL project as a reference.
 
 ## 3.Write a vertex shader that applies all the transformations. Use the reference code, but pay attention to the differences between your code and the reference code. Copy the code the the report.
