@@ -43,6 +43,11 @@ Here we will show an example on same scene on bunny model:
 
 ## 3. Compute Gouraud shading and compare the result to the previous result.
 
+So we can see the different between them.
+Gouraud shading is a method for approximating smooth shading on a polygon mesh by interpolating vertex color across each polygon face.
+The result more visually pleasing representation of the surface than flat shading ,which uses a single color for each pixel on surface.
+For computing Gouraud shading we called the function that we implemented for computing color three times ,each time we send a new edge with his corresponding normal,and this allows more accurate lighting calculations and results in a more rounded appearance of the model's faces.
+
 ![Gouraud](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud1.jpg)
 ![Gouraud](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud2.jpg)
 ![Gouraud](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Gouraud3.jpg)
@@ -62,6 +67,11 @@ And this is another example for reflection vector applied on teapot:
 
 
 ## 5. Compute the specular light with Phong shading and show a result.
+
+First of all Phong shading is a calculating light reflection method on surface by considering three components:ambient,diffuse and specular reflections.And specular light refers to the shiny spots we can see on a surface when a light is shining on it.
+for calculating specular light we use the equation that we've learned at lecture :
+Is=Ks(r*v)^alfa*Ls
+when: Ks-Surface specular reflection coefficient, (r*v)=cos teta, alfa-Shininess coefficient, Ls-Source specular intensity
 
 ![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong3.jpg)
 ![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong4.jpg)
