@@ -68,6 +68,11 @@ And this is another example for reflection vector applied on teapot:
 
 ## 5. Compute the specular light with Phong shading and show a result.
 
+First of all Phong shading is a calculating light reflection method on surface by considering three components:ambient,diffuse and specular reflections.And specular light refers to the shiny spots we can see on a surface when a light is shining on it.
+for calculating specular light we use the equation that we've learned at lecture :
+Is=Ks(r*v)^alfa*Ls
+when: Ks-Surface specular reflection coefficient, (r*v)=cos teta, alfa-Shininess coefficient, Ls-Source specular intensity
+
 ![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong3.jpg)
 ![Specular](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/Specular-Phong4.jpg)
 
