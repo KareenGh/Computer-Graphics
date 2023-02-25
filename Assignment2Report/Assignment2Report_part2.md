@@ -79,3 +79,7 @@ when: Ks-Surface specular reflection coefficient, (r*v)=cos teta, alfa-Shininess
 
 ## 6. Demonstrate different models, lights and shadings and show the results in the report.
 
+![lights](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/more%20than%20one%20light%20(1).png)
+![lights](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/more%20than%20one%20light%20(2).png)
+![lights](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment2Report/more%20than%20one%20light%20(3).png)
+
