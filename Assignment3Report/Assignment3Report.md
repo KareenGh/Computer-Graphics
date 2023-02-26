@@ -225,6 +225,7 @@ void Renderer::Render(const std::shared_ptr<Scene>& scene)
 }
 ```
 
+![trans](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment3Report/Transformation.png)
 
 ## 6. Implement Phong shading in the fragment shader. To demonstrate that the performancehas now improved a lot, load one of the meshes from http://github.com/alecjacobson/common-3d-test-models  display it from several view-point and different lighting.
 
