@@ -578,30 +578,32 @@ void DrawImguiMenus()
 			std::shared_ptr<PointLight> newLight = std::make_shared<PointLight>();
 			scene->AddLight(newLight);
 		}
-		static int LightCount = 1;
-		if (scene->GetLightCount() > 1)
-		{
-//			ImGui::Combo("Choose Light", &LightCount, scene->lights, scene->GetLightCount());
-			ImGui::SliderInt("Light Selction", &LightCount, 1, scene->GetLightCount());
-		}
+		static int LightCount = 0;
+		static char* lights[5] = { "1","2","3","4","5" };
+////		if (scene->GetLightCount() > 1)
+////		{
+//			ImGui::Combo("Choose Light", &LightCount, lights, scene->GetLightCount());
+////			ImGui::Combo("Choose Light", &LightCount, scene->lights, scene->GetLightCount());
+////			ImGui::SliderInt("Light Selction", &LightCount, 1, scene->GetLightCount());
+////		}
 		if (scene->GetLightCount() > 0)
 		{
-//			ImGui::Combo("Choose Light", &LightCount, scene->lights, LightCount);
+			ImGui::Combo("Choose Light", &LightCount, lights, scene->GetLightCount());
 
-			ImGui::SliderFloat("MoveLight_x", &scene->GetLight(LightCount - 1)->GetPosition().x, -1000, 1000);
-			ImGui::SliderFloat("MoveLight_y", &scene->GetLight(LightCount - 1)->GetPosition().y, -1000, 1000);
-			ImGui::SliderFloat("MoveLight_z", &scene->GetLight(LightCount - 1)->GetPosition().z, -1000, 1000);
+			ImGui::SliderFloat("MoveLight_x", &scene->GetLight(LightCount)->GetPosition().x, -1000, 1000);
+			ImGui::SliderFloat("MoveLight_y", &scene->GetLight(LightCount)->GetPosition().y, -1000, 1000);
+			ImGui::SliderFloat("MoveLight_z", &scene->GetLight(LightCount)->GetPosition().z, -1000, 1000);
 
-			ImGui::SliderFloat("alfa", (float*)&scene->GetLight(LightCount - 1)->alfa, 0, 360);
+			ImGui::SliderFloat("alfa", (float*)&scene->GetLight(LightCount)->alfa, 0, 360);
 
-			ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene->GetLight(LightCount - 1)->ambient_ref);
-			ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene->GetLight(LightCount - 1)->diffuse_ref);
-			ImGui::ColorEdit3("Specular_Reflection", (float*)&scene->GetLight(LightCount - 1)->specular_ref);
+			ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene->GetLight(LightCount)->ambient_ref);
+			ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene->GetLight(LightCount)->diffuse_ref);
+			ImGui::ColorEdit3("Specular_Reflection", (float*)&scene->GetLight(LightCount)->specular_ref);
 		}
 		ImGui::End();
 	}
 
-	
+
 }
 
 
