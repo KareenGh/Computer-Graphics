@@ -593,9 +593,9 @@ void DrawImguiMenus()
 		{
 //			ImGui::Combo("Choose Light", &LightCount, scene->lights, LightCount);
 
-			ImGui::SliderFloat("MoveLight_x", &scene->GetLight(LightCount - 1)->GetPosition().x, -1000, 1000);
-			ImGui::SliderFloat("MoveLight_y", &scene->GetLight(LightCount - 1)->GetPosition().y, -1000, 1000);
-			ImGui::SliderFloat("MoveLight_z", &scene->GetLight(LightCount - 1)->GetPosition().z, -1000, 1000);
+			ImGui::SliderFloat("MoveLight_x", &scene->GetLight(LightCount - 1)->GetPosition().x, -400, 400);
+			ImGui::SliderFloat("MoveLight_y", &scene->GetLight(LightCount - 1)->GetPosition().y, -400, 400);
+			ImGui::SliderFloat("MoveLight_z", &scene->GetLight(LightCount - 1)->GetPosition().z, -400, 400);
 
 			ImGui::SliderFloat("alfa", (float*)&scene->GetLight(LightCount - 1)->alfa, 0, 360);
 

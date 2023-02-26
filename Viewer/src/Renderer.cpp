@@ -268,7 +268,10 @@ void Renderer::Render(const std::shared_ptr<Scene>& scene)
 				colorShader.setUniform("view", camera.GetViewTransformation());
 				colorShader.setUniform("projection", camera.GetProjectionTransformation());
 				colorShader.setUniform("material.textureMap", 0);
-				
+				colorShader.setUniform("camera_eyes", scene->GetActiveCamera().GetEye());
+				colorShader.setUniform("material.Ka", scene->GetModel(currentModelIndex)->Ambient_ref);
+				colorShader.setUniform("material.Kd", scene->GetModel(currentModelIndex)->Diffuse_ref);
+				colorShader.setUniform("material.Ks", scene->GetModel(currentModelIndex)->Specular_ref);
 				// Set 'texture1' as the active texture at slot #0
 				texture1.bind(0);
 
@@ -286,6 +289,34 @@ void Renderer::Render(const std::shared_ptr<Scene>& scene)
 				//glBindVertexArray(currentModel->GetVAO());
 				//glDrawArrays(GL_TRIANGLES, 0, currentModel->GetModelVertices().size());
 				//glBindVertexArray(0);
+			}
+		}
+
+		int LightsCount = scene->GetLightCount();
+
+		if (LightsCount)
+		{
+			for (int currentLightIndex = 0; currentLightIndex < scene->GetLightCount(); currentLightIndex++)
+			{
+				std::shared_ptr<PointLight> currlight;
+				currlight= scene->GetLight(currentLightIndex);
+
+				// Activate the 'lightShader' program (vertex and fragment shaders)
+				lightShader.use();
+
+				// Set the uniform variables
+				colorShader.setUniform("view", camera.GetViewTransformation());
+				colorShader.setUniform("projection", camera.GetProjectionTransformation());
+				if (scene->GetLightCount())
+				{
+					colorShader.setUniform("light.La", currlight->ambient_ref);;
+					colorShader.setUniform("light.Ld", currlight->diffuse_ref);
+					colorShader.setUniform("light.Ls", currlight->specular_ref);
+					colorShader.setUniform("light.alfa", currlight->alfa);
+					colorShader.setUniform("light.location", currlight->GetPosition());
+				}
+				// Set 'texture1' as the active texture at slot #0
+
 			}
 		}
 	}
