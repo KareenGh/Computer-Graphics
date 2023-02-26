@@ -24,9 +24,128 @@ the screen by mapping the texture onto the two triangles defined in Renderer::In
 
 ## 3.Write a vertex shader that applies all the transformations. Use the reference code, but pay attention to the differences between your code and the reference code. Copy the code the the report.
 
+```cpp
+#version 330 core
+
+layout(location = 0) in vec3 pos;
+layout(location = 1) in vec3 normal;
+layout(location = 2) in vec2 texCoords;
+
+// The model/view/projection matrices
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+
+// These outputs will be available in the fragment shader as inputs
+out vec3 orig_fragPos;
+out vec3 fragPos;
+out vec3 fragNormal;
+out vec2 fragTexCoords;
+
+void main()
+{
+	// Apply the model transformation to the 'position' and 'normal' properties of the vertex,
+	// so the interpolated values of these properties will be available for us in the fragment shader
+	orig_fragPos = vec3(vec4(pos, 1.0f));
+  fragPos = vec3(model * vec4(pos, 1.0f));
+	fragNormal = mat3(model) * normal;
+
+	// Pass the vertex texture coordinates property as it is. Its interpolated value
+	// will be avilable for us in the fragment shader
+	fragTexCoords = texCoords;
+
+	// This is an internal OpenGL variable, we must set a value to this variable
+	gl_Position = projection * view *  model * vec4(pos, 1.0f);
+}
+  
+```
+
 ## 4.Write a fragment shader that only outputs a constant color and paste it in the report.The goal for now is to ensure that the pipeline works. Lights will be added later.
 
+```cpp
+#version 330 core
+
+struct Material
+{
+	sampler2D textureMap;
+};
+
+// We set this field's properties from the C++ code
+uniform Material material;
+
+// Inputs from vertex shader (after interpolation was applied)
+in vec3 fragPos;
+in vec3 fragNormal;
+in vec2 fragTexCoords;
+in vec3 orig_fragPos;
+// The final color of the fragment (pixel)
+out vec4 frag_color;
+
+void main()
+{
+	// Sample the texture-map at the UV coordinates given by 'fragTexCoords'
+	vec3 textureColor = vec3(texture(material.textureMap, fragTexCoords));
+
+	frag_color = vec4(1.0, 0.0, 0.0, 1.0); // Red
+}
+
+```
+
 ## 5.In the renderer, update all the relevant vertex attributes and uniforms, and paste the relevant piece of code to the report. If everything was done correctly, you should be able to view the mesh in your application.
+
+```cpp
+void Renderer::Render(const std::shared_ptr<Scene>& scene)
+{
+	int half_width = viewport_width / 2;
+	int half_height = viewport_height / 2;
+
+	int cameraCount = scene->GetCameraCount();
+	if (cameraCount > 0)
+	{
+		int modelCount = scene->GetModelCount();
+
+		if (modelCount > 0)
+		{
+			const Camera& camera = scene->GetActiveCamera();
+
+			for (int currentModelIndex = 0; currentModelIndex < modelCount; currentModelIndex++)
+			{
+				std::shared_ptr<MeshModel> currentModel = scene->GetModel(currentModelIndex);
+
+				// Activate the 'colorShader' program (vertex and fragment shaders)
+				colorShader.use();
+
+				// Set the uniform variables
+				colorShader.setUniform("model", currentModel->GetWorldTransformation() * currentModel->GetModelTransformation());
+				colorShader.setUniform("view", camera.GetViewTransformation());
+				colorShader.setUniform("projection", camera.GetProjectionTransformation());
+				colorShader.setUniform("material.textureMap", 0);
+
+				// Set 'texture1' as the active texture at slot #0
+				texture1.bind(0);
+
+				// Drag our model's faces (triangles) in fill mode
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				glBindVertexArray(currentModel->GetVAO());
+				glDrawArrays(GL_TRIANGLES, 0, currentModel->GetModelVertices().size());
+				glBindVertexArray(0);
+
+				// Unset 'texture1' as the active texture at slot #0
+				texture1.unbind(0);
+
+				colorShader.setUniform("color", glm::vec3(0, 0, 0));
+
+				// Drag our model's faces (triangles) in line mode (wireframe)
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				glBindVertexArray(currentModel->GetVAO());
+				glDrawArrays(GL_TRIANGLES, 0, currentModel->GetModelVertices().size());
+				glBindVertexArray(0);
+			}
+		}
+	}
+}
+```
+
 
 ## 6.Implement Phong shading in the fragment shader. To demonstrate that the performancehas now improved a lot, load one of the meshes from http://github.com/alecjacobson/common-3d-test-models  display it from several view-point and different lighting.
 
