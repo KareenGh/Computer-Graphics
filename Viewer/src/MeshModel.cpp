@@ -196,6 +196,49 @@ const std::vector<Vertex>& MeshModel::GetModelVertices()
 }
 
 
+//
+////Responsible about rotation calculating
+//void MeshModel::SetTransformate()
+//{
+//	double alfa = glm::radians(x);
+//	x_rotate[1][1] = cos(alfa);
+//	x_rotate[2][2] = cos(alfa);
+//	x_rotate[1][2] = sin(alfa);
+//	x_rotate[2][1] = -sin(alfa);
+//	alfa = glm::radians(y);
+//	y_rotate[0][0] = cos(alfa);
+//	y_rotate[2][2] = cos(alfa);
+//	y_rotate[0][2] = sin(alfa);
+//	y_rotate[2][0] = -sin(alfa);
+//	alfa = glm::radians(z);
+//	z_rotate[0][0] = cos(alfa);
+//	z_rotate[1][1] = cos(alfa);
+//	z_rotate[0][1] = sin(alfa);
+//	z_rotate[1][0] = -sin(alfa);
+//	alfa = glm::radians(xw);
+//	xw_rotate[1][1] = cos(alfa);
+//	xw_rotate[2][2] = cos(alfa);
+//	xw_rotate[1][2] = sin(alfa);
+//	xw_rotate[2][1] = -sin(alfa);
+//	alfa = glm::radians(yw);
+//	yw_rotate[0][0] = cos(alfa);
+//	yw_rotate[2][2] = cos(alfa);
+//	yw_rotate[0][2] = sin(alfa);
+//	yw_rotate[2][0] = -sin(alfa);
+//	alfa = glm::radians(zw);
+//	zw_rotate[0][0] = cos(alfa);
+//	zw_rotate[1][1] = cos(alfa);
+//	zw_rotate[0][1] = sin(alfa);
+//	zw_rotate[1][0] = -sin(alfa);
+//
+//	//modelTransform = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Translation_mat * x_rotate * y_rotate * z_rotate * Scale_mat;
+//	//Axis_World_Trans = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate *Translation_mat* Scale_mat;
+//	worldTransform = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Scale_mat;
+//	modelTransform = w_translate * w_scale * x_rotate * y_rotate * z_rotate * Scale_mat;
+//}
+
+
+
 //#include "MeshModel.h"
 //#include <iostream>
 //

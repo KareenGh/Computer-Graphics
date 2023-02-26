@@ -252,11 +252,10 @@ void Renderer::Render(const std::shared_ptr<Scene>& scene)
 	if (cameraCount > 0)
 	{
 		int modelCount = scene->GetModelCount();
+		const Camera& camera = scene->GetActiveCamera();
 
 		if (modelCount > 0)
 		{
-			const Camera& camera = scene->GetActiveCamera();
-
 			for (int currentModelIndex = 0; currentModelIndex < modelCount; currentModelIndex++)
 			{
 				std::shared_ptr<MeshModel> currentModel = scene->GetModel(currentModelIndex);
@@ -282,13 +281,11 @@ void Renderer::Render(const std::shared_ptr<Scene>& scene)
 				// Unset 'texture1' as the active texture at slot #0
 				texture1.unbind(0);
 
-				colorShader.setUniform("color", glm::vec3(0, 0, 0));
-
-				// Drag our model's faces (triangles) in line mode (wireframe)
-				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-				glBindVertexArray(currentModel->GetVAO());
-				glDrawArrays(GL_TRIANGLES, 0, currentModel->GetModelVertices().size());
-				glBindVertexArray(0);
+				//// Drag our model's faces (triangles) in line mode (wireframe)
+				//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				//glBindVertexArray(currentModel->GetVAO());
+				//glDrawArrays(GL_TRIANGLES, 0, currentModel->GetModelVertices().size());
+				//glBindVertexArray(0);
 			}
 		}
 	}

@@ -301,6 +301,34 @@ void DrawImguiMenus()
 	ImGui::SetNextWindowPos(ImVec2(0, 20), ImGuiCond_Once);
 	{
 		ImGui::Begin("Scene Menu");
+
+		/* Menu */
+		{
+			ImGuiWindowFlags flags = ImGuiWindowFlags_NoFocusOnAppearing;
+			if (ImGui::BeginMainMenuBar())
+			{
+				if (ImGui::BeginMenu("File"))
+				{
+					if (ImGui::MenuItem("Open", "CTRL+O"))
+					{
+						nfdchar_t* outPath = NULL;
+						nfdresult_t result = NFD_OpenDialog("obj;png,jpg", NULL, &outPath);
+						if (result == NFD_OKAY) {
+							scene->AddModel(Utils::LoadMeshModel(outPath));
+							free(outPath);
+						}
+						else if (result == NFD_CANCEL) {
+						}
+						else {
+						}
+
+					}
+					ImGui::EndMenu();
+				}
+				ImGui::EndMainMenuBar();
+			}
+		}
+
 		if (ImGui::ColorEdit3("Clear Color", (float*)&clearColor))
 		{
 			glClearColor(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
@@ -405,31 +433,121 @@ void DrawImguiMenus()
 
 		if (ImGui::CollapsingHeader("Models"))
 		{
-			const char** items;
-			std::vector<std::string> modelStrings;
-			items = new const char* [scene->GetModelCount()];
-			for (int i = 0; i < scene->GetModelCount(); i++)
+			if (scene->GetModelCount() > 0)
 			{
-				std::ostringstream s;
-				s << scene->GetModel(i)->GetModelName();
-				std::string mystring = s.str();
-				modelStrings.push_back(mystring);
+				/* world */
+				static float XTranslate = 0;
+				static float YTranslate = 0;
+				static float ZTranslate = 0;
+				glm::vec3 TranslationVector = glm::vec3(0.0f);
+				static float XRotate = 0;
+				static float YRotate = 0;
+				static float ZRotate = 0;
+				static float XScale = 1;
+				static float YScale = 1;
+				static float ZScale = 1;
+				static bool inWorld = false;
+
+				const char** items;
+				std::vector<std::string> modelStrings;
+				items = new const char* [scene->GetModelCount()];
+				for (int i = 0; i < scene->GetModelCount(); i++)
+				{
+					std::ostringstream s;
+					s << scene->GetModel(i)->GetModelName();
+					std::string mystring = s.str();
+					modelStrings.push_back(mystring);
+				}
+
+				for (int i = 0; i < scene->GetModelCount(); i++)
+				{
+					items[i] = modelStrings[i].c_str();
+				}
+
+				int currentModelIndex = scene->GetActiveModelIndex();
+				ImGui::Combo("Active Model", &currentModelIndex, items, scene->GetModelCount());
+
+				if (currentModelIndex != scene->GetActiveModelIndex())
+				{
+					scene->SetActiveModelIndex(currentModelIndex);
+				}
+
+				/**/
+
+				delete items;
+				
+				ImGui::Checkbox("World Transformate", &inWorld);
+
+				/* Scale */
+				if (ImGui::InputFloat("X Scale", &XScale, 0.1f, 1.0f, "%.3f"))
+				{
+					if (inWorld)
+						scene->GetActiveModel()->ScaleXWorld(XScale);
+					else
+						scene->GetActiveModel()->ScaleXModel(XScale);
+				}
+				if (ImGui::InputFloat("Y Scale", &YScale, 0.1f, 1.0f, "%.3f"))
+				{
+					if (inWorld)
+						scene->GetActiveModel()->ScaleYWorld(YScale);
+					else
+						scene->GetActiveModel()->ScaleYModel(YScale);
+				}
+				if (ImGui::InputFloat("Z Scale", &ZScale, 0.1f, 1.0f, "%.3f"))
+				{
+					if (inWorld)
+						scene->GetActiveModel()->ScaleZWorld(ZScale);
+					else
+						scene->GetActiveModel()->ScaleZModel(ZScale);
+				}
+
+				/* Rotate */
+				if (ImGui::InputFloat("X Rotate", &XRotate, 0.1f, 1.0f, "%.3f"))
+				{
+					if (inWorld)
+						scene->GetActiveModel()->RotateXWorld(XRotate);
+					else
+						scene->GetActiveModel()->RotateXModel(XRotate);
+				}
+				if (ImGui::InputFloat("Y Rotate", &YRotate, 1.0f, 1.0f, "%.3f"))
+				{
+					if (inWorld)
+						scene->GetActiveModel()->RotateYWorld(YRotate);
+					else
+						scene->GetActiveModel()->RotateYModel(YRotate);
+				}
+				if (ImGui::InputFloat("Z Rotate", &ZRotate, 1.0f, 1.0f, "%.3f"))
+				{
+					if (inWorld)
+						scene->GetActiveModel()->RotateZWorld(ZRotate);
+					else
+						scene->GetActiveModel()->RotateZModel(ZRotate);
+				}
+
+				/* Translate */
+				if (ImGui::InputFloat("X Translate", &TranslationVector.x, 0.1f, 0.5f, "%.3f"))
+				{
+					if (inWorld)
+						scene->GetActiveModel()->TranslateWorld(TranslationVector);
+					else
+						scene->GetActiveModel()->TranslateModel(TranslationVector);
+				}
+				if (ImGui::InputFloat("Y Translate", &TranslationVector.y, 0.1f, 1.0f, "%.3f"))
+				{
+					if (inWorld)
+						scene->GetActiveModel()->TranslateWorld(TranslationVector);
+					else
+						scene->GetActiveModel()->TranslateModel(TranslationVector);
+				}
+				if (ImGui::InputFloat("Z Translate", &TranslationVector.z, 0.1f, 1.0f, "%.3f"))
+				{
+					if (inWorld)
+						scene->GetActiveModel()->TranslateWorld(TranslationVector);
+					else
+						scene->GetActiveModel()->TranslateModel(TranslationVector);
+				}
+
 			}
-
-			for (int i = 0; i < scene->GetModelCount(); i++)
-			{
-				items[i] = modelStrings[i].c_str();
-			}
-
-			int currentModelIndex = scene->GetActiveModelIndex();
-			ImGui::Combo("Active Model", &currentModelIndex, items, scene->GetModelCount());
-
-			if (currentModelIndex != scene->GetActiveModelIndex())
-			{
-				scene->SetActiveModelIndex(currentModelIndex);
-			}
-
-			delete items;
 
 			glm::vec3 modelColor = scene->GetActiveModel()->GetColor();
 			if (ImGui::ColorEdit3("Model Color", (float*)&modelColor))
@@ -450,33 +568,10 @@ void DrawImguiMenus()
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
+		
 	}
 
-	{
-		ImGuiWindowFlags flags = ImGuiWindowFlags_NoFocusOnAppearing;
-		if (ImGui::BeginMainMenuBar())
-		{
-			if (ImGui::BeginMenu("File"))
-			{
-				if (ImGui::MenuItem("Open", "CTRL+O"))
-				{
-					nfdchar_t* outPath = NULL;
-					nfdresult_t result = NFD_OpenDialog("obj;png,jpg", NULL, &outPath);
-					if (result == NFD_OKAY) {
-						scene->AddModel(Utils::LoadMeshModel(outPath));
-						free(outPath);
-					}
-					else if (result == NFD_CANCEL) {
-					}
-					else {
-					}
-
-				}
-				ImGui::EndMenu();
-			}
-			ImGui::EndMainMenuBar();
-		}
-	}
+	
 }
 
 
