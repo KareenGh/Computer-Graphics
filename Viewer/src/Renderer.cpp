@@ -268,7 +268,7 @@ void Renderer::Render(const std::shared_ptr<Scene>& scene)
 				colorShader.setUniform("view", camera.GetViewTransformation());
 				colorShader.setUniform("projection", camera.GetProjectionTransformation());
 				colorShader.setUniform("material.textureMap", 0);
-
+				
 				// Set 'texture1' as the active texture at slot #0
 				texture1.bind(0);
 

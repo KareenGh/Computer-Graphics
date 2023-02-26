@@ -53,6 +53,11 @@ public:
 	void TranslateModel(const glm::vec3& translationVector);
 	void TranslateWorld(const glm::vec3& translationVector);
 
+	//for Model
+	glm::vec3 Ambient_ref = glm::vec3(1);
+	glm::vec3 Diffuse_ref = glm::vec3(1);
+	glm::vec3 Specular_ref = glm::vec3(1);
+
 	void RotateXModel(double angle);
 	void RotateYModel(double angle);
 	void RotateZModel(double angle);

@@ -436,6 +436,10 @@ void DrawImguiMenus()
 			if (scene->GetModelCount() > 0)
 			{
 				/* world */
+				static int models_num = 1;
+				ImGui::ColorEdit3("Material_Ambient_Reflection", (float*)&scene->GetModel(models_num - 1)->Ambient_ref);
+				ImGui::ColorEdit3("Material_Diffuse_Reflection", (float*)&scene->GetModel(models_num-1)->Diffuse_ref);
+				ImGui::ColorEdit3("Material_Specular_Reflection", (float*)&scene->GetModel(models_num-1)->Specular_ref);
 				static float XTranslate = 0;
 				static float YTranslate = 0;
 				static float ZTranslate = 0;
@@ -466,6 +470,7 @@ void DrawImguiMenus()
 
 				int currentModelIndex = scene->GetActiveModelIndex();
 				ImGui::Combo("Active Model", &currentModelIndex, items, scene->GetModelCount());
+
 
 				if (currentModelIndex != scene->GetActiveModelIndex())
 				{
@@ -597,6 +602,7 @@ void DrawImguiMenus()
 			ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene->GetLight(LightCount - 1)->ambient_ref);
 			ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene->GetLight(LightCount - 1)->diffuse_ref);
 			ImGui::ColorEdit3("Specular_Reflection", (float*)&scene->GetLight(LightCount - 1)->specular_ref);
+
 		}
 		ImGui::End();
 	}
