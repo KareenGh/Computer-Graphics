@@ -14,6 +14,10 @@ PointLight::PointLight(const glm::vec3& position, const glm::vec3& color) :
 
 }
 
+PointLight::PointLight()
+{
+}
+
 PointLight::~PointLight()
 {
 }

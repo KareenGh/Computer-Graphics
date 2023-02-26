@@ -49,6 +49,8 @@ public:
 
 	void SetActiveModelIndex(int index);
 	const int GetActiveModelIndex() const;
+
+	
 };
 
 //#pragma once

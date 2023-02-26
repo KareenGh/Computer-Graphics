@@ -68,9 +68,9 @@ int main(int argc, char** argv)
 	Camera camera = Camera(eye, at, up, GetAspectRatio());
 	scene->AddCamera(camera);
 
-	scene->AddLight(std::make_shared<PointLight>(glm::vec3(0, 0, 15), glm::vec3(1, 1, 1)));
-	scene->AddLight(std::make_shared<PointLight>(glm::vec3(0, 5, 5), glm::vec3(0, 0, 0)));
-	scene->AddLight(std::make_shared<PointLight>(glm::vec3(-5, 0, 0), glm::vec3(0, 0, 0)));
+	//scene->AddLight(std::make_shared<PointLight>(glm::vec3(0, 0, 15), glm::vec3(1, 1, 1)));
+	//scene->AddLight(std::make_shared<PointLight>(glm::vec3(0, 5, 5), glm::vec3(0, 0, 0)));
+	//scene->AddLight(std::make_shared<PointLight>(glm::vec3(-5, 0, 0), glm::vec3(0, 0, 0)));
 
 	Renderer renderer;
 	renderer.LoadShaders();
@@ -475,7 +475,7 @@ void DrawImguiMenus()
 				/**/
 
 				delete items;
-				
+
 				ImGui::Checkbox("World Transformate", &inWorld);
 
 				/* Scale */
@@ -532,14 +532,14 @@ void DrawImguiMenus()
 					else
 						scene->GetActiveModel()->TranslateModel(TranslationVector);
 				}
-				if (ImGui::InputFloat("Y Translate", &TranslationVector.y, 0.1f, 1.0f, "%.3f"))
+				if (ImGui::InputFloat("Y Translate", &TranslationVector.y, 0.1f, 0.5f, "%.3f"))
 				{
 					if (inWorld)
 						scene->GetActiveModel()->TranslateWorld(TranslationVector);
 					else
 						scene->GetActiveModel()->TranslateModel(TranslationVector);
 				}
-				if (ImGui::InputFloat("Z Translate", &TranslationVector.z, 0.1f, 1.0f, "%.3f"))
+				if (ImGui::InputFloat("Z Translate", &TranslationVector.z, 0.1f, 0.5f, "%.3f"))
 				{
 					if (inWorld)
 						scene->GetActiveModel()->TranslateWorld(TranslationVector);
@@ -568,7 +568,37 @@ void DrawImguiMenus()
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
-		
+
+
+		/* Lights */
+		ImGui::Begin("Lighting & Shading");
+		ImGui::Text("LightCount = %d", scene->GetLightCount());
+		if (ImGui::Button("Add point light"))
+		{
+			std::shared_ptr<PointLight> newLight = std::make_shared<PointLight>();
+			scene->AddLight(newLight);
+		}
+		static int LightCount = 1;
+		if (scene->GetLightCount() > 1)
+		{
+//			ImGui::Combo("Choose Light", &LightCount, scene->lights, scene->GetLightCount());
+			ImGui::SliderInt("Light Selction", &LightCount, 1, scene->GetLightCount());
+		}
+		if (scene->GetLightCount() > 0)
+		{
+//			ImGui::Combo("Choose Light", &LightCount, scene->lights, LightCount);
+
+			ImGui::SliderFloat("MoveLight_x", &scene->GetLight(LightCount - 1)->GetPosition().x, -1000, 1000);
+			ImGui::SliderFloat("MoveLight_y", &scene->GetLight(LightCount - 1)->GetPosition().y, -1000, 1000);
+			ImGui::SliderFloat("MoveLight_z", &scene->GetLight(LightCount - 1)->GetPosition().z, -1000, 1000);
+
+			ImGui::SliderFloat("alfa", (float*)&scene->GetLight(LightCount - 1)->alfa, 0, 360);
+
+			ImGui::ColorEdit3("Ambient_Reflection", (float*)&scene->GetLight(LightCount - 1)->ambient_ref);
+			ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene->GetLight(LightCount - 1)->diffuse_ref);
+			ImGui::ColorEdit3("Specular_Reflection", (float*)&scene->GetLight(LightCount - 1)->specular_ref);
+		}
+		ImGui::End();
 	}
 
 	
