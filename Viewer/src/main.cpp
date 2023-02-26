@@ -436,6 +436,11 @@ void DrawImguiMenus()
 			if (scene->GetModelCount() > 0)
 			{
 				/* world */
+				static int models_num = 0;
+				ImGui::ColorEdit3("Material_Ambient_Reflection", (float*)&scene->GetModel(models_num)->Ambient_ref);
+				ImGui::ColorEdit3("Material_Diffuse_Reflection", (float*)&scene->GetModel(models_num)->Diffuse_ref);
+				ImGui::ColorEdit3("Material_Specular_Reflection", (float*)&scene->GetModel(models_num)->Specular_ref);
+
 				static float XTranslate = 0;
 				static float YTranslate = 0;
 				static float ZTranslate = 0;
