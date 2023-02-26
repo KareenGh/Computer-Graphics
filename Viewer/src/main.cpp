@@ -467,6 +467,7 @@ void DrawImguiMenus()
 				int currentModelIndex = scene->GetActiveModelIndex();
 				ImGui::Combo("Active Model", &currentModelIndex, items, scene->GetModelCount());
 
+
 				if (currentModelIndex != scene->GetActiveModelIndex())
 				{
 					scene->SetActiveModelIndex(currentModelIndex);

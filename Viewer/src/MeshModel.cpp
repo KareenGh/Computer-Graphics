@@ -185,6 +185,8 @@ void MeshModel::ScaleWorld(double factor)
 	worldTransform = glm::scale(glm::mat4(1), glm::vec3(factor, factor, factor)) * worldTransform;
 }
 
+
+
 GLuint MeshModel::GetVAO() const
 {
 	return vao;
@@ -194,6 +196,7 @@ const std::vector<Vertex>& MeshModel::GetModelVertices()
 {
 	return modelVertices;
 }
+
 
 
 //
