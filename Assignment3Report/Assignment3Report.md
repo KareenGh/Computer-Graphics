@@ -22,6 +22,81 @@ the screen by mapping the texture onto the two triangles defined in Renderer::In
 
 ## 2. Update the MeshModel class to load the mesh on the GPU. Use the example OpenGL project as a reference.
 
+We've updated the MeshModel class accordingly by using the example raised by the lecturer.
+so we have changed MeshModel.h file by adding vertex struct and for loading a mesh on the GPU we need to create vertex buffer objects VBO's.so vbo and vao are OpenGL buffer handles used to store the vertex and index data of the model.These handles are used in the GetVAO() method to get the handle of the vertex array object associated with the model.
+
+```
+struct Vertex
+{
+	glm::vec3 position;
+	glm::vec3 normal;
+	glm::vec2 textureCoords;
+};
+
+class MeshModel
+{
+protected:
+	std::vector<Face> faces;
+	std::vector<glm::vec3> vertices;
+	std::vector<glm::vec3> normals;
+	std::vector<glm::vec3> textureCoords;
+
+	std::vector<Vertex> modelVertices;
+
+	glm::mat4x4 modelTransform;
+	glm::mat4x4 worldTransform;
+
+	std::string modelName;
+
+	glm::vec3 color;
+
+	GLuint vbo;
+	GLuint vao;
+
+public:
+	MeshModel(std::vector<Face> faces, std::vector<glm::vec3> vertices, std::vector<glm::vec3> normals, std::vector<glm::vec2> textureCoords, const std::string& modelName = "");
+	virtual ~MeshModel();
+
+	const glm::mat4x4& GetWorldTransformation() const;
+	const glm::mat4x4& GetModelTransformation() const;
+
+	void SetWorldTransformation(const glm::mat4x4& worldTransform);
+	void SetModelTransformation(const glm::mat4x4& modelTransform);
+
+	const glm::vec3& GetColor() const;
+	void SetColor(const glm::vec3& color);
+
+	const std::string& GetModelName();
+
+	const std::vector<Vertex>& GetModelVertices();
+
+	void TranslateModel(const glm::vec3& translationVector);
+	void TranslateWorld(const glm::vec3& translationVector);
+
+	void RotateXModel(double angle);
+	void RotateYModel(double angle);
+	void RotateZModel(double angle);
+	void ScaleXModel(double factor);
+	void ScaleYModel(double factor);
+	void ScaleZModel(double factor);
+	void ScaleModel(double factor);
+
+	void RotateXWorld(double angle);
+	void RotateYWorld(double angle);
+	void RotateZWorld(double angle);
+	void ScaleXWorld(double factor);
+	void ScaleYWorld(double factor);
+	void ScaleZWorld(double factor);
+	void ScaleWorld(double factor);
+
+	GLuint GetVAO() const;
+};
+```
+
+and we've changed MeshModel.cpp file accordingly like the example,We've changed MeshModel constructor takes as input four vectors : faces,vertices,normals and textureCoords which represents the faces,vertices,normals and texture coordinates of the model.it also takes an optional modelName string.
+  In the constructor,the model transformation matri,world transformation matrix and color are initialzed.Then for each face in faces, the three vertices are extracted and used to create a Vertex object,which is added to the modelVertices vector.This vector will be used to store vertex data that will be loaded into the GPU.In addition to this there is the implementation of the functions that we have defined at MeshModel.h file previously.
+  
+
 ## 3. Write a vertex shader that applies all the transformations. Use the reference code, but pay attention to the differences between your code and the reference code. Copy the code the the report.
 
 We used the refence code for now and updated the vertex shader to applies all the transformation.
