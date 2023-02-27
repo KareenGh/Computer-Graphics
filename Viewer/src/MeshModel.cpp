@@ -263,6 +263,16 @@ void MeshModel::LoadTextures(const char* path)
 {
 	if (!(Texture.loadTexture(path, true)))
 		Texture.loadTexture(path, true);
+
+	std::vector<std::string> faces
+	{
+		"https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/tree/master/Data/posx.jpg",
+		"https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/tree/master/Data/negx.jpg",
+		"https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/tree/master/Data/posy.jpg",
+		"https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/tree/master/Data/negy.jpg",
+		"https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/tree/master/Data/posz.jpg",
+		"https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/tree/master/Data/negz.jpg"
+	};
 }
 
 void MeshModel::LoadNormalMap(const char* path)
@@ -270,6 +280,7 @@ void MeshModel::LoadNormalMap(const char* path)
 	if (!(NormalMap.loadTexture(path, true)))
 		NormalMap.loadTexture(path, true);
 }
+
 
 ////Responsible about rotation calculating
 //void MeshModel::SetTransformate()

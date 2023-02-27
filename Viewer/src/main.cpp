@@ -1027,7 +1027,9 @@ void DrawImguiMenus()
 // 
 //			ImGui::Checkbox("Camera_Transformation",&cam_transform);
 //			ImGui::Checkbox("Bounding Box", &scene.GetActiveModel().bounding_box);
-//			ImGui::Checkbox("faces_normal", &scene.GetActiveModel().face_normals);
+//			ImGui::Checkbox("
+// 
+// _normal", &scene.GetActiveModel().face_normals);
 //			ImGui::Checkbox("vertices_normal", &scene.GetActiveModel().vertex_normals);
 //			ImGui::Checkbox("Orthograhic", &scene.GetActiveCamera().orth);
 //			ImGui::Checkbox("Perspective", &scene.GetActiveCamera().Perspective);
