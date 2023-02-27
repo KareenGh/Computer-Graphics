@@ -336,6 +336,16 @@ void Renderer::LoadTextures()
 	{
 		texture1.loadTexture("bin\\Release\\BlackWhite.png", true);
 	}
+
+	std::vector<std::string> faces
+	{
+		"GitHub\computer-graphics-2023-rashilmbariky\Data\posx.jpg",
+		"GitHub\computer-graphics-2023-rashilmbariky\Data\ negx.jpg",
+		"GitHub\computer-graphics-2023-rashilmbariky\Data\posy.jpg",
+		"GitHub\computer-graphics-2023-rashilmbariky\Data\ negy.jpg",
+		"GitHub\computer-graphics-2023-rashilmbariky\Data\posz.jpg",
+		"GitHub\computer-graphics-2023-rashilmbariky\Data\ negz.jpg"
+	};
 }
 //void Renderer::Render(const Scene& scene)
 //{
