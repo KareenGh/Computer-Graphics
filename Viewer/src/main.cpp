@@ -609,9 +609,7 @@ void DrawImguiMenus()
 		ImGui::End();
 
 		ImGui::Begin("Mapping & Shading");
-//		ImGui::Checkbox("Texture Mapping", &scene->TextureMapping);
-//		if (scene->TextureMapping)
-//		{
+
 		/* Texture */
 		if (ImGui::Button("Plane")) 
 			scene->GetActiveModel()->PlaneMap();
@@ -622,7 +620,6 @@ void DrawImguiMenus()
 
 		if (ImGui::Button("Normal Mapping"))
 		{
-//			scene->Normal = true;
 			nfdchar_t* outPath = NULL;
 			nfdresult_t result = NFD_OpenDialog("jpg", NULL, &outPath);
 			if (result == NFD_OKAY) {
@@ -646,7 +643,6 @@ void DrawImguiMenus()
 		{
 			scene->Toonshading = true;
 		}
-//		}
 
 		ImGui::End();
 	}
