@@ -252,7 +252,6 @@ And as mentioned we downloaded beetle.obj mesh from the link and load it:
 
 ![beetle-6 2](https://user-images.githubusercontent.com/116673155/221546534-645d1d5b-78ef-44ad-8b4a-699bf1eb4f8a.png)
 
-![beetle-6 3-onelight](https://user-images.githubusercontent.com/116673155/221546542-14a6ee66-4b85-4769-99b6-7b5945666778.png)
 
 Here is with two lights:
 ![beetle-6 4 two lights](https://user-images.githubusercontent.com/116673155/221546577-24c73217-f5f8-4a6d-988a-a7e0d37b1ca6.png)
