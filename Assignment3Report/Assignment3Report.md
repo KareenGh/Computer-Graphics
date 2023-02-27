@@ -277,7 +277,7 @@ We used the OpenGL demo to load a texture mapping and we also added to the meshM
 
 ## 8. Implement one (for pairs: all) of the following                                                                                                                         (a) Normal mapping                                                                                                                                                       (b) Enviroment mapping                                                                                                                                                   (c) Toon shading (without the silhouette)                                                                                                                                 All of these can be done in many different ways and levels of complexity. Keep it simple! if in doubt, please ask. Explain what you did and show your results in the report.
 
-We added to the code the Normal mapping implemintation but we didn get a perfect resul so there is no picture. :(
+We added to the code the Normal mapping and toon shading implemintation, and we tried our best to make it work but we didnt get a perfect result so there is no picture. :(
 
 Here is an example of Enviroment mapping on teapot mesh :
 ![EnvironmentMapping](https://user-images.githubusercontent.com/116673155/221695186-722ff1dd-a1ef-4796-9aaf-5f1984632729.jpg)
