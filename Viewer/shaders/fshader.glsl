@@ -37,7 +37,7 @@ in vec3 reflected;
 out vec4 frag_color;
 out vec4 color;
 
-float levels=4 ;//4 different levels of shading 
+float shadings = 3 ;
 
 
 void main()
@@ -75,7 +75,7 @@ void main()
 
 	/* Mapping */
 	float level=floor(pow((max(0.0f, (dot(light.location-fragPos, normalize(fragNormal))))), light.alfa) * levels);
-	float brightness=level/levels;
+	float brightness=level/shadings;
 
 
 	if(Normal)

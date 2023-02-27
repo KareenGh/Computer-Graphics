@@ -37,8 +37,6 @@ public:
 	std::shared_ptr<PointLight> GetLight(int index) const;
 	const std::vector<std::shared_ptr<PointLight>>& GetActiveLights() const;
 
-//	const AmbientLight& GetAmbientLight();
-
 	const Camera& GetActiveCamera() const;
 	Camera& GetActiveCamera();
 
@@ -58,7 +56,4 @@ public:
 	bool Normal = false;
 	bool Environment = false;
 	bool Toonshading = false;
-
-	//int Scene::GetMapping();
-
 };
