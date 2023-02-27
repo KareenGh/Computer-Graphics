@@ -1,3 +1,4 @@
+#define _USE_MATH_DEFINES
 #include "MeshModel.h"
 #include "Utils.h"
 #include <vector>
@@ -7,6 +8,8 @@
 #include <sstream>
 #include <random>
 #include <glm/gtc/matrix_transform.hpp>
+#include <math.h>
+
 
 MeshModel::MeshModel(std::vector<Face> faces, std::vector<glm::vec3> vertices, std::vector<glm::vec3> normals, std::vector<glm::vec2> textureCoords, const std::string& modelName) :
 	modelTransform(1),
@@ -40,6 +43,10 @@ MeshModel::MeshModel(std::vector<Face> faces, std::vector<glm::vec3> vertices, s
 			modelVertices.push_back(vertex);
 		}
 	}
+
+	//PlaneMap();
+	//CylinderMap();
+	//SpherMap();
 
 	glGenVertexArrays(1, &vao);
 	glGenBuffers(1, &vbo);
@@ -192,14 +199,78 @@ GLuint MeshModel::GetVAO() const
 	return vao;
 }
 
+GLuint MeshModel::GetVBO() const
+{
+	return vbo;
+}
+
 const std::vector<Vertex>& MeshModel::GetModelVertices()
 {
 	return modelVertices;
 }
 
+void MeshModel::PlaneMap()
+{
+	/*  drop z coord */
+	for (Vertex& vertex : modelVertices) {
+		float u = vertex.position[0];
+		float v = vertex.position[1];
+		vertex.textureCoords = glm::vec2(u, v);
+	}
+	glBindVertexArray(GetVAO());
+	glBindBuffer(GL_VERTEX_ARRAY, GetVBO());
+	glBufferSubData(GL_ARRAY_BUFFER, 0, modelVertices.size() * sizeof(Vertex), &modelVertices[0]);
+	glBindVertexArray(0);
+}
 
+void MeshModel::CylinderMap()
+{
+	/* Given a point (x,y,z), convert it to cylindrical coordinates (r, theta, z) and use (theta,z) as the 2D texture coordinates */
+	for (Vertex& vertex : modelVertices) {
+		float x = vertex.position[0];
+		float y = vertex.position[1];
+		float z = vertex.position[2];
+		float u = std::atan2(x, y);
+		float v = std::atan2(x, z);
+		vertex.textureCoords = glm::vec2(u, v);
 
-//
+		//float x = vertex.position[0];
+		//float y = vertex.position[1];
+		//float z = vertex.position[2];
+		//float r = sqrt(x * x + y * y);
+		//float theta = atan2(y, x);
+		//vertex.textureCoords = glm::vec2(theta, z);
+	}
+	glBindVertexArray(GetVAO());
+	glBindBuffer(GL_VERTEX_ARRAY, GetVBO());
+	glBufferSubData(GL_ARRAY_BUFFER, 0, modelVertices.size() * sizeof(Vertex), &modelVertices[0]);
+	glBindVertexArray(0);
+}
+
+void MeshModel::SpherMap()
+{
+	/* Given a point (x,y,z), convert it to spherical coordinate coordinates (theta,phi) */
+	for (Vertex& vertex : modelVertices) {
+		vertex.textureCoords = glm::vec2(vertex.position[0] / (1 - vertex.position[2]), vertex.position[1] / (1 - vertex.position[2]));
+	}
+	glBindVertexArray(GetVAO());
+	glBindBuffer(GL_VERTEX_ARRAY, GetVBO());
+	glBufferSubData(GL_ARRAY_BUFFER, 0, modelVertices.size() * sizeof(Vertex), &modelVertices[0]);
+	glBindVertexArray(0);
+}
+
+void MeshModel::LoadTextures(const char* path)
+{
+	if (!(Texture.loadTexture(path, true)))
+		Texture.loadTexture(path, true);
+}
+
+void MeshModel::LoadNormalMap(const char* path)
+{
+	if (!(NormalMap.loadTexture(path, true)))
+		NormalMap.loadTexture(path, true);
+}
+
 ////Responsible about rotation calculating
 //void MeshModel::SetTransformate()
 //{
@@ -239,9 +310,6 @@ const std::vector<Vertex>& MeshModel::GetModelVertices()
 //	worldTransform = w_translate * w_scale * xw_rotate * yw_rotate * zw_rotate * Scale_mat;
 //	modelTransform = w_translate * w_scale * x_rotate * y_rotate * z_rotate * Scale_mat;
 //}
-
-
-
 //#include "MeshModel.h"
 //#include <iostream>
 //

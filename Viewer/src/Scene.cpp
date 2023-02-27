@@ -102,6 +102,15 @@ const std::vector<std::shared_ptr<PointLight>>& Scene::GetActiveLights() const
 	return lights;
 }
 
+//int Scene::GetMapping()
+//{
+//	if (Normal)
+//		return 1;
+//	if (Environment)
+//		return 2;
+//	if (Toonshading)
+//		return 3;
+//}
 //const AmbientLight& Scene::GetAmbientLight()
 //{
 //	return ambientLight;
