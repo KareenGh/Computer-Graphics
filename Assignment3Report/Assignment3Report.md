@@ -229,6 +229,35 @@ void Renderer::Render(const std::shared_ptr<Scene>& scene)
 
 ## 6. Implement Phong shading in the fragment shader. To demonstrate that the performancehas now improved a lot, load one of the meshes from http://github.com/alecjacobson/common-3d-test-models  display it from several view-point and different lighting.
 
+Here we use the same equation for computing Phong Shading that we use at previous assignment as a sum of Ambient+Diffuse+Specular ,we just move it to fshader file and define a Material variable and Light variable and using the example that have been shared to complete.
+
+Here is an example of phong shading on teapot:
+
+![teapot-6 1](https://user-images.githubusercontent.com/116673155/221545973-d8b6b83c-26b3-491a-b336-7ae51578a0c6.png)
+
+
+![teapot-6 2](https://user-images.githubusercontent.com/116673155/221546015-b963c556-f433-4d36-b6a5-11349d4e8f6f.png)
+
+
+![teapot-6 3](https://user-images.githubusercontent.com/116673155/221546069-e96958af-2f97-40b4-8607-1ba9601cc1a5.png)
+
+Another example on beethoven:
+
+![beethoven](https://user-images.githubusercontent.com/116673155/221546146-bdf1b355-b180-4125-a90f-a6d96c2cac12.png)
+
+And as mentioned we downloaded beetle.obj mesh from the link and load it:
+
+![beetle-6 1](https://user-images.githubusercontent.com/116673155/221546488-43c16ac8-b0b6-4b22-9c9a-ad29664501d4.png)
+
+
+![beetle-6 2](https://user-images.githubusercontent.com/116673155/221546534-645d1d5b-78ef-44ad-8b4a-699bf1eb4f8a.png)
+
+
+Here is with two lights:
+![beetle-6 4 two lights](https://user-images.githubusercontent.com/116673155/221546577-24c73217-f5f8-4a6d-988a-a7e0d37b1ca6.png)
+
+![beetle-6 5](https://user-images.githubusercontent.com/116673155/221546599-12546042-5e84-448b-b9ad-9866df906646.png)
+
 ## 7. Implement texture mapping. Use the example OpenGL project as reference. Enable at least one type of canonical project (for pairs: three): plane, cylinder or sphere. In addition, find a mesh with texture coordinates online and use them. Show your results in the report.
 
-## 8. Implement one (for pairs: all) of the following                                                                                                                         (a) Normal mapping                                                                                                                                                       (b) Enviroment mapping                                                                                                                                                   (c) Toon shading (without the silhouette)                                                                                                                                 All of these can be done in many different ways and levels of complexity. Keep it simple! if in doubt, please ask. Explain what you did and show your results in the     report.
+## 8. Implement one (for pairs: all) of the following                                                                                                                         (a) Normal mapping                                                                                                                                                       (b) Enviroment mapping                                                                                                                                                   (c) Toon shading (without the silhouette)                                                                                                                                 All of these can be done in many different ways and levels of complexity. Keep it simple! if in doubt, please ask. Explain what you did and show your results in the report.
