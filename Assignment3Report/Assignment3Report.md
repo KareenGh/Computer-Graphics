@@ -260,4 +260,19 @@ Here is with two lights:
 
 ## 7. Implement texture mapping. Use the example OpenGL project as reference. Enable at least one type of canonical project (for pairs: three): plane, cylinder or sphere. In addition, find a mesh with texture coordinates online and use them. Show your results in the report.
 
+We used the OpenGL demo to load a texture mapping and we also added to the meshModel function to calculate the different kinds. 
+
+### Plane
+
+![Plane](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment3Report/Plane2.png)
+![Plane2](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment3Report/Plane1.png)
+
+### Cylinder
+
+![Cylinder](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment3Report/Cylinder.png)
+
+### Sphere
+
+![Spher](https://github.com/HaifaGraphicsCourses/computer-graphics-2023-rashilmbariky/blob/master/Assignment3Report/Spher.png)
+
 ## 8. Implement one (for pairs: all) of the following                                                                                                                         (a) Normal mapping                                                                                                                                                       (b) Enviroment mapping                                                                                                                                                   (c) Toon shading (without the silhouette)                                                                                                                                 All of these can be done in many different ways and levels of complexity. Keep it simple! if in doubt, please ask. Explain what you did and show your results in the report.
