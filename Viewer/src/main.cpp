@@ -596,9 +596,9 @@ void DrawImguiMenus()
 		{
 			ImGui::Combo("Choose Light", &LightCount, lights, scene->GetLightCount());
 
-			ImGui::SliderFloat("MoveLight_x", &scene->GetLight(LightCount)->GetPosition().x, -1000, 1000);
-			ImGui::SliderFloat("MoveLight_y", &scene->GetLight(LightCount)->GetPosition().y, -1000, 1000);
-			ImGui::SliderFloat("MoveLight_z", &scene->GetLight(LightCount)->GetPosition().z, -1000, 1000);
+			ImGui::SliderFloat("MoveLight_x", &scene->GetLight(LightCount)->GetPosition().x, -100, 100);
+			ImGui::SliderFloat("MoveLight_y", &scene->GetLight(LightCount)->GetPosition().y, -100, 100);
+			ImGui::SliderFloat("MoveLight_z", &scene->GetLight(LightCount)->GetPosition().z, -100, 100);
 
 			ImGui::SliderFloat("alfa", (float*)&scene->GetLight(LightCount)->alfa, 0, 360);
 
@@ -606,6 +606,48 @@ void DrawImguiMenus()
 			ImGui::ColorEdit3("Diffuse_Reflection", (float*)&scene->GetLight(LightCount)->diffuse_ref);
 			ImGui::ColorEdit3("Specular_Reflection", (float*)&scene->GetLight(LightCount)->specular_ref);
 		}
+		ImGui::End();
+
+		ImGui::Begin("Mapping & Shading");
+//		ImGui::Checkbox("Texture Mapping", &scene->TextureMapping);
+//		if (scene->TextureMapping)
+//		{
+		/* Texture */
+		if (ImGui::Button("Plane")) 
+			scene->GetActiveModel()->PlaneMap();
+		if (ImGui::Button("Cylinder"))
+			scene->GetActiveModel()->CylinderMap();
+		if (ImGui::Button("Spher"))
+			scene->GetActiveModel()->SpherMap();
+
+		if (ImGui::Button("Normal Mapping"))
+		{
+//			scene->Normal = true;
+			nfdchar_t* outPath = NULL;
+			nfdresult_t result = NFD_OpenDialog("jpg", NULL, &outPath);
+			if (result == NFD_OKAY) {
+
+				//MeshModel& model = scene.GetActiveModel();
+				if (&scene->GetActiveModel() != nullptr) {
+
+					scene->GetActiveModel()->LoadNormalMap(outPath);
+					scene->Normal = true;
+				}
+				free(outPath);
+			}
+			else if (result == NFD_CANCEL) {
+			}
+		}
+		if (ImGui::Button("Environment mapping"))
+		{
+			scene->Environment = true;
+		}
+		if (ImGui::Button("Toon shading"))
+		{
+			scene->Toonshading = true;
+		}
+//		}
+
 		ImGui::End();
 	}
 
