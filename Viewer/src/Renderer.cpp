@@ -272,9 +272,9 @@ void Renderer::Render(const std::shared_ptr<Scene>& scene)
 				colorShader.setUniform("material.Ka", scene->GetModel(currentModelIndex)->Ambient_ref);
 				colorShader.setUniform("material.Kd", scene->GetModel(currentModelIndex)->Diffuse_ref);
 				colorShader.setUniform("material.Ks", scene->GetModel(currentModelIndex)->Specular_ref);
-				//colorShader.setUniform("Normal", scene->Normal);
-				//colorShader.setUniform("Environment", scene->Environment);
-				//colorShader.setUniform("Toonshading", scene->Toonshading);
+				colorShader.setUniform("Normal", scene->Normal);
+				colorShader.setUniform("Environment", scene->Environment);
+				colorShader.setUniform("Toonshading", scene->Toonshading);
 
 				// Set 'texture1' as the active texture at slot #0
 				texture1.bind(0);
@@ -332,7 +332,7 @@ void Renderer::LoadShaders()
 
 void Renderer::LoadTextures()
 {
-	if (!texture1.loadTexture("bin\\Debug\\color.jpg", true))
+	if (!texture1.loadTexture("bin\\Debug\\board.jpg", true))
 	{
 		texture1.loadTexture("bin\\Release\\BlackWhite.png", true);
 	}
