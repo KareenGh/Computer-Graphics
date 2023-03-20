@@ -1,14 +1,16 @@
 # Computer Graphics 203.3710
 ## Students Team data
 
-Name: Rashil Mbariky
-
-Student Number: 209148154
 
 
 Name: Kareen Ghattas
 
 Student Number: 207478728
+
+Name: Rashil Mbariky
+
+Student Number: 209148154
+
 
 ### Lecturer
 *Roi Poranne*
@@ -16,11 +18,6 @@ Student Number: 207478728
 [roiporanne@cs.haifa.ac.il](mailto:roiporanne@cs.haifa.ac.il)
 
 URL: [https://roipo.github.io/](https://roipo.github.io/)
-
-Office Hours: By appointment.
-
-### Lectures:
-Sundays at 16:00pm - 20:00pm
 
 ## Course Description
 
